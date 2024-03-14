@@ -14,7 +14,10 @@ d.*
 s.*
 fort.*
 *.mod
-*.lyx
 *.asv
 *.lyx~
+*.lyx
+*.lyx#
 *.mat
+//uncomment this to upload the LG190 data
+//!LG190Raw.mat
