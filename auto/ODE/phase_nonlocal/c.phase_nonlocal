@@ -1,0 +1,10 @@
+NDIM=   22, IPS =   2, ISP=2, IRS =   0, ILP =   1
+ICP =  [2, 11, 6, 13, 14, 16, 18,19, 20, 21, 22, 23, 24]
+NTST=  500, NCOL=   4, IAD =   3, ISP =   2, ISW = 1, IPLT= 0, NBC= 0, NINT= 0
+NMX=  400000, NPR=  100, MXBF=  10, IID =   2, ITMX= 18, ITNW= 5, NWTN= 3, JAC=0
+EPSL= 1e-07, EPSU = 1e-07, EPSS =1e-05
+DS  =  0.000002, DSMIN= 0.0000000001, DSMAX=   0.01, IADS=   1
+NPAR = 24, THL =  {11:1e-3}, THU={}
+parnames={1:'mu', 2:'eps', 3:'gamma', 4:'kappa_base',5:'kappa_exp',6:'kappa',7:'log_kappa', 13:'psi', 14,'chi_bar', 16:'chi_hat', 21:'chi0', 22:'ncross',23:'cross_pos', 24:'abs_cross_pos'}
+UZSTOP = {1: [-0.5, 1.5], 'eps':[-1.5, 2], 'kappa_base':[0, 100], 11:[2e2]}
+UZR = {'eps':[1, 2, 3, 4,5,  5.35,  5.45, 6.0,  6.5, 7, 7.8, 8, 9, 10]}

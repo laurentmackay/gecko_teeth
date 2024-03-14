@@ -1,0 +1,147 @@
+
+
+####### N=11 #########
+
+
+
+
+ftblo_eps = cache_branch('ftblo_eps', 'phase_nonlocal', dat='11_gamma=0_eps=0.2_kappa=1_ftb', NDIM=22, PAR={'eps':0.2,'kappa_base':1})
+shiftedlo_eps = cache_branch('shiftedlo_eps',ftblo_eps('BP1'), ISW=-1, forward={'DS':1e-4}, backward={'DS':-1e-4},SP='TR1')
+
+pl(ftblo_eps+shiftedlo_eps, use_labels=False, bifurcation_y='PAR(20)')
+
+kappas=[0.2, 0.4, 0.6, 0.8, 1.2, 1.4]
+ftblo_kappa = cache_branch('ftblo_kappa', 'phase_nonlocal', dat='11_gamma=0_eps=0.2_kappa=1_ftb', NDIM=22, PAR={'eps':0.2,'kappa_base':1, 'kappa_exp':0.5},  ICP =  ['kappa_base', 11, 6, 13, 14, 16, 18,19, 20, 21, 22, 23, 24] , UZR={'kappa_base':[k*k for k in kappas]}, UZSTOP={'kappa_base':[ k*k for k in [0.15, 1.41]]})
+
+
+
+
+bndry_eps = cache_branch('bndry_eps', 'phase_nonlocal', dat='11_gamma=0_eps=0.1_kappa=1.75_bndry', NDIM=22, PAR={'eps':0.1,'kappa_base':1.75})
+
+bndry2_eps = cache_branch('bndry2_eps', bndry_eps('BP1'), ISW=-1, forward={'DS':1e-5}, backward=False, SP='LP6')
+
+shifted_eps = cache_branch('shifted_eps',bndry_eps('BP3'), ISW=-1, forward={'DS':1e-7}, backward=False)
+shifted_eps += cache_branch('shifted_eps',shifted_eps(37), ISW=-1, forward=False, backward=True)
+
+bndry_eps = cache_branch('bndry_eps')
+shifted_eps = cache_branch('shifted_eps')
+
+pl(bndry_eps+shifted_eps, use_labels=False, bifurcation_y='PAR(20)', minx=-0.2)
+
+
+bndryHI_eps = cache_branch('bndryHI_eps', 'phase_nonlocal', dat='11_gamma=0_eps=0.1_kappa=3_bndry', NDIM=22, PAR={'eps':0.1,'kappa_base':3})
+
+
+kappas=[0.4, 0.6, 0.8, 1, 1.2, 1.4]
+ftblo_eps2={}
+kappas=[ 1.2, 1.4]
+for k in kappas:
+    ftblo_eps2[k] =  cache_branch(f'ftblo_kappa={k}_eps', 'phase_nonlocal', dat=f'11_gamma=0_eps=0.2_kappa={k}_ftb', NDIM=22, PAR={'eps':0.2,'kappa_base':k}, NMX=2300)
+
+ftblo_eps2[0.2] = cache_branch(f'ftblo_kappa=0.2_eps', 'phase_nonlocal', dat=f'11_gamma=0_eps=0.1_kappa=0.2_ftb', NDIM=22, PAR={'eps':0.1,'kappa_base':0.2}, NMX=2300)
+
+ftblo_eps3 = ftblo_eps2[0.4]+ftblo_eps2[0.6]+ftblo_eps2[0.8]+ftblo_eps2[1]+ftblo_eps2[1.2]+ftblo_eps2[1.4]
+pl(ftblo_eps3, use_labels=False, bifrucation_y='chi_hat', minx=0, maxx=0.3)
+
+run('phase_nonlocal', dat=f'11_gamma=0_eps=0.1_kappa=0.2_ftb', NDIM=22, PAR={'eps':0.1,'kappa_base':0.2}, NMX=2300)
+
+pl(ftblo_eps2[0.4]+ftblo_eps2[0.6], use_labels=False, bifurcation_y='chi_hat', minx=0, maxx=0.3, maxy=0, miny=-0.3)
+
+
+############### N=13 #################
+
+
+
+bndry_eps = cache_branch('bndry_eps_13', 'phase_nonlocal', dat='13_gamma=0_eps=0.1_kappa=2_bndry', NDIM=26, PAR={'eps':0.1,'kappa_base':2**2, 'kappa_exp':1/2}, SP='LP6',NTST=1500)
+bndry2_eps =cache_branch('bndry2_eps_13', bndry_eps('BP3'), ISW=-1, forward={'DS':1e-3}, backward={'DS':-1e-3})
+bndry3_eps =cache_branch('bndry3_eps_13', bndry_eps('BP4'), ISW=-1, forward={'DS':1e-5}, backward={'DS':-1e-5} )
+
+bndry_eps = cache_branch('bndry_eps_13')
+bndry2_eps =cache_branch('bndry2_eps_13')
+bndry3_eps =cache_branch('bndry3_eps_13')
+
+pl(bndry_eps+bndry2_eps+bndry3_eps, use_labels=False, bifurcation_y='PAR(20)')
+
+SNP10 =  run(bndry_eps('LP1'), ISW=2, ICP=['eps','kappa_base',11, 'kappa'], DS=1e-5)
+SNP1 = cache_branch('SNP1_eps_kappa',SNP10, UZSTOP={'eps':-1, 'kappa_base':[0,16]})
+
+PFP10 =  run(bndry_eps('BP1'), ISW=2, ICP=['eps','kappa_base',11, 'kappa'], DS=1e-5)
+PFP1 = cache_branch('PFP1_eps_kappa',PFP10, UZSTOP={'eps':-1, 'kappa_base':[0,16]})
+
+
+kappas=[0.2, 0.4, 0.6, 0.8, 1.0, 1.2, 1.4]
+ftb_kappa = cache_branch('ftb_kappa_13', 'phase_nonlocal', dat='13_gamma=0_eps=0.1_kappa=2_ftb', NDIM=26, PAR={'eps':0.1,'kappa_base':2**2, 'kappa_exp':1/2}, SP=[],NTST=1500, ICP =  ['kappa_base', 11, 6, 13, 14, 16, 18,19, 20, 21, 22, 23, 24], UZR={'kappa_base':[k*k for k in kappas]}, UZSTOP={'kappa_base':[ k*k for k in [0.15, ]]}, forward=False)
+
+
+
+
+
+##### OLD STUFF - PRELIMINARY EXPLORATION ###########
+ 
+ 
+
+
+
+
+
+
+
+ftb_eps = cache_branch('ftb_eps','phase_nonlocal',dat='11_gamma=0_eps=0.2_kappa=1_ftb', NDIM=22, PAR={'eps':0.2,'kappa4':1}, backward={'SP':['LP6','BP4']}, NTST=500, NMX=8000)
+shifted_eps = cache_branch('shifted_eps', ftb_eps('BP1'), ISW=-1, forward={'DS':0.0001}, backward={'DS':-0.0001})
+
+bndry_eps = cache_branch('bndry_eps', 'phase_nonlocal', dat='11_gamma=0_eps=0.1_kappa=3_bndry', NDIM=22, PAR={'eps':0.1,'kappa_base':3**(2),'kappa_exp':1/2}, ICP =  ['eps', 11, 'kappa',13, 14, 16, 18,19, 20, 21, 22, 23, 24], NTST=750, NMX=8000, forward={'DS':1e-5}, backward={'DS':-1e-5})
+bndry2_eps =  cache_branch('bndry2_eps', bndry_eps('BP1') , ISW=-1, forward={'DS':1e-5}, backward={'DS':-1e-5} )
+
+
+bndrylo_eps = cache_branch('bndrylo_eps', 'phase_nonlocal', dat='11_gamma=0_eps=0.1_kappa=1.75_bndry', NDIM=22, PAR={'eps':0.1,'kappa_base':1.75**(2),'kappa_exp':1/2}, NTST=750, NMX=8000, forward={'DS':1e-5}, backward={'DS':-1e-5, 'ILP':1})
+bndry2lo_eps =  cache_branch('bndry2lo_eps', bndrylo_eps('BP1') , ISW=-1, forward={'DS':1e-5}, backward=False, SP='LP6' )
+
+
+
+
+SNP10 =  run(bndrylo_eps('LP1'), ISW=2, ICP=['eps','kappa_exp',11], DS=1e-5)
+SNP1 = cache_branch('SNP1_eps_kappa',SNP10, UZSTOP={'eps':0, 'kappa_base':[0,16]})
+
+PFP10 =  run(bndry_eps('BP1'), ISW=2, ICP=['eps','kappa_base',11], DS=1e-5)
+PFP1 = cache_branch('PFP1_eps_kappa',PFP10, UZSTOP={'eps':0, 'kappa_base':[0,16]})
+
+
+
+bndry_kappa = cache_branch('bndry_kappa', 'phase_nonlocal', dat='11_gamma=0_eps=0.2_kappa=2_bndry', NDIM=22, PAR={'eps':0.2,'kappa4':2**4}, ICP =  ['kappa4', 11,5, 13, 14, 16, 18,19, 20, 21, 22, 23, 24], NTST=500, NMX=2000, forward={'DS':1e-7}, backward={'DS':-1e-7})
+bndry2_kappa = cache_branch('bndry2_kappa', bndry_kappa('BP1'), ISW=-1,forward={'DS':1e-3}, backward={'DS':-1e-3})
+
+ftb_kappa = cache_branch('FTB_kappa', 'phase_nonlocal', dat='11_gamma=0_eps=0.2_kappa=1.5_ftb', NDIM=22, PAR={'eps':0.2,'kappa4':1.5**4}, ICP =  [5, 11, 5,13, 14, 16, 18,19, 20, 21, 22, 23, 24], NTST=500, NMX=8000, forward={'DS':1e-5}, backward={'DS':-1e-5})
+
+pl(ftb_kappa+bndry_kappa+bndry2_kappa,use_labels=False)
+
+
+
+wtv = cache_branch('wtv_mu', 'phase_nonlocal', NDIM=22, PAR={'eps':0.2,'kappa_base':1.5,'mu':-1}, ICP =  [1], NTST=1500, NMX=8000, forward={'DS':1e-5}, backward=False, IPS=1)
+wtv2=run(wtv('HB1'),ICP=['mu',11], IPS=2, DS=-1E-2)
+
+
+
+ftb_kappa = cache_branch('FTB_kappa', 'phase_nonlocal', dat='11_gamma=0_eps=0.4_kappa=1.5_ftb', NDIM=22, PAR={'eps':0.4,'kappa_base':1.5**(1/4),'kappa_exp':4}, ICP =  ['kappa_exp', 11, 'kappa',13, 14, 16, 18,19, 20, 21, 22, 23, 24], NTST=500, NMX=8000, forward={'DS':1e-5}, backward={'DS':-1e-5})
+
+
+ftb_kappa = cache_branch('FTB_kappa', 'phase_nonlocal', dat='11_gamma=0_eps=0.1_kappa=1.5_ftb', NDIM=22, PAR={'eps':0.1,'kappa_base':1.5**(1/4),'kappa_exp':4}, ICP =  ['kappa_exp', 11, 'kappa',13, 14, 16, 18,19, 20, 21, 22, 23, 24], NTST=500, NMX=8000, forward={'DS':1e-5}, backward={'DS':-1e-5})
+
+
+ftb_eps = cache_branch('FTB_eps', 'phase_nonlocal', dat='11_gamma=0_eps=0.1_kappa=1.5_ftb', NDIM=22, PAR={'eps':0.1,'kappa_base':1.5**(1/4),'kappa_exp':4}, ICP =  ['eps', 11, 'kappa',13, 14, 16, 18,19, 20, 21, 22, 23, 24], NTST=500, NMX=8000,UZR={'eps':[0.05, 0.4]}, forward=False, backward={'DS':-1e-5, 'SP':'BP1'})
+
+ftb_kappa = cache_branch('FTB_kappa', ftb_eps('UZ1'), PAR={'kappa_base':1.5**(1/4),'kappa_exp':4}, ICP =  ['kappa_exp', 11, 'kappa',13, 14, 16, 18,19, 20, 21, 22, 23, 24], NTST=500, NMX=8000, forward={'DS':1e-5}, backward=False)
+
+ftb2_kappa = cache_branch('FTB2_kappa', 'phase_nonlocal', dat='11_gamma=0_eps=0.1_kappa=3_ftb', NDIM=22, PAR={'eps':0.1,'kappa_base':3**(2),'kappa_exp':1/2}, ICP =  ['kappa_base', 11, 'kappa',13, 14, 16, 18,19, 20, 21, 22, 23, 24], SP='BP0', NTST=750, NMX=8000, forward={'DS':1e-5}, backward={'DS':-1e-5, 'ILP':1 }, ILP=0)
+
+
+
+bndry2_kappa = cache_branch('BNDRY2_kappa', 'phase_nonlocal', dat='11_gamma=0_eps=0.1_kappa=3_bndry', NDIM=22, PAR={'eps':0.1,'kappa_base':3**(2),'kappa_exp':1/2}, ICP =  ['kappa_base', 11, 'kappa',13, 14, 16, 18,19, 20, 21, 22, 23, 24], SP='BP0', NTST=750, NMX=8000, forward={'DS':1e-5}, backward={'DS':-1e-5, 'ILP':1}, ILP=0)
+
+
+bndry3_kappa = cache_branch('BNDRY3_kappa', 'phase_nonlocal', dat='11_gamma=0_eps=0.1_kappa=1.75_bndry', NDIM=22, PAR={'eps':0.1,'kappa_base':1.75**(2),'kappa_exp':1/2}, ICP =  ['kappa_base', 11, 'kappa',13, 14, 16, 18,19, 20, 21, 22, 23, 24], SP='BP0', NTST=750, NMX=8000, forward={'DS':1e-5}, backward={'DS':-1e-5, 'ILP':1}, ILP=0)
+
+
+
+
+
+bndry2_kappa = cache_branch('BNDRY2_kappa', 'phase_nonlocal', dat='13_gamma=0_eps=0.1_kappa=2.5_bndry', NDIM=26, PAR={'eps':0.1,'kappa_base':2.5**(2),'kappa_exp':1/2}, ICP =  ['kappa_base', 11, 'kappa',13, 14, 16, 18,19, 20, 21, 22, 23, 24],  NTST=1500, NMX=8000, forward={'DS':1e-5}, backward={'DS':-1e-5})

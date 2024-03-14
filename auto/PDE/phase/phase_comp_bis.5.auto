@@ -1,0 +1,180 @@
+
+################################
+################################
+##########             N=5
+################################
+################################
+
+
+############# small omega=0.1
+#################################
+
+
+
+############# kappa=2 #####################
+
+    
+
+## PLOT 1
+## 1 par wrt epsilon/f
+#### kappa = 2
+split_eps = cache_branch('split_5_eps', 'phase_comp', dat='5/proper_kappa=2_f=0.1_gamma=0_omega=0.1', NTST=500, UZR={'f':[0.2]}, PAR={'kappa2':4,'f':0.1, 'omega':0.1}, forward = {'UZSTOP':{11:1e3}})
+flat_eps = cache_branch('flat_01_eps', 'phase_comp', dat='5/pos_kappa=2_f=0.1_gamma=0_omega=0.1', NTST=500, PAR={'kappa2':4,'f':0.1, 'omega':0.1}, UZR={'f':[0.2]}, UZSTOP={11:1e3})
+
+
+
+rp_bi_01_eps_for = run('phase_comp', dat='five_kappa=2_f=0.8_gamma=0_omega=0.1', PAR={'kappa2':4,'f':0.8, 'omega':0.1}, DS=0.05)
+sv('rp_bi_01_eps_for') #rp_bi_01_eps_for=loadbd('rp_bi_01_eps_for')
+
+rp_bi_01_eps_back = run(rp_bi_01_eps_for('EP1'), DS='-')
+sv('rp_bi_01_eps_back') #rp_bi_01_eps_back=loadbd('rp_bi_01_eps_back')
+
+Uss_01 = {1 : -1.734459793E-02, 2 : -1.734459793E-02, 3 : -1.734459793E-02, 4 : -1.734459793E-02, 5 : -1.734459793E-02, 6 : -9.998495711E-01, 7 : -9.998495711E-01, 8 : -9.998495711E-01, 9 : -9.998495711E-01, 10 : -9.998495711E-01, 11 : 9.725953818E-01, 12 : 9.732032539E-01, 13 : 9.744193780E-01, 14 : 9.762445143E-01, 15 : 9.786798034E-01, 16 : 9.817267673E-01, 17 : 9.853873105E-01, 18 : 9.896637208E-01, 19 : 9.945586708E-01, 20 : 1.000075220E+00, 21 : 1.000075220E+00, 22 : 9.945586708E-01, 23 : 9.896637208E-01, 24 : 9.853873105E-01, 25 : 9.817267673E-01, 26 : 9.786798034E-01, 27 : 9.762445143E-01, 28 : 9.744193780E-01, 29 : 9.732032539E-01, 30 : 9.725953818E-01, 31 : 9.725953818E-01, 32 : 9.732032539E-01, 33 : 9.744193780E-01, 34 : 9.762445143E-01, 35 : 9.786798034E-01, 36 : 9.817267673E-01, 37 : 9.853873105E-01, 38 : 9.896637208E-01, 39 : 9.945586708E-01, 40 : 1.000075220E+00, 41 : 1.000075220E+00, 42 : 9.945586708E-01, 43 : 9.896637208E-01, 44 : 9.853873105E-01, 45 : 9.817267673E-01, 46 : 9.786798034E-01, 47 : 9.762445143E-01, 48 : 9.744193780E-01, 49 : 9.732032539E-01, 50 : 9.725953818E-01, 51 : 9.725953818E-01, 52 : 9.732032539E-01, 53 : 9.744193780E-01, 54 : 9.762445143E-01, 55 : 9.786798034E-01, 56 : 9.817267673E-01, 57 : 9.853873105E-01, 58 : 9.896637208E-01, 59 : 9.945586708E-01, 60 : 1.000075220E+00, 61 : 1.000075220E+00, 62 : 9.945586708E-01, 63 : 9.896637208E-01, 64 : 9.853873105E-01, 65 : 9.817267673E-01, 66 : 9.786798034E-01, 67 : 9.762445143E-01, 68 : 9.744193780E-01, 69 : 9.732032539E-01, 70 : 9.725953818E-01, 71 : 9.725953818E-01, 72 : 9.732032539E-01, 73 : 9.744193780E-01, 74 : 9.762445143E-01, 75 : 9.786798034E-01, 76 : 9.817267673E-01, 77 : 9.853873105E-01, 78 : 9.896637208E-01, 79 : 9.945586708E-01, 80 : 1.000075220E+00, 81 : 1.000075220E+00, 82 : 9.945586708E-01, 83 : 9.896637208E-01, 84 : 9.853873105E-01, 85 : 9.817267673E-01, 86 : 9.786798034E-01, 87 : 9.762445143E-01, 88 : 9.744193780E-01, 89 : 9.732032539E-01, 90 : 9.725953818E-01, 91 : 9.725953818E-01, 92 : 9.732032539E-01, 93 : 9.744193780E-01, 94 : 9.762445143E-01, 95 : 9.786798034E-01, 96 : 9.817267673E-01, 97 : 9.853873105E-01, 98 : 9.896637208E-01, 99 : 9.945586708E-01, 100 : 1.000075220E+00, 101 : 1.000075220E+00, 102 : 9.945586708E-01, 103 : 9.896637208E-01, 104 : 9.853873105E-01, 105 : 9.817267673E-01, 106 : 9.786798034E-01, 107 : 9.762445143E-01, 108 : 9.744193780E-01, 109 : 9.732032539E-01, 110 : 9.725953818E-01, }
+r_01_eps_for = run('phase_comp', PAR={'mu':1, 'kappa2':4, 'f':1}, LAB=200, SP=['LP6'], ICP=[2,19], IBR=1, NPR=1000, NMX=5000, DS=-0.001, U=Uss_01, IPS=1, UZSTOP={2:[1.25]}, MXBF=25)
+sv('r_01_eps_for') #r_01_eps_for=loadbd('r_01_eps_for')
+r_01_eps_back = run('phase_comp', PAR={'mu':1, 'kappa2':4, 'f':1}, LAB=200, SP=['LP6'], ICP=[2,19], IBR=1, NPR=1000, NMX=5000, DS=0.001, U=Uss_01, IPS=1, UZSTOP={2:[1.25]}, MXBF=25)
+sv('r_01_eps_back') #r_01_eps_back=loadbd('r_01_eps_back')
+
+#LOAD FROM STORAGE
+anti = load_branch('vshaped_01_eps')
+
+flat_eps = load_branch('flat_01_eps')
+split_eps = load_branch('vshaped_01_eps')
+
+
+rp_bi_01_eps_for=loadbd('rp_bi_01_eps_for')
+rp_bi_01_eps_back=loadbd('rp_bi_01_eps_back')
+bi = rp_bi_01_eps_for + rp_bi_01_eps_back
+
+r_01_eps_for=loadbd('r_01_eps_for')
+r_01_eps_back=loadbd('r_01_eps_back')
+ss = r_01_eps_for + r_01_eps_back
+
+
+pl(split_eps+flat_eps+bi+ss, stability=True, use_labels=False, bifurcation_y=['chi_bar','PAR(19)'])
+
+#### kappa = 0.5
+
+
+split_upper_kappa0 = run( anti('LP1'), ISW=2, ICP =['f','kappa2', 11, 14, 13, 15, 16, 17, 18], UZSTOP={'kappa2':0.5*0.5}, NPR=1)
+sv('split_LP1_2par0')
+split_upper_kappa = run(split_upper_kappa0, NPR=40, DS='-')
+sv('split_LP1_2par')
+
+split_lo_eps = cache_branch('split_kappa=0.5_eps', 'phase_comp', dat='5/proper_kappa=0.5_f=0.1_gamma=0_omega=0.1', NTST=500, UZR={'f':[0.2]}, PAR={'kappa2':0.5*0.5,'f':0.1, 'omega':0.1}, UZSTOP={11:1e3})
+ 
+
+pfp_2par_k2 =  loadbd('pfp_eps_k2')
+split2_lo_eps = cache_branch('split2_kappa=0.5_eps', pfp_2par_k2('UZ2'), ICP =['f', 11, 14, 13, 15, 16, 17, 18], ISW=1, PAR={6:2*pi}, SP=[], UZSTOP={'f':1e-4, 11:1e3}, UZR={'f':[0.2, 0.5]}, NPAR=20)
+split2_lo_omega = cache_branch('split2_kappa=0.5_omega',split2_lo_eps('UZ3'), ICP =[6, 11, 14, 13, 15, 16, 17, 18], UZSTOP={6:[0,6*pi]}, NMX=5800)
+split_lo_omega = cache_branch('split_kappa=0.5_omega',split_eps('UZ1'), SP=['LP3'],ICP =['omega', 11, 14, 13, 15, 16, 17, 18], UZR={'omega':2*pi}, UZSTOP={'omega':6*pi}, backward=False)
+
+split2_lo2_omega = cache_branch('split2_kappa=0.5_epsilon=0.5_omega',split2_lo_eps('UZ2'), ICP =[6, 11, 14, 13, 15, 16, 17, 18], UZSTOP={6:[0,6*pi]}, NMX=5800)
+
+
+
+sym_lo_omega = cache_branch('sym_kappa=0.5_omega', 'phase_comp', dat='5/sym_kappa=0.5_f=0.2_gamma=0_omega=6.2832', DSMAX=0.01,ICP =['omega', 11, 14, 13, 15, 16, 17, 18], PAR={'kappa2':0.5*0.5,'f':0.2, 'omega':2*pi}, UZR={'omega':2*pi}, UZSTOP={'omega':[0,6*pi]})
+
+split_lo_eps = load_branch('split_kappa=0.5_eps')
+split2_lo_eps = load_branch('split2_kappa=0.5_eps')
+
+split_lo_omega = load_branch('split_kappa=0.5_omega')
+split2_lo_omega = load_branch('split2_kappa=0.5_omega')
+sym_lo_omega = load_branch('sym_kappa=0.5_omega')
+
+pl( split_lo_omega+split2_lo_omega+sym_lo_omega, bifurcation_y='chi_hat', use_labels=False, stability=True)
+
+## PLOT 2 - PHASE ASYMM VS EPSILON
+pl(anti, stability=True, use_labels=False, bifurcation_y=['chi_hat'])
+
+
+
+## PLOT 3 - PHASE ASYMM VS KAPPA # limiting kappa range for now...
+rp_anti_01_kappa_for = run('phase_comp', dat='five_kappa=2_f=0.2_gamma=0_omega=0.1', PAR={'kappa2':4,'f':0.2, 'omega':0.1}, ICP =['kappa2', 11, 14, 13, 15, 16, 17, 18], UZSTOP={'kappa2':[0.5*0.5, 9]})
+sv('rp_anti_01_kappa_for') #rp_anti_01_kappa_for=loadbd('rp_anti_01_kappa_for')
+
+rp_anti_01_kappa_back = run(rp_anti_01_kappa_for('EP1'), DS='-') 
+sv('rp_anti_01_kappa_back') #rp_anti_01_kappa_back=loadbd('rp_anti_01_kappa_back')
+
+#LOAD FROM STORAGE
+rp_anti_01_kappa_for=loadbd('rp_anti_01_kappa_for')
+rp_anti_01_kappa_back=loadbd('rp_anti_01_kappa_back')
+anti = rp_anti_01_kappa_for + rp_anti_01_kappa_back
+
+pl(anti, stability=True, use_labels=False, bifurcation_y=['chi_hat'], bifurcation_x='kappa')
+
+######## VARIABLE OMEGA ###############
+## PLOT 4
+## 1 par wrt omega
+
+
+split_omega = cache_branch('split_omega',split_eps('UZ1'),ICP =['omega', 11, 14, 13, 15, 16, 17, 18], UZR={'omega':2*pi}, forward={'UZSTOP':{'omega':6*pi}})
+
+split_omega = load_branch('split_omega')
+
+split_gamma =  cache_branch('split_gamma',split_omega('UZ1'),ICP =['grad', 11, 14, 13, 15, 16, 17, 18], UZR={'omega':2*pi}, SP=['LP12'], forward={'UZSTOP':{'omega':6*pi, 11:1e3}})
+split_gamma2 =  cache_branch('split_gamma2',split_omega('UZ2'),ICP =['grad', 11, 14, 13, 15, 16, 17, 18], UZR={'omega':2*pi}, SP=['LP3'], forward={'UZSTOP':{'omega':6*pi, 11:1e3}}, backward=False)
+split_gamma3 =  cache_branch('split_gamma3',split_omega('UZ3'),ICP =['grad', 11, 14, 13, 15, 16, 17, 18], UZR={'omega':2*pi}, SP=['LP3'], forward={'UZSTOP':{'omega':6*pi, 11:1e3}}, backward=False)
+
+flat_omega = cache_branch('flat_omega',flat_eps('UZ1'),ICP =['omega', 11, 14, 13, 15, 16, 17, 18], UZSTOP={}, backward=False, SP=['LP7'], PAR={'kappa2':4,'omega':0.1})
+
+split_omega = load_branch('split_omega')
+split_gamma =  load_branch('split_gamma')
+split_gamma2 =  load_branch('split_gamma2')
+
+rp_anti_omega = cache_branch('anti_omega','phase_comp', dat='five_kappa=2_f=0.2_gamma=0_omega=0.1'
+
+rp_anti_omega_for = run('phase_comp', dat='five_kappa=2_f=0.2_gamma=0_omega=0.1', PAR={'kappa2':4,'f':0.2, 'omega':0.1}, ICP =['omega', 11, 14, 13, 15, 16, 17, 18], UZSTOP={'omega':[0, 6*pi]})
+sv('rp_anti_omega_for') #rp_anti_omega_for=loadbd('rp_anti_omega_for')
+
+rp_anti_omega_back = run(rp_anti_omega_for('EP1'), DS='-') 
+sv('rp_anti_omega_back') #rp_anti_omega_back=loadbd('rp_anti_omega_back')
+
+rp_anti2_omega_for = run(rp_anti2_01_eps_for('UZ1') , ICP =['omega', 11, 14, 13, 15, 16, 17, 18], UZSTOP={'omega':[0, 6*pi]})
+sv('rp_anti2_omega_for') #rp_anti2_omega_for=loadbd('rp_anti2_omega_for')
+
+rp_anti2_omega_back = run(rp_anti_omega_for('EP1'), DS='-') 
+sv('rp_anti2_omega_back') #rp_anti2_omega_back=loadbd('rp_anti2_omega_back')
+
+rp_anti2_omega_for_ext = run(rp_anti2_01_eps_for('UZ1') , ICP =['omega', 11, 14, 13, 15, 16, 17, 18], UZSTOP={'omega':6*pi})
+sv('rp_anti2_omega_for_ext') #rp_anti2_omega_for_ext=loadbd('rp_anti2_omega_for_ext')
+
+rp_sym_omega_for = run('phase_comp', dat='five_kappa=2_f=0.2_gamma=0_omega=6.2832', PAR={'kappa2':4,'f':0.2, 'omega':2*pi}, ICP =['omega', 11, 14, 13, 15, 16, 17, 18], UZSTOP={'omega':[0, 6*pi]})
+sv('rp_sym_omega_for') #rp_sym_omega_for=loadbd('rp_sym_omega_for')
+
+rp_sym_omega_back = run(rp_sym_omega_for('EP1'), DS='-') 
+sv('rp_sym_omega_back') #rp_sym_omega_back=loadbd('rp_sym_omega_back')
+
+rp_anti_omega_for=loadbd('rp_anti_omega_for')
+rp_anti_omega_back=loadbd('rp_anti_omega_back')
+anti = rp_anti_omega_for+rp_anti_omega_back
+
+rp_anti2_omega_for=loadbd('rp_anti2_omega_for')
+rp_anti2_omega_back=loadbd('rp_anti2_omega_back')
+anti2 = rp_anti2_omega_for+rp_anti2_omega_back
+
+rp_sym_omega_for=loadbd('rp_sym_omega_for')
+rp_sym_omega_back=loadbd('rp_sym_omega_back')
+sym = rp_sym_omega_for + rp_sym_omega_back
+
+
+
+pl(anti+anti2+sym,  bifurcation_y=['chi_hat'], bifurcation_x='omega', stability=True, use_labels=False)
+
+## PLOT 5
+## 2 parameter in the (epsilon,omega)-plane
+twopar={'UZSTOP':{'f':0,'omega':[0,9*pi]}, 'ISW':2, 'ICP':['omega', 'f', 11]}
+
+pfp_omega_eps0 = run(rp_anti_omega_for('LP2'), **twopar, NPR=1 )
+sv('pfp_omega_eps0')
+pfp_omega_eps_for = run(pfp_omega_eps0, NPR=40)
+sv('pfp_omega_eps_for')
+pfp_omega_eps_back = run(pfp_omega_eps0, NPR=40, DS='-')
+sv('pfp_omega_eps_back')
+
+
+
+## PLOT 6
+### 1 parameter in gamma
+
+split_lo_gamma = cache_branch('split_gamma_omega=0.1',split_eps('UZ1'),ICP =['grad', 11, 14, 13, 15, 16, 17, 18], SP=['LP3'], forward={'UZSTOP':{'omega':6*pi, 11:1e3}}, NTST=50)

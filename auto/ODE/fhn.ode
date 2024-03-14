@@ -1,0 +1,6 @@
+u'=u*(1.0-u)*(u-a)-v + f0
+v'=e*(k*u-v-b)
+
+init u=0, v=0
+par e=0.01, a=0.169, k=0.6, b=0.18, f0=0.0
+@ XP1=u, YP1=v, TOTAL=2000, XHI=1

@@ -1,0 +1,748 @@
+####### N=3 #########
+
+
+### rp_anti_eps_for_lo=run('phase',dat='3_anti_lo', NDIM=6, PAR={'eps':0.5}, SP=['LP6'],  ICP=[2, 11, 13, 14, 16]) ## cannot catch the period doubling no matter how much I try, but AUTO struggles with degenerate stuff so maybe thats why.
+
+rp_anti_eps_for=run('phase',dat='three_phase_anti', NDIM=6, PAR={'eps':1}, SP=['LP6'],  ICP=[2, 11, 13, 14, 16])
+rp_anti_eps_back=run('phase',dat='three_phase_anti', NDIM=6, PAR={'eps':1}, SP=['BP1'], DS='-',  ICP=[2, 11, 13, 14, 16], UZSTOP={11:[6.283185307179586]})
+
+
+rp_spatial_eps_for=run('phase',dat='three_phase_spatial', NDIM=6, PAR={'eps':6}, SP=['LP6'],  ICP=[2, 11, 15], NTST=1500)
+rp_spatial_eps_back=run('phase',dat='three_phase_spatial', NDIM=6, PAR={'eps':6} ,SP=['BP12','LP0'],  DS='-',  ICP=[2, 11, 15], DSMAX=0.001)
+
+rp_spatial2_eps_back=run(rp_spatial_eps_back('BP1'), ISW=-1,  DS=-0.000001,  ICP=[2, 11, 15], DSMAX=0.01, NTST=1500)
+rp_spatial2_eps_for=run(rp_spatial_eps_back('BP1'), ISW=-1,  DS=0.000001,  ICP=[2, 11, 15], DSMAX=0.01, NTST=1500)
+
+
+Uss  = {1 : -2.480006466E-01, 2 : -8.306886792E-01, 3 : -2.480006466E-01, 4 : -9.687598667E-01, 5 : 5.567372075E-01, 6 : -9.687598667E-01, }
+Uss2 = {1 : -8.306886792E-01, 2 : -2.480006466E-01, 3 : -8.306886792E-01, 4 : 5.567372075E-01, 5 : -9.687598667E-01, 6 : 5.567372075E-01, }
+
+r_ss_for = run('phase', NDIM=6,  U=Uss, IPS=1,  PAR={'eps':12}, SP=['LP6'],  ICP=[2, 15, 17])
+r_ss_back = run('phase', NDIM=6,  U=Uss, IPS=1,  PAR={'eps':12}, SP=['LP6'],  ICP=[2, 15, 17], DS='-')
+
+r_ss2_for = run('phase', NDIM=6,  U=Uss2, IPS=1,  PAR={'eps':12}, SP=['LP6'],   ICP=[2, 15])
+r_ss2_back = run('phase', NDIM=6, U=Uss2, IPS=1,  PAR={'eps':12}, SP=['LP6'], ICP=[2, 15, 17], DS='-')
+
+Uss3={1 : 3.875541271E-01, 2 : 3.875541271E-01, 3 : 3.875541271E-01, 4 : -9.218469496E-01, 5 : -9.218469496E-01, 6 : -9.218469496E-01, }
+r_ss3_for = run('phase', NDIM=6,  U=Uss3, IPS=1,  PAR={'eps':1.5}, SP=['LP6'],  ICP=[2, 15, 17,11], UZSTOP = {'eps':[-20, 20]})
+r_ss3_back = run('phase', NDIM=6,  U=Uss3, IPS=1,  PAR={'eps':1.5}, SP=['LP6'],  ICP=[2, 15, 17,11], DS='-', UZSTOP = {'eps':[-20, 20]})
+
+
+
+rp_anti_eps = rp_anti_eps_for + rp_anti_eps_back
+rp_spatial_eps = rp_spatial_eps_for + rp_spatial_eps_back
+rp_spatial2_eps = rp_spatial2_eps_for + rp_spatial2_eps_back
+
+r_ss = r_ss_for+r_ss_back
+r_ss2 = r_ss2_for+r_ss2_back
+
+pl(rp_anti_eps+rp_spatial_eps+rp_spatial2_eps+r_ss+r_ss2, stability=True, use_labels=False, bifurcation_y=['chi_hat', 'PAR(15)'])
+
+
+rp_anti_gamma={}
+for i in [5,7,9,11,15,17, 19, 21]:
+    rp_anti_gamma[i] = run('phase',dat=f'{i}_anti', NDIM=2*i, PAR={'eps':1}, SP=['LP1'],  ICP=[3, 11, 13, 14, 16])
+    rp_anti_gamma[-i] = run('phase',dat=f'{i}_anti', NDIM=2*i, PAR={'eps':1}, SP=['LP1'],  ICP=[3, 11, 13, 14, 16], DS='-')
+
+
+for i in [19, 21]:
+    rp_anti_gamma[i] = run('phase',dat=f'{i}_anti', NDIM=2*i, PAR={'eps':1}, SP=['LP1'],  ICP=[3, 11, 13, 14, 16])
+    rp_anti_gamma[-i] = run('phase',dat=f'{i}_anti', NDIM=2*i, PAR={'eps':1}, SP=['LP1'],  ICP=[3, 11, 13, 14, 16], DS='-')
+
+
+
+####### N=5 #########
+
+
+
+
+rp_anti_eps_for=run('phase',dat='five_phase_anti', NDIM=10, PAR={'eps':1},SP=['LP6'],  ICP=[2, 11, 13, 14, 16], DS=0.001, NTST=1500)
+rp_anti2_eps_for = run(rp_anti_eps_for('BP1'), ISW=-1, DS=0.0001)
+rp_anti2_eps_back = run(rp_anti_eps_for('BP1'), ISW=-1, DS=-0.0001)
+rp_anti_eps_back=run('phase',dat='five_phase_anti', NDIM=10, PAR={'eps':1},SP=['LP6','BP1'],  ICP=[2, 11, 13, 14, 16], DS=-0.001)
+
+pl(rp_anti_eps_for+rp_anti2_eps_for+rp_anti2_eps_back, stability=True, use_labels=False)
+
+rp_spatial_eps_for=run('phase',dat='five_phase_spatial', NDIM=10, PAR={'eps':7}, SP=['LP6'],  ICP=[2, 11, 15], UZSTOP={1:[2e2]})
+rp_spatial_eps_back=run('phase',dat='five_phase_spatial', NDIM=10, PAR={'eps':7},SP=['BP6'], DS='-', UZR={'eps':[4.0]}, UZSTOP={'eps':[0,100]},  ICP=[2, 11, 15])
+
+
+rp_spatial2_eps_back=run(rp_spatial_eps_back('BP1'), ISW=-1,  DS=-0.000001,  ICP=[2, 11, 15], DSMAX=0.01, NTST=1500)
+rp_spatial2_eps_for=run(rp_spatial_eps_back('BP1'), ISW=-1,  DS=0.000001,  ICP=[2, 11, 15], DSMAX=0.01, NTST=1500)
+
+
+
+Uss  = {1 : -2.480006466E-01, 2 : -8.306886792E-01, 3 : -2.480006466E-01, 4 : -8.306886792E-01, 5 : -2.480006466E-01, 6 : -9.687598667E-01, 7 : 5.567372075E-01, 8 : -9.687598667E-01, 9 : 5.567372075E-01, 10 : -9.687598667E-01, }
+Uss2 = {1 : -8.306886792E-01, 2 : -2.480006466E-01, 3 : -8.306886792E-01, 4 : -2.480006466E-01, 5 : -8.306886792E-01, 6 : 5.567372075E-01, 7 : -9.687598667E-01, 8 : 5.567372075E-01, 9 : -9.687598667E-01, 10 : 5.567372075E-01, }
+Uss3 = {1 : -7.566011488E-01, 2 : -3.695213363E-02, 3 : -9.099516518E-01, 4 : -8.240029150E-01, 5 : 4.481252891E-01, 6 : 6.538766716E-01, 7 : -9.993170367E-01, 8 : 4.147143491E-01, 9 : 5.665855594E-01, 10 : -8.939707631E-01, }
+
+r_ss_for = run('phase', U=Uss, IPS=1,  PAR={'eps':12}, SP=['LP6'], UZSTOP={2:[0,20]},  ICP=[2, 15])
+r_ss_back = run('phase', U=Uss, IPS=1,  PAR={'eps':12}, SP=['LP6'], UZSTOP={2:[0,20]},  ICP=[2, 15], DS='-')
+
+r_ss2_for = run('phase', U=Uss2, IPS=1,  PAR={'eps':12}, SP=['LP6'], UZSTOP={2:[0,20]},  ICP=[2, 15])
+r_ss2_back = run('phase', U=Uss2, IPS=1,  PAR={'eps':12}, SP=['LP6'], UZSTOP={2:[0,20]},  ICP=[2, 15], DS='-')
+
+
+
+#r_ss3_for = run('phase', U=Uss3, IPS=1,  PAR={'eps':12}, SP=['LP6'], UZSTOP={2:[0,20]})
+#r_ss3_back = run('phase', U=Uss3, IPS=1,  PAR={'eps':12}, SP=['LP6'], UZSTOP={2:[0,20]}, DS='-')
+
+
+r_ss = r_ss_for+r_ss_back
+r_ss2 = r_ss2_for+r_ss2_back
+
+rp_anti2_eps = rp_anti2_eps_for+rp_anti2_eps_back
+rp_anti_eps = rp_anti_eps_for+rp_anti_eps_back
+rp_spatial_eps = rp_spatial_eps_for+rp_spatial_eps_back
+rp_spatial2_eps = rp_spatial2_eps_for + rp_spatial2_eps_back
+
+pl(rp_anti_eps+rp_anti2_eps+rp_spatial_eps+rp_spatial2_eps+r_ss + r_ss2, stability=True, use_labels=False, use_symbols=False, bifurcation_y=['chi_hat', 'PAR(15)'])
+
+
+rp_anti_gamma_for=run('phase',dat='five_phase_anti', NDIM=10, PAR={'eps':1}, ICP=['gamma', 11, 13, 14, 15, 16], NTST=1500, UZSTOP={'gamma':0}, NPR=100)
+rp_anti_gamma2_for=run(rp_anti_gamma_for('BP1'), ISW=-1, DS=0.0001)
+rp_anti_gamma2_back=run(rp_anti_gamma_for('BP1'), ISW=-1, DS=-0.0001)
+
+rp_spatial_gamma_for=run('phase',dat='five_phase_spatial', NDIM=10, PAR={'eps':7}, ICP=['gamma', 11, 13, 14, 15, 16], NTST=1500, UZSTOP={'gamma':0,11:1e2}, NPR=100)
+
+PFP1_gamma_eps0 = run(rp_spatial_gamma_for('BP1'), ISW=2, ICP=['gamma','eps',11], UZSTOP={'gamma':0})
+PFP1_gamma_eps_for = run(PFP1_gamma_eps0, SP=['BP0'])
+PFP1_gamma_eps_back = run(PFP1_gamma_eps0, DS='-')
+
+
+rp_spatialhi_gamma_for=run(rp_spatial_eps_for('UZ1'), ICP=['gamma', 11, 13, 14, 15, 16], NTST=1500, UZSTOP={'gamma':0,11:1e2}, NPR=100)
+
+PD2_gamma_eps0 = run(rp_spatialhi_gamma_for('PD1'), ISW=2, ICP=['gamma','eps',11], UZSTOP={'gamma':0}, SP=['LP0'])
+PD2_gamma_eps_for = run(PD2_gamma_eps0, SP=[], UZSTOP={'gamma':0,'eps':12})
+PD2_gamma_eps_back= run(PD2_gamma_eps0, DS='-', UZSTOP={'gamma':0,'eps':12})
+
+pl(rp_anti_gamma_for+rp_anti_gamma2_for+rp_anti_gamma2_back, stability=True, bifurcation_y='chi_hat')
+
+PFP3_gamma_eps0 = run(rp_anti_gamma_for('BP1'), ISW=2, ICP=['gamma','eps',11], UZSTOP={'gamma':0}, DS='-')
+PFP3_gamma_eps_back = run(PFP3_gamma_eps0, SP=['LP1'])
+PFP3_gamma_eps_for= run(PFP3_gamma_eps0, SP=['LP2'], DS='-')
+
+rp_anti_gamma_hip=run(rp_anti_eps_for('UZ3'), ICP=['gamma', 11, 13, 14, 15, 16], NTST=1500, UZSTOP={'gamma':0}, NPR=100)
+rp_anti_gamma_hip2=run(rp_anti_gamma_hip('BP1'), ICP=['gamma', 11, 14,16, 18, 19, 20], ISW=-1, SP=['LP4','BP3'], DS=0.0001)
+rp_anti_gamma_hip3=run(rp_anti_gamma_hip('BP3'), ICP=['gamma', 11, 14,16, 18, 19, 20], ISW=-1, SP=['LP12','BP3'], DS=0.0001, NPAR=20)
+rp_anti_gamma_hip4=run(rp_anti_gamma_hip('BP3'), ICP=['gamma', 11, 14,16, 18, 19, 20], ISW=-1, SP=['LP12','BP3'], DS=-0.0001, NPAR=20)
+
+
+anti_gamma_hip = rp_anti_gamma_hip+rp_anti_gamma_hip2+rp_anti_gamma_hip3+rp_anti_gamma_hip4
+
+pl(anti_gamma_hip , stability=True, bifurcation_y='chi_hat')
+
+PD3_gamma_eps0 = run(rp_anti_gamma_hip3('PD1'), ISW=2, ICP=['gamma','eps',11], UZSTOP={'gamma':0})
+PD3_gamma_eps_for = run(PD3_gamma_eps0, SP=['BP1'], UZSTOP={'gamma':0,'eps':12})
+PD3_gamma_eps_back= run(PD3_gamma_eps0, SP=['LP2'], DS='-', UZSTOP={'gamma':0,'eps':12})
+
+rp_anti_skew = run(PD3_gamma_eps_back('UZ2'), ISW=1, ICP=['gamma',11,'chi_bar', 'chi_hat'], DS=-0.0001)
+
+
+
+LP_skew_gamma_eps0 = run(rp_anti_skew('LP1'), ISW=2, ICP=['gamma','eps',11], UZSTOP={'gamma':0})
+LP_skew_gamma_eps_for = run(LP_skew_gamma_eps0, SP=['LP6'], UZSTOP={'gamma':0,'eps':12})
+LP_skew_gamma_eps_back= run(LP_skew_gamma_eps0, SP=['LP1'], DS='-', UZSTOP={'gamma':0,'eps':12})
+
+rp_anti_skew_lo = run(PD3_gamma_eps_for('UZ2'), ISW=1, ICP=['gamma',11,'chi_bar', 'chi_hat'], DS=-0.0001)
+
+LP_skew_lo_gamma_eps0 = run(rp_anti_skew_lo('LP1'), ISW=2, ICP=['gamma','eps',11], UZSTOP={'gamma':0})
+LP_skew_lo_gamma_eps_for = run(LP_skew_lo_gamma_eps0, SP=['LP6'], UZSTOP={'gamma':0,'eps':12})
+LP_skew_lo_gamma_eps_back= run(LP_skew_lo_gamma_eps0, SP=['LP1'], DS='-', UZSTOP={'gamma':0,'eps':12})
+
+rp_anti_gamma_hi=run(rp_anti_eps_for('UZ4'), ICP=['gamma', 11, 13, 14, 15, 16], NTST=1500, UZSTOP={'gamma':0}, NPR=100)
+rp_anti_gamma_hi2=run(rp_anti_gamma_hi('BP1'), ICP=['gamma', 11, 14,16, 18, 19, 20], ISW=-1, SP=['LP4','BP3'], DS=0.0001)
+rp_anti_gamma_hi3=run(rp_anti_gamma_hi('BP3'), ISW=-1 , ICP=['gamma', 11, 14,16, 18, 19, 20], SP=['LP6','BP6'], DS=0.0001)
+
+
+PFP2_gamma_eps0 = run(rp_anti_eps_for('BP1'), ISW=2, ICP=['eps','gamma',11], UZSTOP={'gamma':0}, DS='-')
+PFP2_gamma_eps = run(PFP2_gamma_eps0)
+
+
+
+rp_anti_gamma_mid=run(rp_anti_eps_for('UZ1'), ICP=['gamma', 11, 13, 14, 15, 16], NTST=1500, UZSTOP={'gamma':0, 11:[1e2]}, NPR=100, SP=['LP12'])
+HM1_gamma_eps_back = run(rp_anti_gamma_mid('UZ1'), ICP=['gamma','eps', 13, 14, 15, 16 ], SP=['BP0'], DS=0.01)
+HM1_gamma_eps_for = run(rp_anti_gamma_mid('UZ1'), ICP=['gamma','eps', 13, 14, 15, 16 ], SP=['BP0'], DS=-0.01)
+
+
+PD1_gamma_eps0=run(rp_anti2_eps_for('PD1'), ICP=['gamma','eps', 11, 13, 14, 15, 16], UZSTOP={'gamma':0}, ISW=2)
+PD1_gamma_eps_for=run(PD1_gamma_eps0)
+
+
+rp_anti2_gamma_for = run(rp_anti2_eps_for('UZ1'), ICP=['gamma', 11, 13, 14, 15, 16], SP=['LP12'], NTST=1500)
+rp_anti2_gamma_back = run(rp_anti2_eps_for('UZ1'), ICP=['gamma', 11, 13, 14, 15, 16], SP=['LP12'], NTST=1500, DS='-')
+
+pl(rp_anti2_gamma_for+rp_anti2_gamma_back, stability=True, bifurcation_y='chi_bar')
+
+
+
+SNP_gamma_eps0 = run(rp_anti_gamma_for('LP1'), ISW=2, ICP=['gamma','eps',11], UZSTOP={'gamma':0}, DS='-')
+SNP_gamma_eps_back = run(SNP_gamma_eps0)
+SNP_gamma_eps_for = run(SNP_gamma_eps0, DS='-',SP=['LP8'])
+
+SNP2_gamma_eps0 = run(rp_anti_gamma_hi2('LP1'), ISW=2, ICP=['gamma','eps',11, 16], UZSTOP={'gamma':0}, DS='-')
+SNP2_gamma_eps_back = run(SNP2_gamma_eps0)
+SNP2_gamma_eps_for = run(SNP2_gamma_eps0, DS='-',SP=['LP8'])
+
+skew_for=run('phase',dat='5_skewed_pos', NDIM=10, PAR={'eps':1.65,'gamma':0.406}, UZSTOP={'gamma':0},SP=['LP6'],  ICP=['gamma', 11, 13, 14, 16, 18, 19, 20], DS=0.001, NTST=1500)
+skew_back=run('phase',dat='5_skewed_pos', NDIM=10, PAR={'eps':1.65,'gamma':0.406}, UZSTOP={'gamma':0},SP=['LP6'],  ICP=['gamma', 11, 13, 14, 16, 18, 19, 20], DS=0.001, NTST=1500)
+
+
+
+
+HM1 = HM1_gamma_eps_back + HM1_gamma_eps_for
+SNP = SNP_gamma_eps_back + SNP_gamma_eps_for
+PFP3 = PFP3_gamma_eps_back + PFP3_gamma_eps_for
+
+LP_skew = LP_skew_gamma_eps_for + LP_skew_gamma_eps_back
+PD2 = PD2_gamma_eps_for +PD2_gamma_eps_back
+PD3 = PD3_gamma_eps_for +PD3_gamma_eps_back
+
+pl(HM1+SNP, use_labels=False, bifurcation_y='eps')
+
+
+pl(SNP2_gamma_eps_back+SNP2_gamma_eps_for+ PFP2_gamma_eps, bifurcation_y='eps', bifurcation_x='gamma')
+
+pl(SNP2_gamma_eps_back+SNP2_gamma_eps_for+ PFP2_gamma_eps+HM1+SNP+PFP3+PD1_gamma_eps_for+LP_skew + PD2+PD3, bifurcation_y='eps', bifurcation_x='gamma', use_labels=False, use_symbols=False)
+
+
+################ N=7 #####################
+
+rp_anti_eps_HM=run('phase',dat='7_anti', NDIM=14, PAR={'eps':1},SP=['LP0'], UZSTOP={11:2E2},  ICP=[2, 11, 13, 14, 15, 16, 18, 19, 20], DS=0.001, NTST=2500)
+rp_anti_eps_for=run('phase',dat='7_anti', NDIM=14, PAR={'eps':1},SP=['LP6'],  ICP=[2, 11, 13, 14, 16, 18, 19, 20], DS=0.001, NTST=1500)
+rp_anti2_eps_for = run(rp_anti_eps_for('BP1'), ISW=-1, DS=0.0001)
+rp_anti2_eps_back = run(rp_anti_eps_for('BP1'), ISW=-1, DS=-0.0001)
+rp_anti3_eps_for = run(rp_anti_eps_for('BP2'), ISW=-1, DS=0.0001)
+rp_anti3_eps_back = run(rp_anti_eps_for('BP2'), ISW=-1, DS=-0.0001)
+rp_anti_eps_back=run('phase',dat='five_phase_anti', NDIM=10, PAR={'eps':1},SP=['LP6','BP1'],  ICP=[2, 11, 13, 14, 15, 16], DS=-0.001)
+
+pl(rp_anti_eps_for+rp_anti2_eps_for+rp_anti2_eps_back, stability=True, use_labels=False)
+
+pl(rp_anti_eps_for+rp_anti2_eps_for+rp_anti2_eps_back+rp_anti3_eps_for+rp_anti3_eps_back, stability=True, use_labels=False)
+
+rp_spatial_eps_HM=run('phase',dat='7_spatial', NDIM=14, PAR={'eps':7}, SP=['LP0'],  ICP=[2, 11, 15], UZSTOP={1:[1.5e2]}, THL={11:1E-2}, NTST=2500, NMX=1700)
+
+
+rp_spatial_eps_for=run('phase',dat='7_spatial', NDIM=14, PAR={'eps':7}, SP=['LP6'],  ICP=[2, 11, 15], UZSTOP={1:[2e2]})
+rp_spatial_eps_back=run('phase',dat='7_spatial', NDIM=14, PAR={'eps':7},SP=['BP12'], DS='-', UZR={'eps':[4.0]}, UZSTOP={'eps':[0,100]},  ICP=[2, 11, 15])
+
+
+rp_spatial2_eps_back=run(rp_spatial_eps_back('BP1'), ISW=-1,  DS=-0.000001,  ICP=[2, 11, 15], DSMAX=0.01, NTST=1500)
+rp_spatial2_eps_for=run(rp_spatial_eps_back('BP1'), ISW=-1,  DS=0.000001,  ICP=[2, 11, 15], DSMAX=0.01, NTST=1500)
+
+
+
+Uss  = {1 : -2.480006466E-01, 2 : -8.306886792E-01, 3 : -2.480006466E-01, 4 : -8.306886792E-01, 5 : -2.480006466E-01, 6 : -8.306886792E-01, 7 : -2.480006466E-01, 8 : -9.687598667E-01, 9 : 5.567372075E-01, 10 : -9.687598667E-01, 11 : 5.567372075E-01, 12 : -9.687598667E-01, 13 : 5.567372075E-01, 14 : -9.687598667E-01, }
+Uss2 = {1 : -8.306886792E-01, 2 : -2.480006466E-01, 3 : -8.306886792E-01, 4 : -2.480006466E-01, 5 : -8.306886792E-01, 6 : -2.480006466E-01, 7 : -8.306886792E-01, 8 : 5.567372075E-01, 9 : -9.687598667E-01, 10 : 5.567372075E-01, 11 : -9.687598667E-01, 12 : 5.567372075E-01, 13 : -9.687598667E-01, 14 : 5.567372075E-01, }
+Uss3 = {1 : -7.566011488E-01, 2 : -3.695213363E-02, 3 : -9.099516518E-01, 4 : -8.240029150E-01, 5 : 4.481252891E-01, 6 : 6.538766716E-01, 7 : -9.993170367E-01, 8 : 4.147143491E-01, 9 : 5.665855594E-01, 10 : -8.939707631E-01, }
+Uss_grad={1 : -9.034491807E-01, 2 : -8.250151612E-01, 3 : 2.831102905E-01, 4 : -7.921535188E-01, 5 : 2.831102905E-01, 6 : -8.250151612E-01, 7 : -9.034491807E-01, 8 : -4.286952039E-01, 9 : 5.651105944E-01, 10 : -9.590873596E-01, 11 : 6.103218845E-01, 12 : -9.590873596E-01, 13 : 5.651105944E-01, 14 : -4.286952039E-01, }
+
+r_ss_for = run('phase', U=Uss, IPS=1,  PAR={'eps':12},NDIM=14, SP=['LP6'], UZSTOP={2:[0,20]},  ICP=[2, 15])
+r_ss_back = run('phase', U=Uss, IPS=1,  PAR={'eps':12},NDIM=14, SP=['LP6'], UZSTOP={2:[0,20]},  ICP=[2, 15], DS='-')
+
+r_ss2_for = run('phase', U=Uss2, IPS=1,  PAR={'eps':12},NDIM=14, SP=['LP16'], UZSTOP={2:[0,20]},  ICP=[2, 15])
+r_ss2_back = run('phase', U=Uss2, IPS=1,  PAR={'eps':12},NDIM=14, SP=['LP16'], UZSTOP={2:[0,20]},  ICP=[2, 15], DS='-')
+
+r_ssgrad_for = run('phase', U=Uss_grad, IPS=1,  PAR={'eps':8,'gamma':1},NDIM=14, SP=['LP6'], UZSTOP={2:[0,20]},  ICP=[2, 15],DS='-')
+
+
+#r_ss3_for = run('phase', U=Uss3, IPS=1,  PAR={'eps':12}, SP=['LP6'], UZSTOP={2:[0,20]})
+#r_ss3_back = run('phase', U=Uss3, IPS=1,  PAR={'eps':12}, SP=['LP6'], UZSTOP={2:[0,20]}, DS='-')
+
+
+r_ss = r_ss_for+r_ss_back
+r_ss2 = r_ss2_for+r_ss2_back
+
+rp_anti2_eps = rp_anti2_eps_for+rp_anti2_eps_back
+rp_anti_eps = rp_anti_eps_for+rp_anti_eps_back
+rp_spatial_eps = rp_spatial_eps_for+rp_spatial_eps_back
+rp_spatial2_eps = rp_spatial2_eps_for + rp_spatial2_eps_back
+
+pl(rp_anti_eps+rp_anti2_eps+rp_spatial_eps+rp_spatial2_eps+r_ss + r_ss2, stability=True, use_labels=False, use_symbols=False, bifurcation_y=['chi_bar', 'PAR(15)'])
+
+
+
+
+
+
+
+
+
+rp_anti_gamma_for=run('phase',dat='7_anti', NDIM=14, PAR={'eps':1}, ICP=['gamma', 11, 'chi_hat', 20], NTST=1500, UZSTOP={'gamma':0}, NPR=100)
+rp_anti_gamma2_for=run(rp_anti_gamma_for('BP1'), ISW=-1, DS=0.00001, ILP=0)
+rp_anti_gamma2_back=run(rp_anti_gamma_for('BP1'), ISW=-1, DS=-0.00001, ILP=0)
+
+rp_left_gamma_for=run(rp_anti2_eps_for('UZ1'), ICP=['gamma', 11,  'chi_bar'],SP=['BP0'], NTST=1500, UZSTOP={'gamma':0, 11:1e2}, NPR=100)
+rp_right_gamma_for=run(rp_anti2_eps_back('UZ1'), ICP=['gamma', 11,  'chi_bar'],SP=['BP0'], NTST=1500, UZSTOP={'gamma':0, 11:1e2}, NPR=100, DS='-')
+
+pl(rp_anti_gamma_for+rp_anti_gamma2_for+rp_anti_gamma2_back+rp_left_gamma_for+rp_right_gamma_for, stability=True, use_labels=False, bifurcation_y=['PAR(20)', 'chi_bar'])
+
+
+
+
+rp_spatial_gamma_for=run('phase',dat='7_spatial', NDIM=14, PAR={'eps':7}, ICP=['gamma', 11,  'chi_bar'], NTST=1500, UZSTOP={'gamma':0,11:1e2}, NPR=100)
+
+PFP1_gamma_eps0 = run(rp_spatial_gamma_for('BP1'), ISW=2, ICP=['gamma','eps',11], UZSTOP={'gamma':0})
+PFP1_gamma_eps_for = run(PFP1_gamma_eps0, SP=['BP0'])
+PFP1_gamma_eps_back = run(PFP1_gamma_eps0, DS='-')
+
+PFP2_gamma_eps0 = run(rp_anti_eps_for('BP1'), ISW=2, ICP=['eps','gamma',11], UZSTOP={'gamma':0})
+PFP2_gamma_eps_back = run(PFP2_gamma_eps0, SP=['LP1','BP1'])
+PFP2_gamma_eps_for= run(PFP2_gamma_eps0, SP=['LP4'], DS='-')
+
+PFP3_gamma_eps0 = run(rp_anti_gamma_for('BP1'), ISW=2, ICP=['gamma','eps',11], UZSTOP={'gamma':0}, DS='-')
+PFP3_gamma_eps_back = run(PFP3_gamma_eps0, SP=['LP1','BP1'])
+PFP3_gamma_eps_for= run(PFP3_gamma_eps0, SP=['LP4'], DS='-')
+
+PFP5_gamma_eps0 = run(rp_anti3_eps_for('BP1'), ISW=2, ICP=['eps','gamma',11], UZSTOP={'gamma':0}, DS='-')
+PFP5_gamma_eps_back = run(PFP5_gamma_eps0, SP=['LP1','BP1'])
+PFP5_gamma_eps_for= run(PFP5_gamma_eps0, SP=['LP4'], DS='-')
+
+PD4_gamma_eps0 = run(rp_anti3_eps_for('PD1'), ISW=2, ICP=['eps','gamma',11], UZSTOP={'gamma':0}, DS='-')
+PD4_gamma_eps_back = run(PD4_gamma_eps0, SP=['LP1','BP1'])
+PD4_gamma_eps_for= run(PD4_gamma_eps0, SP=['BP1'], DS='-')
+
+
+SNP2_gamma_eps0 = run(rp_left_gamma_for('LP1'), ISW=2, ICP=['gamma','eps',11, 16], UZSTOP={'gamma':0}, DS='-')
+SNP2_gamma_eps_back = run(SNP2_gamma_eps0)
+SNP2_gamma_eps_for = run(SNP2_gamma_eps0, DS='-',SP=['LP8','BP1'])
+
+PD2_gamma_eps0 = run(rp_left_gamma_for('PD1'), ISW=2, ICP=['gamma','eps',11], UZSTOP={'gamma':0})
+PD2_gamma_eps_for = run(PD2_gamma_eps0, SP=['BP4'], UZSTOP={'gamma':0,'eps':12})
+PD2_gamma_eps_back= run(PD2_gamma_eps0, SP=['LP2'], DS='-', UZSTOP={'gamma':0,'eps':12})
+
+
+rp_anti_gamma_hi=run(rp_anti_eps_for('UZ4'), ICP=['gamma',11,13,14,15,16,18,19,20], UZSTOP={'gamma':0})
+
+
+
+#SNP2_gamma_eps0 = run(rp_anti_gamma_hi('LP1'), ISW=2, ICP=['gamma','eps',11, 16], UZSTOP={'gamma':0}, DS='-')
+#SNP2_gamma_eps_back = run(SNP2_gamma_eps0)
+#SNP2_gamma_eps_for = run(SNP2_gamma_eps0, DS='-',SP=['LP8','BP1'])
+
+pl(PFP2_gamma_eps+PFP3_gamma_eps_for+PFP3_gamma_eps_back+SNP2_gamma_eps_for+SNP2_gamma_eps_back, bifurcation_y='eps',bifurcation_x='gamma')
+
+rp_anti_gamma_mid=run(rp_anti_eps_for('UZ2'), ICP=['gamma',11,13,14,15,16,18,19,20], UZSTOP={'gamma':0})
+
+PD3_gamma_eps0 = run(rp_anti_gamma_mid('PD1'), ISW=2, ICP=['gamma','eps',11], UZSTOP={'gamma':0})
+PD3_gamma_eps_for = run(PD3_gamma_eps0, SP=['BP4'], UZSTOP={'gamma':0,'eps':12})
+PD3_gamma_eps_back= run(PD3_gamma_eps0, SP=['LP2'], DS='-', UZSTOP={'gamma':0,'eps':12})
+
+rp_uni_gamma=run(rp_anti_gamma_hi('BP1'), ISW=-1, DS=0.0001, SP=['BP2'])
+
+
+PD1_gamma_eps0=run(rp_uni_gamma('PD1'), ICP=['gamma','eps', 11, 13, 14, 15, 16], UZSTOP={'gamma':0}, ISW=2)
+PD1_gamma_eps_for=run(PD1_gamma_eps0)
+PD1_gamma_eps_back=run(PD1_gamma_eps0, DS='-')
+
+
+rp_spatial_gamma_hi_for=run('phase',dat='7_spatial_hi', NDIM=14, PAR={'eps':9}, ICP=['gamma', 11, 13, 14, 15, 16], NTST=1500, UZSTOP={'gamma':0,11:1e2}, NPR=100)
+
+PFP4_gamma_eps0 = run(rp_spatial_gamma_hi_for('LP1'), ISW=2, ICP=['gamma','eps',11], UZSTOP={'gamma':0}, DS='-')
+PFP4_gamma_eps_back = run(PFP4_gamma_eps0)
+PFP4_gamma_eps_for= run(PFP4_gamma_eps0, DS='-', UZSTOP={'gamma':3.20551E-01 }, SP=['LP0'], NMX=600)
+
+
+HM4 = run(rp_spatial_eps_HM('EP2'), ISW=2,  ICP=['gamma', 'eps', 13, 14, 15, 16], UZSTOP={'gamma':0})
+
+PF2 = run(r_ss('BP1'), ISW=2, ICP=['gamma', 'eps', 13, 14, 15, 16], UZSTOP={'gamma':0},DS='-')
+PF1 = run(r_ss2('BP1'), ISW=2, ICP= ['eps','gamma', 13, 14, 15, 16], UZSTOP={'gamma':0}, DS=-0.000001, DSMAX=0.001)
+PF3 = run(r_ssgrad_for('BP1'),  ISW=2, ICP=[ 'eps','gamma', 13, 14, 15, 16], UZSTOP={'gamma':0}, DS=0.00001)+run(r_ssgrad_for('BP1'),  ISW=2, ICP=[ 'eps','gamma', 13, 14, 15, 16], UZSTOP={'gamma':0}, DS=-0.00001)
+
+PD1 = PD1_gamma_eps_for + PD1_gamma_eps_back
+SNP2= SNP2_gamma_eps_for+SNP2_gamma_eps_back
+PD3 = PD3_gamma_eps_for+PD3_gamma_eps_back
+PFP3 = PFP3_gamma_eps_for+PFP3_gamma_eps_back
+PFP2 = PFP2_gamma_eps
+PFP1 = PFP1_gamma_eps_back+PFP1_gamma_eps_for
+PFP4 = PFP4_gamma_eps_for+PFP4_gamma_eps_back
+
+rp_spatial_higamma_for=run('phase',dat='7_spatial_hi_gamma', NDIM=14, PAR={'eps':7,'gamma':1}, ICP=['gamma', 11, 13, 14, 15, 16], NTST=1500, UZSTOP={'gamma':0,11:1e2}, NPR=100)
+rp_spatial_higamma_back=run('phase',dat='7_spatial_hi_gamma', NDIM=14, PAR={'eps':7,'gamma':1}, ICP=['gamma', 11, 13, 14, 15, 16], NTST=1500, UZSTOP={'gamma':0,11:1e2}, NPR=100, DS='-')
+
+PFP5_gamma_eps0 = run(rp_spatial_higamma_back('BP1'), ISW=2, ICP=['gamma','eps',11], UZSTOP={'gamma':0}, DS='-')
+PFP5_gamma_eps_back = run(PFP5_gamma_eps0, SP=[])
+PFP5_gamma_eps_for= run(PFP5_gamma_eps0, SP=[], DS=-0.00001)
+PFP5 = PFP5_gamma_eps_for+PFP5_gamma_eps_back
+
+PFP6_gamma_eps0 = run(rp_spatial_higamma_for('BP1'), ISW=2, ICP=['gamma','eps',11], UZSTOP={'gamma':0}, DS='-')
+PFP6_gamma_eps_back = run(PFP6_gamma_eps0, SP=[])
+PFP6_gamma_eps_for= run(PFP6_gamma_eps0, SP=[], DS='-')
+
+pl(PFP1+PFP2+PFP4+PFP3+PFP5+PD1+PD3+SNP2+PF1+PF2+PF3, bifurcation_y='eps',bifurcation_x='gamma', use_labels=,use_symbols=False)
+
+
+####### N=9 #########
+
+inphase_eps = cache_branch('rp_inphase_eps_9','phase',dat='9_gamma=0.1_eps=-3.5_inphase.dat', NDIM=18, PAR={'eps':-3.5,'gamma':0.1}, backward={'SP':['LP6','BP2']}, UZSTOP={'eps':[-6,8]}, NTST=1500)
+#inphase2_eps = cache_branch('rp_inphase2_eps_9', inphase_eps('BP1'), ISW=-1, forward={'DS':0.0001}, backward={'DS':-0.0001},UZSTOP={'eps':[-3,8]})
+
+antiphase_eps = cache_branch('rp_antiphase_eps_9','phase',dat='9_gamma=0.1_eps=3.5_antiphase.dat', NDIM=18, PAR={'eps':3.5,'gamma':0.1}, backward={'SP':['LP6','BP2']}, UZSTOP={'eps':[-6,8]}, SP='BP2', NTST=1500)
+
+pl(antiphase_eps+inphase_eps, bifurcation_y=['psi', 'chi_hat'], use_labels=False)
+
+anti_eps = cache_branch('rp_anti_eps_9','phase',dat='9_anti', NDIM=18, PAR={'eps':1.5}, backward={'SP':['LP6','BP1']}, NTST=1500)
+anti2_eps = cache_branch('rp_anti2_eps_9',anti_eps('BP1'), ISW=-1,SP='LP4', forward={'DS':0.001}, backward=False )
+anti3_eps = cache_branch('rp_anti3_eps_9',anti_eps('BP2'), ISW=-1, forward={'DS':0.001}, backward={'DS':-0.001} )
+anti4_eps = cache_branch('rp_anti4_eps_9',anti_eps('BP3'), ISW=-1, forward={'DS':0.001}, backward={'DS':-0.001} )
+
+spatial_eps=cache_branch('rp_spatial_eps_9','phase',dat='9_spatial', NDIM=18, PAR={'eps':7}, SP=['LP16','BP16'],  ICP=[2, 11, 15], UZSTOP={1:[2e2]}, NTST=1500)
+spatial2_eps=cache_branch('rp_spatial2_eps_9', spatial_eps('BP2'), ISW=-1 , SP=['LP16','BP16'], forward={'DS':0.00001}, backward={'DS':-0.00001})
+
+
+anti_eps = load_branch('rp_anti_eps_9')
+anti2_eps = load_branch('rp_anti2_eps_9')
+anti3_eps = load_branch('rp_anti3_eps_9')
+anti4_eps = load_branch('rp_anti4_eps_9')
+
+spatial_eps = load_branch('rp_spatial_eps_9')
+spatial2_eps = load_branch('rp_spatial2_eps_9')
+
+r_ss = load_branch('r_ss_9')
+r_ss2 = load_branch('r_ss2_9')
+
+pl(anti_eps + anti2_eps + anti3_eps + spatial_eps+spatial2_eps+r_ss+r_ss2+r_ss32, stability=True, use_labels=False, use_symbols=False, bifurcation_y=['PAR(20)', 'PAR(15)'])
+
+
+Uss={1 : -2.480006466E-01, 2 : -8.306886792E-01, 3 : -2.480006466E-01, 4 : -8.306886792E-01, 5 : -2.480006466E-01, 6 : -8.306886792E-01, 7 : -2.480006466E-01, 8 : -8.306886792E-01, 9 : -2.480006466E-01, 10 : -9.687598667E-01, 11 : 5.567372075E-01, 12 : -9.687598667E-01, 13 : 5.567372075E-01, 14 : -9.687598667E-01, 15 : 5.567372075E-01, 16 : -9.687598667E-01, 17 : 5.567372075E-01, 18 : -9.687598667E-01, }
+Uss2={1 : 3.988418421E-01, 2 : -8.261189866E-01, 3 : -8.715563413E-01, 4 : 1.340660200E-01, 5 : -7.935989035E-01, 6 : -4.314691489E-01, 7 : -8.559163897E-01, 8 : -1.879420713E-01, 9 : -8.077535958E-01, 10 : -9.170197299E-01, 11 : 5.634957142E-01, 12 : 4.902953639E-01, 13 : -9.909724024E-01, 14 : 6.084412711E-01, 15 : -9.021276925E-01, 16 : 5.171142368E-01, 17 : -9.821801148E-01, 18 : 5.895202527E-01, }
+Uss3={1 : -8.199913838E-01, 2 : -1.196226845E-01, 3 : -7.822958837E-01, 4 : 3.381771051E-01, 5 : -7.613540357E-01, 6 : 3.381771051E-01, 7 : -7.822958837E-01, 8 : -1.196226845E-01, 9 : -8.199913838E-01, 10 : 5.723758648E-01, 11 : -9.928194264E-01, 12 : 6.229070158E-01, 13 : -9.410824861E-01, 14 : 6.483363573E-01, 15 : -9.410824861E-01, 16 : 6.229070158E-01, 17 : -9.928194264E-01, 18 : 5.723758648E-01, }
+
+
+
+r_ss = cache_branch('r_ss_9','phase', U=Uss, IPS=1,  PAR={'eps':12}, NDIM=18, SP=['LP6'], UZSTOP={2:[0,20]},  ICP=[2, 15])
+r_ss2 = cache_branch('r_ss2_9','phase', U=Uss2, IPS=1,  PAR={'eps':12}, NDIM=18, SP=['LP61'], UZSTOP={2:[0,20]},  ICP=[2, 15])
+
+r_ss3_antigamma = cache_branch('r_ss3_9','phase', U=Uss3, IPS=1,  PAR={'eps':8.5,'gamma':0.25}, NDIM=18, SP=['LP61'], UZSTOP={2:[0,20]},  ICP=['gamma', 15], DS='-')
+
+r_ss3 = cache_branch('r_ss3_9','phase', U=Uss3, IPS=1,  PAR={'eps':8.5,'gamma':0.25}, NDIM=18, SP=['LP61'], UZSTOP={2:[0,20]},  ICP=[2, 15])
+
+
+r_ss32 = cache_branch('r_ss32_9',PF2('UZ5'), IPS=1, NDIM=18, SP=['LP61'], UZSTOP={2:[0,20]},  ICP=[2, 15], ISW=1)
+
+r0=run('phase',dat='9_anti', NDIM=18, PAR={'eps':1.5}, ICP=['eps', 11, 'chi_hat', 20], UZSTOP={'eps':[1.2]},UZR={}, DS='-')
+rp_anti_gamma=cache_branch('rp_anti_gamma_9', r0('UZ1'),ICP=['gamma', 11, 'chi_hat', 20, 21, 22, 23], NTST=1500, UZSTOP={'gamma':0}, NPR=100, backward=False, DS='-')
+rp_anti_gamma2=cache_branch('rp_anti_gamma2_9',rp_anti_gamma('BP1'), ISW=-1, ILP=1, forward={'DS':0.0001}, backward={'DS':-0.0001})
+
+pl(rp_anti_gamma+rp_anti_gamma2, stability=True)
+
+spatial_gamma=cache_branch('rp_spatial_gamma_9','phase',dat='9_spatial', NDIM=18, PAR={'eps':7}, ICP=['gamma', 11, 'chi_hat', 20], SP=['BP1'], NTST=1500, UZSTOP={'gamma':0}, NPR=100, backward=False)
+spatial_gamma_bis=cache_branch('rp_spatial_gamma_bis_9',spatial_eps('UZ3'),  ICP=['gamma', 11, 'chi_hat', 20], SP=['BP1'], NTST=1500, UZSTOP={'gamma':0, 11:3E2}, NPR=100, backward=False)
+
+
+shifted_gamma=cache_branch('rp_shifted_gamma_9','phase',dat='9_shifted', NDIM=18, PAR={'eps':4.674,'gamma':0.1}, ICP=['gamma', 11, 'chi_hat', 20], NTST=1500, UZSTOP={'gamma':0})
+
+
+rp_anti_gamma2=load_branch('rp_anti_gamma2_9')
+
+r0=run('phase',dat='9_anti', NDIM=18, PAR={'eps':1.5}, ICP=['eps', 11, 'chi_hat', 20], UZSTOP={'eps':[1.28,1.65]})
+anti_gamma_bis=cache_branch('rp_anti_gamma_bis_9', r0, ICP=['gamma', 11, 'chi_hat', 20], NTST=1500, UZSTOP={'gamma':0}, NPR=100, backward=False)
+anti_gamma2_bis=cache_branch('rp_anti_gamma2_bis_9',anti_gamma_bis('BP1'), ISW=-1, forward={'DS':0.0001}, backward={'DS':-0.0001})
+
+r0=run('phase',dat='9_anti', NDIM=18, PAR={'eps':1.5}, ICP=['eps', 11, 'chi_hat', 20], UZSTOP={'eps':[1.26,1.65]}, DS='-')
+anti_gamma_bis2=cache_branch('rp_anti_gamma_bis2_9', r0, ICP=['gamma', 11, 'chi_hat', 20], NTST=1500, UZSTOP={'gamma':0}, NPR=100, forward=False)
+anti_gamma2_bis2=cache_branch('rp_anti_gamma2_bis2_9',anti_gamma_bis2('BP1'), ISW=-1, forward={'DS':0.0001}, backward={'DS':-0.0001})
+
+
+r0=run('phase',dat='9_anti', NDIM=18, PAR={'eps':1.5}, ICP=['eps', 11, 'chi_hat', 20], UZSTOP={'eps':[1.85]})
+anti_gamma_bis3=cache_branch('rp_anti_gamma_bis3_9', r0, ICP=['gamma', 11, 'chi_hat', 20], NTST=1500, SP=['PD1'], UZSTOP={'gamma':0}, NPR=100, backward=False)
+anti_gamma2_bis3=cache_branch('rp_anti_gamma2_bis3_9',anti_gamma_bis3('BP1'), ISW=-1, forward={'DS':0.0001}, backward={'DS':-0.0001})
+
+
+anti_gamma_lo=cache_branch('rp_anti_gamma_lo_9',anti_eps('UZ11'), ICP=['gamma', 11, 'chi_hat', 20], NTST=1500, SP=['LP8'] , forward=False, UZSTOP={'gamma':0}, NPR=100)
+anti2_gamma_lo=cache_branch('rp_anti2_gamma_lo_9',anti_gamma_lo('BP1'), ICP=['gamma', 11, 'chi_hat', 'chi_bar', 18, 19, 20], ISW=-1, forward={'DS':0.00001}, backward={'DS':-0.00001})
+
+
+
+anti_gamma_mid=cache_branch('rp_anti_gamma_mid_9',anti_eps('UZ4'), ICP=['gamma', 11, 'chi_hat', 20, 22, 23], NTST=1500, SP=['LP8'] , backward=False, UZSTOP={'gamma':0}, NPR=100)
+anti2_gamma_mid=cache_branch('rp_anti2_gamma_mid_9',anti_gamma_mid('BP1'), ICP=['gamma', 11, 'chi_hat', 'chi_bar', 22,23], ISW=-1, forward={'DS':0.00001}, backward={'DS':-0.00001})
+
+pl(anti_gamma_mid+anti2_gamma_mid, stability=True, use_labels=False)
+
+anti_gamma_mid=load_branch('rp_anti_gamma_mid_9')
+anti2_gamma_mid=load_branch('rp_anti2_gamma_mid_9')
+
+anti_gamma_mid2=cache_branch('rp_anti_gamma_mid2_9',anti_eps('UZ3'), ICP=['gamma', 11, 'chi_hat', 20], NTST=1500, SP=['LP8'] , backward=False, UZSTOP={'gamma':0}, NPR=100, DSMAX=0.001)
+anti2_gamma_mid2=cache_branch('rp_anti2_gamma_mid2_9',anti_gamma_mid2('PD1'), ICP=['gamma', 11, 'chi_hat', 'chi_bar', 18, 19, 20, 21], SP=['LP18'], ISW=-1, forward={'DS':0.00001}, backward={'DS':-0.00001})
+anti3_gamma_mid2=cache_branch('rp_anti3_gamma_mid2_9',anti2_gamma_mid2('BP1'), ICP=['gamma', 11, 'chi_hat', 'chi_bar', 18, 19, 20, 21], SP=['LP18'], ISW=-1, forward={'DS':0.00001}, backward={'DS':-0.00001})
+
+pl(anti_gamma_mid2+anti2_gamma_mid2, stability=True, use_labels=False)
+
+
+anti_gamma_mid5=cache_branch('rp_anti_gamma_mid5_9',anti_eps('UZ6'), ICP=['gamma', 11, 'chi_hat', 'chi_bar', 18,19,20, 21,22,23], NTST=1500, SP=['LP8'] , backward=False, UZSTOP={'gamma':0}, NPR=100)
+anti2_gamma_mid5=cache_branch('rp_anti2_gamma_mid5_9',anti_gamma_mid5('BP1'), ISW=-1, forward={'DS':0.00001}, backward={'DS':-0.00001})
+
+pl(anti_gamma_mid5+anti2_gamma_mid5, stability=True, use_labels=False)
+
+r0=run(anti2_eps('UZ1'), ICP=['eps', 11, 'chi_hat', 20, 21, 22, 23], UZSTOP={'eps':[5.85]}, UZR={})
+r02=run(r0('UZ1'), ICP=['gamma', 11, 'chi_hat', 20, 21, 22, 23], UZSTOP={'gamma':[0.05]}, UZR={})
+r03=run(r02('UZ1'), ICP=['eps', 11, 'chi_hat', 20, 21, 22, 23], UZSTOP={'eps':[5.45]}, UZR={}, DS='-')
+anti_gamma_mid6=cache_branch('rp_anti_gamma_mid6_9',r03('UZ1'), ICP=['gamma', 11, 'chi_hat', 'chi_bar', 18,19,20, 21,22,23], NTST=1500, SP=['LP8'],  UZSTOP={'gamma':0}, NPR=100)
+anti2_gamma_mid6=cache_branch('rp_anti2_gamma_mid6_9',anti_gamma_mid6('BP1'), ISW=-1, forward={'DS':0.00001}, backward={'DS':-0.00001})
+
+
+anti_gamma_mid3=cache_branch('rp_anti_gamma_mid3_9',anti_eps('UZ2'), ICP=['gamma', 11, 'chi_hat', 20], NTST=1500, SP=['LP8'] , backward=False, UZSTOP={'gamma':0}, NPR=100, DSMAX=0.001)
+anti2_gamma_mid3=cache_branch('rp_anti2_gamma_mid3_9',anti_gamma_mid3('PD1'), ICP=['gamma', 11, 'chi_hat', 'chi_bar', 18, 19, 20, 21], SP=['LP18'], ISW=-1, forward={'DS':0.00001}, backward={'DS':-0.00001}, DSMAX=0.01)
+anti3_gamma_mid3=cache_branch('rp_anti3_gamma_mid3_9',anti2_gamma_mid3('BP1'), ICP=['gamma', 11, 'chi_hat', 'chi_bar', 18, 19, 20, 21], SP=['LP18'], ISW=-1, forward={'DS':0.00001}, backward={'DS':-0.00001}, DSMAX=0.01)
+
+pl(anti_gamma_mid3+anti2_gamma_mid3, stability=True, use_labels=False)
+
+anti_gamma_mid4=cache_branch('rp_anti_gamma_mid4_9',anti_eps('UZ1'), ICP=['gamma', 11, 'chi_hat', 20], NTST=1500, SP=['LP8'] , backward=False, UZSTOP={'gamma':0}, NPR=100)
+anti2_gamma_mid4=cache_branch('rp_anti2_gamma_mid4_9',anti_gamma_mid4('BP1'), ICP=['gamma', 11, 'chi_hat', 'chi_bar', 18, 19, 20, 21], SP=['LP18'], ISW=-1, forward={'DS':0.00001}, backward={'DS':-0.00001})
+
+pl(anti_gamma_mid4+anti2_gamma_mid4, stability=True, use_labels=False)
+
+
+rp_left_gamma=cache_branch('rp_left_gamma_9', anti2_eps('UZ1'), ICP=['gamma', 11,  'chi_bar', 21, 22, 23],SP=['LP12'],  UZSTOP={'gamma':0, 11:1e2},DS='-', NPR=100, backward=False)
+rp_right_gamma=cache_branch('rp_right_gamma_9',anti2_eps('UZ2'), ICP=['gamma', 11,  'chi_bar', 21, 22, 23],SP=['LP12'], NTST=1500, UZSTOP={'gamma':0, 11:1e2}, NPR=100, DS='-', backward=False)
+
+
+r0 = run(anti_eps('BP1'), ISW=-1,DS=0.001, UZR={'eps':6.15}, SP='UZ1' )
+rp_uni_gamma=cache_branch('rp_uni_gamma_9', r0, ICP=['gamma', 11,  'chi_bar', 21, 22, 23],SP=['LP12'],  UZSTOP={'gamma':0, 11:1e2},  backward=False)
+
+
+
+r0 = run(anti_eps('BP1'), ISW=-1, DS=0.001, UZR={'eps':6.1}, SP='UZ1' )
+rp_uni2_gamma=cache_branch('rp_uni2_gamma_9', r0, ICP=['gamma', 11,  'chi_bar'],SP=['LP12'],  UZSTOP={'gamma':0, 11:1e2},  backward=False)
+
+
+
+anti_gamma_mid=load_branch('rp_anti_gamma_mid_9')
+anti2_gamma_mid=load_branch('rp_anti2_gamma_mid_9')
+
+rp_right_gamma=load_branch('rp_right_gamma_9')
+rp_left_gamma=load_branch('rp_left_gamma_9')
+pl(anti_gamma_bis+anti_gamma2_bis+rp_left_gamma+rp_right_gamma, stability=True, use_labels=False, use_symbols=False, grid=False, bifurcation_y=['chi_bar'])
+
+PFP4_gamma_eps0 = run(anti3_eps('BP1'), ISW=2, ICP=['eps','gamma',11], UZSTOP={'gamma':0}, DS='-', NTST=1500)
+PFP4= cache_branch('PFP4_gamma_eps_9', PFP4_gamma_eps0, SP=['LP4'], forward=False)
+
+PD1_gamma_eps0 = run(anti3_eps('PD1'), ISW=2, ICP=['eps','gamma',11], UZSTOP={'gamma':0}, DS='-')
+PD1 = cache_branch('PD1_gamma_eps',PD1_gamma_eps0, SP=['LP2'], forward=False)
+
+PD2_gamma_eps0 = run(anti2_gamma_mid('PD1'), ISW=2, ICP=['gamma','eps',11], UZSTOP={'gamma':0}, DS='-')
+PD2 = cache_branch('PD2_gamma_eps',PD2_gamma_eps0)
+
+PD3_gamma_eps0 = run(anti_gamma_mid3('PD1'), ISW=2, ICP=['gamma','eps',11], UZSTOP={'gamma':0}, DS='-')
+PD3 = cache_branch('PD3_gamma_eps',PD3_gamma_eps0)
+
+PD4_gamma_eps0 = run(anti3_gamma_mid3('PD1'), ISW=2, ICP=['gamma','eps',11], SP=['LP6'], UZSTOP={'gamma':0}, DS='-')
+PD4 = cache_branch('PD4_gamma_eps',PD4_gamma_eps0, backward=False)
+
+PD5_gamma_eps0 = run(rp_uni_gamma('PD3'), ISW=2, ICP=['gamma','eps',11], SP=['LP6'], UZSTOP={'gamma':0}, DS='-')
+PD5 = cache_branch('PD5_gamma_eps',PD5_gamma_eps0, SP='BP1')
+
+PD6_gamma_eps0 = run(rp_left_gamma('PD2'), ISW=2, ICP=['gamma','eps',11, 22,23,24], SP=['LP6'], UZSTOP={'gamma':0}, DS='-')
+PD6 = cache_branch('PD6_gamma_eps',PD6_gamma_eps0, SP=[])
+
+PD7_gamma_eps0 = run(anti2_gamma_mid5('PD1'), ISW=2, ICP=['gamma','eps',11, 22,23,24], SP=['LP6'], UZSTOP={'gamma':0}, DS='-')
+PD7 = cache_branch('PD7_gamma_eps',PD7_gamma_eps0, SP=[])
+
+TR4_gamma_eps0 = run(rp_uni2_gamma('TR1'), ISW=2, ICP=['gamma','eps',11], SP=['LP6'], UZSTOP={'gamma':0}, DS='-')
+TR4 = cache_branch('TR4_gamma_eps',TR4_gamma_eps0, SP=['BP1','R21'])
+
+TR5_gamma_eps0 = run(rp_left_gamma('TR1'), ISW=2, ICP=['gamma','eps',11, 12, 22,23,24], SP=['LP8'], UZSTOP={'gamma':0}, DS='-')
+TR5 = cache_branch('TR5_gamma_eps',TR5_gamma_eps0, SP=['R11'])
+
+PFP1_gamma_eps0 = run(spatial_gamma('BP1'), ISW=2, ICP=['gamma','eps',11], UZSTOP={'gamma':0}, DS=0.0001)
+PFP1= cache_branch('PFP1_gamma_eps_9',PFP1_gamma_eps0, SP=['BP2'], NTST=2500, forward={'NTST':1500, 'SP':['LP50']})
+
+PFP2_gamma_eps0 = run(anti_eps('BP1'), ISW=2, ICP=['eps','gamma',11], UZSTOP={'gamma':0})
+PFP2= cache_branch('PFP2_gamma_eps_9',PFP2_gamma_eps0, SP=['LP4'], forward=False)
+
+PFP5_gamma_eps0 = run(anti2_gamma_mid3('BP1'), ISW=2, ICP=['gamma','eps',11], UZSTOP={'gamma':0}, DS='-', NTST=1500)
+PFP5= cache_branch('PFP5_gamma_eps_9', PFP5_gamma_eps0, SP=['BP0','LP1'], UZSTOP={'gamma':[0,0.4]})
+
+#PFP3_gamma_eps0 = run(rp_anti_eps_for('BP2'), ISW=2, ICP=['eps','gamma',11], UZSTOP={'gamma':0})
+#PFP3_gamma_eps_back = run(PFP3_gamma_eps0, SP=['LP1','BP1'])
+#PFP3_gamma_eps_for= run(PFP3_gamma_eps0, SP=['LP4'], DS='-')
+
+#PFP5_gamma_eps0 = run(rp_anti_gamma_for('BP1'), ISW=2, ICP=['gamma','eps',11], UZSTOP={'gamma':0}, DS='-')
+#PFP5_gamma_eps_back = run(PFP5_gamma_eps0, SP=['LP1','BP1'])
+#PFP5_gamma_eps_for= run(PFP5_gamma_eps0, SP=['LP4'], DS='-')
+
+rp_anti_gamma2=load_branch('rp_anti_gamma2_9')
+
+TR1_gamma_eps0 = run(rp_anti_gamma2('TR1'), ISW=2, ICP=['gamma','eps',11, 12], UZSTOP={'gamma':0})
+TR1 = cache_branch('TR1_gamma_eps_9', TR1_gamma_eps0, SP=['LP2','BP2'])
+
+TR1p_gamma_eps0 = run(rp_anti_gamma2('TR2'), ISW=2, ICP=['gamma','eps',11, 12], UZSTOP={'gamma':0})
+TR1p = cache_branch('TR1p_gamma_eps_9', TR1_gamma_eps0, SP=['LP2','BP2'])
+
+TR2_gamma_eps0 = run(anti3_gamma_mid2('TR1'), ISW=2, ICP=['gamma','eps',11], UZSTOP={'gamma':0}, DS='-')
+TR2 = cache_branch('TR2_gamma_eps_9',TR2_gamma_eps0, SP=['BP1'])
+
+TR3_gamma_eps0 = run(rp_right_gamma('TR1'), ISW=2, ICP=['gamma','eps',11], UZSTOP={'gamma':0}, DS='-')
+TR3 = cache_branch('TR3_gamma_eps_9',TR3_gamma_eps0, SP=['BP1'])
+
+SNP1_gamma_eps0 = run(anti2_eps('LP1'), ISW=2, ICP=['eps','gamma',11], UZSTOP={'gamma':0})
+SNP1= cache_branch('SNP1_gamma_eps_9',SNP1_gamma_eps0, SP=['LP4'], backward=False)
+
+SNP1p_gamma_eps0 = run(anti2_eps('LP3'), ISW=2, ICP=['eps','gamma',11], UZSTOP={'gamma':0})
+SNP1p= cache_branch('SNP1p_gamma_eps_9',SNP1p_gamma_eps0, SP=['LP4'], backward=False)
+
+SNP2_gamma_eps0 = run(rp_left_gamma('LP1'), ISW=2, ICP=['gamma','eps',11], UZSTOP={'gamma':0, 11:3e2},NTST=1500)
+SNP2 = cache_branch('SNP2_gamma_eps_9',SNP2_gamma_eps0, SP=['BP0'])
+
+SNP3_gamma_eps0 = run(anti_gamma_lo('LP1'), ISW=2, ICP=['eps','gamma',11], UZSTOP={'gamma':0})
+SNP3= cache_branch('SNP3_gamma_eps_9',SNP3_gamma_eps0, SP=['LP4'])
+
+SNP4_gamma_eps0 = run(anti_gamma2_bis('LP1'), ISW=2, ICP=['gamma','eps',11], UZSTOP={'gamma':0})
+SNP4= cache_branch('SNP4_gamma_eps_9',SNP4_gamma_eps0, SP=['LP4'])
+
+SNP5_gamma_eps0 = run(anti2_gamma_mid5('LP2'), ISW=2, ICP=['gamma','eps',11, 22, 23], UZSTOP={'gamma':0})
+SNP5= cache_branch('SNP5_gamma_eps_9',SNP5_gamma_eps0, SP=['BP12'])
+
+SNP6_gamma_eps0 = run(anti2_gamma_mid5('LP3'), ISW=2, ICP=['gamma','eps',11, 22, 23], UZSTOP={'gamma':0})
+SNP6= cache_branch('SNP6_gamma_eps_9',SNP6_gamma_eps0, SP=['BP12'])
+
+SNP7_gamma_eps0 = run(anti2_gamma_mid5('LP4'), ISW=2, ICP=['gamma','eps',11, 22, 23], UZSTOP={'gamma':0})
+SNP7= cache_branch('SNP7_gamma_eps_9',SNP7_gamma_eps0, SP=['BP12'])
+
+
+HM4= cache_branch('HM4_gamma_eps_9',spatial_gamma_bis('UZ1'), ICP=['gamma','eps'], UZSTOP={'gamma':0}, SP=['BP0','LP1'])
+
+PF1 = cache_branch('PF1_gamma_eps',r_ss('BP1'), ISW=2, ICP=['eps','gamma'], UZSTOP={'gamma':[0,1.5]}, backward=False)
+PF2 = cache_branch('PF2_gamma_eps',r_ss3('BP1'), ISW=2, ICP=['eps','gamma'], UZSTOP={'gamma':[0,1.5]})
+
+
+SNP1 = load_branch('SNP1_gamma_eps_9')
+SNP2 = load_branch('SNP2_gamma_eps_9')
+SNP3 = load_branch('SNP3_gamma_eps_9')
+SNP4 = load_branch('SNP4_gamma_eps_9')
+SNP5 = load_branch('SNP5_gamma_eps_9')
+SNP6 = load_branch('SNP6_gamma_eps_9')
+SNP7 = load_branch('SNP7_gamma_eps_9')
+PFP1 = load_branch('PFP1_gamma_eps_9')
+PFP2 = load_branch('PFP2_gamma_eps_9')
+PFP4 = load_branch('PFP4_gamma_eps_9')
+PFP5 = load_branch('PFP5_gamma_eps_9')
+PD1 = load_branch('PD1_gamma_eps')
+PD2 = load_branch('PD2_gamma_eps')
+PD3 = load_branch('PD3_gamma_eps')
+PD4 = load_branch('PD4_gamma_eps')
+PD5 = load_branch('PD5_gamma_eps')
+PD6 = load_branch('PD6_gamma_eps')
+TR1 = load_branch('TR1_gamma_eps_9')
+TR2 = load_branch('TR2_gamma_eps_9')
+TR4 = load_branch('TR4_gamma_eps')
+TR5 = load_branch('TR5_gamma_eps')
+HM4 = load_branch('HM4_gamma_eps_9')
+
+pl(PFP1+PFP2+PFP4+PFP5+SNP1+SNP2+PD1+PD5+PD6+PD2+SNP4+TR1+TR2+TR4+TR5+HM4+SNP5+SNP6+SNP7,bifurcation_x='gamma',bifurcation_y='eps', use_labels=False, maxx=0.7, minx=0, miny=0, maxy=10.85, stability=False)
+
+pl(SNP2+PD5+PD6+TR5+SNP5+SNP6+SNP7,bifurcation_x='gamma',bifurcation_y='eps', use_labels=False, maxx=0.7, minx=0, miny=0, maxy=10.85, stability=False)
+
+pl(PFP1+PFP2+PFP4+PFP5+SNP1+SNP2+PD1+PD5+PD6+PD2+SNP4+TR1+TR2+TR4+HM4+PF1+PF2,bifurcation_x='gamma',bifurcation_y='eps', use_labels=False, maxx=0.7, minx=0, miny=0, maxy=10.85)
+
+pl(PD5+TR4,bifurcation_x='gamma',bifurcation_y='eps', use_labels=False, maxx=0.7, minx=0, miny=0, maxy=10.85)
+
+
+pl(SNP1+SNP2+PFP2, bifurcation_x='gamma',bifurcation_y='eps', use_symbols=False)
+pl(PFP4+PD1, bifurcation_x='gamma',bifurcation_y='eps', use_symbols=False)
+
+pl(SNP1+SNP2+PFP2, bifurcation_x='gamma',bifurcation_y='eps', use_symbols=False)
+
+########### OLD STUFF
+
+r0=run('phase', NDIM=6)
+
+
+rp_anti=run('phase',dat='three_phase_anti', NDIM=6, PAR={1:1}, IPS=2, ICP=[4,11, 14, 13], NMX=36000, NTST=550, ISP=2,LAB=152,SP=['LP6'], IBR=5, NPAR=14, DSMAX=0.01, NPR=100)
+pl(rp4for, stability=True)
+
+r0=run('phase', NDIM=6, PAR={4:0.04})
+
+rp_anti_eps=run('phase',dat='three_phase_anti', NDIM=6, PAR={1:1}, LAB=152,SP=['LP6'], IBR=1)
+rp_anti_eps2=run('phase',dat='three_phase_anti', NDIM=6, PAR={1:1}, LAB=252, SP=['LP6'], DS='-', UZR={2:0,11:30}, UZSTOP={2:[0,3],11:30}, NMX=300, DSMAX=0.001)
+
+
+rp_anti_eps_strong=run('phase',dat='three_phase_anti_per2_strong', NDIM=6, PAR={1:1, 2:2}, LAB=352,SP=['LP6'], IBR=2, UZSTOP={2:[0,5]})
+rp_anti_eps_strong2=run('phase',dat='three_phase_anti_per2_strong', NDIM=6, PAR={1:1, 2:2},  LAB=452,SP=['LP6','BP0'], IBR=2, UZSTOP={2:[0,5]}, DS='-')
+
+
+r_anti_eps = run('phase', U={1:-8.537002673E-01, 2:-4.172952835E-01, 3:-8.537002673E-01, 4:5.207646816E-01, 5:-9.087709537E-01, 6:5.207646816E-01 }, IPS=1,  PAR={1:1, 2:3}, SP=['LP6'], LAB=552, IBR=3, UZSTOP={2:[0,3]}, DS='-')
+#r_anti_eps2 = run('phase', U={1:-8.537002673E-01, 2:-4.172952835E-01, 3:-8.537002673E-01, 4:5.207646816E-01, 5:-9.087709537E-01, 6:5.207646816E-01 }, IPS=1, PAR={1:1, 2:3}, SP=['LP6'], LAB=552, IBR=3, UZSTOP={2:[0,3]})
+
+r_anti2_eps = run('phase', U={1:-4.172952835E-01, 2:-8.537002673E-01, 3:-4.172952835E-01, 4:-9.087709537E-01, 5:5.207646816E-01, 6:-9.087709537E-01 }, IPS=1,  PAR={1:1, 2:3}, SP=['LP6'], LAB=652, IBR=3, UZSTOP={2:[0,3]}, DS='-')
+#r_anti2_eps2 = run('phase', U={1:-4.172952835E-01, 2:-8.537002673E-01, 3:-4.172952835E-01, 4:-9.087709537E-01, 5:5.207646816E-01, 6:-9.087709537E-01 }, IPS=1, PAR={1:1, 2:3}, SP=['LP6'], LAB=652, IBR=3, UZSTOP={2:[0,3]},)
+pl(r_anti_eps + r_anti_eps2 + r_anti2_eps + r_anti2_eps2, stability=True)
+
+pl(r_anti_eps + r_anti2_eps+ rp_anti_eps + rp_anti_eps2 + rp_anti_eps_strong + rp_anti_eps_strong2,stability=True)
+
+
+rp_anti_grad=run('phase',dat='three_phase_anti', NDIM=6, PAR={1:1}, IPS=2, ICP=[4,11, 14, 13], NMX=36000, NTST=350, ISP=2,LAB=152,SP=['LP1'], IBR=1,  DSMAX=0.01, NPR=500)
+sv('rp_anti_gamma')
+rp_anti_grad2=run('phase',dat='three_phase_anti', NDIM=6, PAR={1:1}, IPS=2, ICP=[4,11, 14, 13], NMX=36000, NTST=350, ISP=2,LAB=152,SP=['LP1'], IBR=1, DSMAX=0.01, NPR=500, DS='-')
+sv('rp_anti_gamma_neg')
+
+rp5_anti_grad=run('phase',dat='five_phase_anti', NDIM=10, PAR={1:1}, IPS=2, ICP=[4,11, 14, 13], NMX=36000, NTST=300, ISP=2,LAB=152,SP=['LP1'], IBR=1,  DSMAX=0.1, NPR=500)
+rp5_anti_grad2=run('phase',dat='five_phase_anti', NDIM=10, PAR={1:1}, IPS=2, ICP=[4,11, 14, 13], NMX=36000, NTST=300, ISP=2,LAB=152,SP=['LP1'], IBR=1, DSMAX=0.1, NPR=500, DS='-')
+
+
+rp7_anti_grad=run('phase',dat='seven_phase_anti', NDIM=14, PAR={1:1}, IPS=2, ICP=[4,11, 14, 13], NMX=36000, NTST=250, ISP=2,LAB=152,SP=['LP1'], IBR=1, DSMAX=0.1, NPR=500)
+rp7_anti_grad2=run('phase',dat='seven_phase_anti', NDIM=14, PAR={1:1}, IPS=2, ICP=[4,11, 14, 13], NMX=36000, NTST=250, ISP=2,LAB=152,SP=['LP1'], IBR=1, DSMAX=0.1, NPR=500, DS='-')
+
+rp11_anti_grad=run('phase',dat='eleven_phase_anti', NDIM=22, PAR={1:1}, IPS=2, ICP=[4,11, 14, 13], NMX=36000, NTST=150, ISP=2,LAB=152,SP=['LP1'], IBR=1,  DSMAX=0.1, NPR=500)
+rp11_anti_grad2=run('phase',dat='eleven_phase_anti', NDIM=22, PAR={1:1}, IPS=2, ICP=[4,11, 14, 13], NMX=36000, NTST=150, ISP=2,LAB=152,SP=['LP1'], IBR=1, DSMAX=0.1, NPR=500)
+
+pl(rp_anti_grad + rp_anti_grad2 + rp5_anti_grad + rp5_anti_grad2  + rp7_anti_grad + rp7_anti_grad2 +rp11_anti_grad + rp11_anti_grad2, stability=True, use_labels=False )
+
+cp('rp_anti_gamma','phase')
+rp_quasi_2par0=run('phase',IRS=rp_anti_grad('LP1').data['LAB'], NDIM=6, PAR={1:1}, IPS=2, ICP=[4, 2, 11, 13], ISW=2, NTST=350, ISP=2,LAB=152,SP=['LP0'], IBR=1,  DSMAX=0.01, NPR=100, NMX=700)
+rp_quasi_2par=run(rp_quasi_2par0)
+rp_quasi_2par2=run(rp_quasi_2par0, DS='-', SP=['BP1'])
+
+
+cp('rp_anti_gamma_neg','phase')
+rp_quasi_neg_2par0=run('phase',IRS=rp_anti_grad2('LP1').data['LAB'], NDIM=6, PAR={1:1}, IPS=2, ICP=[4, 2, 11, 13], ISW=2, NTST=350, ISP=2,LAB=152,SP=['LP0'], IBR=1,  DSMAX=0.01, NPR=100, NMX=700)
+rp_quasi_neg_2par=run(rp_quasi_neg_2par0, DS='-')
+rp_quasi_neg_2par2=run(rp_quasi_neg_2par0, SP=['BP1'])
+
+
+
+
+rpeps=run('phase',dat='three_phase_anti', NDIM=6, PAR={1:1}, IPS=2, ICP=[2,11, 14, 13], NMX=36000, NTST=550, ISP=2,LAB=152,SP=['LP6'], IBR=5, NPAR=14, DSMAX=0.001, DS='-', NPR=100)
+ 
+
+ 
+ 
+per1=run('phase',dat='three_phase_anti', NDIM=6, PAR={1:1}, IPS=2, NMX=2, NTST=900, ISP=2,LAB=152,SP=['LP6'], IBR=5, NPAR=14, DSMAX=0.001, NPR=100,  ICP=[3,11, 14, 13],)
+per12 = run(per1('EP2'), PAR={1:1},  ICP=[2,11, 14, 13], NMX=3000, LAB=154)
+per13 = run(per1('EP2'), PAR={1:1},  ICP=[2,11, 14, 13], NMX=3000,SP=['BP0'], DS='-', LAB=200)
+
+
+per2=run('phase',dat='eleven_phase_anti_per2', NDIM=6, PAR={1:1, 2:1.05}, IPS=2, ICP=[2,11, 14, 13], NMX=1000, NTST=1500, ISP=2,LAB=152,SP=['LP6'], IBR=6, NPAR=14, DSMAX=0.001, NPR=100, DS=0.000001)
+
+per22=run(per2(155), NDIM=6, PAR={1:1}, IPS=2, ICP=[2,11, 14, 13], NMX=2500, NTST=1500, ISP=2,LAB=182,SP=['LP6'], IBR=6, NPAR=14, DSMAX=0.001, NPR=100, DS=0.000001)
+per23=run(per2(155), NDIM=6, PAR={1:1}, IPS=2, ICP=[2,11, 14, 13], NMX=2500, NTST=1500, ISP=2, LAB=282,SP=['LP6'], IBR=6, NPAR=14, DSMAX=0.001, NPR=100, DS=-0.000001)
+
+pl(per12 + per13 + per22 + per23, stability=True)
+
+
+per1p=run('phase',dat='three_phase_anti', NDIM=6, PAR={1:1}, IPS=2, ICP=[4, 11, 14, 13], NMX=2000, NTST=900, ISP=2,LAB=152,SP=['LP6'], IBR=7, NPAR=14, DSMAX=0.01, NPR=100, UZSTOP={4:0.04})
+
+per12p = run(per1p('UZ1'), PAR={1:1},  ICP=[2,11, 14, 13], NMX=3000, LAB=310)
+per13p = run(per1p('UZ1'), PAR={1:1},  ICP=[2,11, 14, 13], NMX=3000,SP=['BP0'], DS='-', LAB=400)
+
+
+per2p=run('phase',dat='three_per2_anti', NDIM=6, PAR={1:1, 2:1.05}, IPS=2, ICP=[4, 11, 14, 13], NMX=2000, NTST=1500, ISP=2,LAB=152,SP=['LP6'], IBR=7, NPAR=14, DSMAX=0.01, NPR=100, UZR={4:0.04})
+per22p = run(per2p('UZ2'), PAR={1:1},  ICP=[2,11, 14, 13], NMX=3000, LAB=310)
+per23p = run(per2p('UZ2'), PAR={1:1},  ICP=[2,11, 14, 13], NMX=3000,SP=['BP0'], DS='-', LAB=400)
+
+
+
+rp11eps=run('phase',dat='eleven_phase_anti', NDIM=22, PAR={1:1}, IPS=2, ICP=[2,11, 14, 13], NMX=36000, NTST=550, ISP=2,LAB=152,SP=['LP6'], IBR=5, NPAR=14, DSMAX=0.001, DS='-', NPR=100)
+ 
+ 
+rp11wtv=run('phase',dat='eleven_phase_anti', NDIM=22, PAR={1:1, 2:0.1}, IPS=2, ICP=[3,11, 14, 13], NMX=5, ISP=2,LAB=152,SP=['LP6'], IBR=5, NPAR=14, DSMAX=0.001, DS='-', NPR=1, NTST=350)
+
+rp11grad=run(rp11wtv('EP2'),  PAR={1:1}, IPS=2, ISP=2,LAB=152,SP=['PD12', 'LP2'], IBR=5, NPAR=14, DSMAX=0.1, DS='-', NPR=100,  NMX=5000, ICP=[4,11, 14, 13])
+rp11grad2=run(rp11wtv('EP2'),  PAR={1:1}, IPS=2, ISP=2,LAB=182,SP=['PD12', 'LP2'], IBR=5, NPAR=14, DSMAX=0.1, DS=, NPR=100,  NMX=5000, ICP=[4,11, 14, 13])
+
+
+rp112wtv=run('phase',dat='eleven_phase_anti_per2', NDIM=22, PAR={1:1, 2:0.5, 4:-0.05}, IPS=2, NMX=5, ISP=2,LAB=152, SP=['LP6'], IBR=5, NPAR=14, DSMAX=0.001, DS='-', NPR=1, NTST=350,  ICP=[3,11, 14, 13])
+
+
+rp112grad=run(rp112wtv('EP2'),  PAR={1:1}, IPS=2, ISP=2,LAB=152,SP=['PD12', 'LP2'], IBR=5, NPAR=14, DSMAX=0.1, DS='-', NPR=100,  NMX=5000, ICP=[4,11, 14, 13])
+rp112grad2=run(rp112wtv('EP2'),  PAR={1:1}, IPS=2, ISP=2,LAB=182,SP=['PD12', 'LP2'], IBR=5, NPAR=14, DSMAX=0.1, DS=, NPR=100,  NMX=5000, ICP=[4,11, 14, 13])

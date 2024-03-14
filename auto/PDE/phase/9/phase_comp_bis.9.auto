@@ -1,0 +1,200 @@
+
+################################
+################################
+##########             N=7
+################################
+################################
+
+
+############# small omega=0.1
+#################################
+
+
+
+############# kappa=2 #####################
+
+## PLOT 1
+## 1 par wrt epsilon/f
+############ OMEGA=0.1 ######################
+
+#### KAPPA=1 #######
+split_eps = cache_branch('split_eps', 'phase_comp', dat='ftb_kappa=1_f=0.2_gamma=0_omega=0.1', PAR={'kappa2':1,'f':0.2, 'omega':0.1}, UZSTOP={11:1e3,'f':-1.5}, SP=['LP9'])
+
+r0 = run('phase_comp', dat='ftb_shifted1_kappa=1_f=0.405_gamma=0_omega=0.1', PAR={'kappa2':1,'f':0.405, 'omega':0.1}, UZSTOP={11:1e3,'f':0}, SP=['LP1'], NTST=250, DS=0.0001)
+shifted_eps = cache_branch('shifted_eps',r0('LP1'), SP='LP12')
+
+split_eps = load_branch('split_eps')
+shifted_eps = load_branch('shifted_eps')
+
+pl(split_eps+shifted_eps, stability=True)
+
+shifted2_eps = cache_branch('shifted2_eps', 'phase_comp', dat='ftb_shifted2_kappa=1_f=0.52_gamma=0_omega=0.1', PAR={'kappa2':1,'f':0.52, 'omega':0.1}, UZSTOP={11:1e3,'f':0}, SP=['LP9'], NTST=250)
+
+uni_eps = cache_branch('uni_eps', 'phase_comp', dat='leftward_kappa=1_f=0.65_gamma=0_omega=0.1', PAR={'kappa2':1,'f':0.65, 'omega':0.1}, UZR={'f':[0.2]}, UZSTOP={11:1e3})
+
+#### KAPPA=2 #######
+split_eps = cache_branch('split_kappa=2_eps', 'phase_comp', dat='split_proper_kappa=2_f=0.3_gamma=0_omega=0.1', PAR={'kappa2':4,'f':0.3, 'omega':0.1}, UZSTOP={11:1e3,'f':-1.5}, SP=['LP8'])
+split2_eps = cache_branch('split2_eps', 'phase_comp', dat='split_shifted_kappa=2_f=0.6_gamma=0_omega=0.1', PAR={'kappa2':4,'f':0.6, 'omega':0.1}, UZSTOP={11:1e3,'f':-3}, SP=['LP5'], backward=False)
+
+uni_eps = cache_branch('uni_kappa=2_eps', 'phase_comp', dat='rightward_kappa=2_f=0.6_gamma=0_omega=0.1', PAR={'kappa2':4,'f':0.6, 'omega':0.1}, UZR={'f':[0.2]}, UZSTOP={11:1e3, 'f':-3})
+
+
+############ OMEGA=1 ######################
+split_eps_slow = cache_branch('split_eps_slow', 'phase_comp', dat='btf_kappa=1_f=0.2_gamma=0_omega=1', PAR={'kappa2':1,'f':0.2, 'omega':1}, UZSTOP={11:1e3,'f':0}, SP=['LP8'])
+uni_eps_slow = cache_branch('uni_eps_slow_kappa=0.8', 'phase_comp', dat='rightward_kappa=1_f=0.65_gamma=0_omega=1', PAR={'kappa2':1,'f':0.65, 'omega':1}, UZSTOP={11:1e3,'f':0}, SP=['LP12'], NTST=500)
+
+
+alt_eps_slow = cache_branch('alt_eps_slow', 'phase_comp', dat='split_shifted_kappa=2_f=0.6_gamma=0_omega=1', PAR={'kappa2':4,'f':0.6, 'omega':1}, UZSTOP={11:1e3,'f':0}, SP=['LP8'])
+
+split_eps_slow = cache_branch('split_eps_slow_kappa=0.8', 'phase_comp', dat='split_proper_kappa=0.8_f=0.4_gamma=0_omega=1', PAR={'kappa2':0.8*0.8,'f':0.4, 'omega':1}, UZSTOP={11:1e3,'f':-2}, SP=['LP8'])
+split2_eps_slow = cache_branch('split2_eps_slow_kappa=0.8', 'phase_comp', dat='split_shifted_proper_kappa=0.8_f=0.1_gamma=0_omega=1', PAR={'kappa2':0.8*0.8,'f':0.1, 'omega':1}, UZSTOP={11:1e3,'f':-2}, SP=['LP8'])
+uni_eps_slow = cache_branch('uni_eps_slow_kappa=0.8', 'phase_comp', dat='leftward_kappa=0.8_f=0.65_gamma=0_omega=1', PAR={'kappa2':0.8*0.8,'f':0.65, 'omega':1}, UZSTOP={11:1e3,'f':0}, SP=['LP8'])
+
+
+#LOAD FROM STORAGE
+split_eps = load_branch('split_kappa=2_eps')
+split2_eps = load_branch('split2_eps')
+uni_eps = cache_branch('uni_eps') #uni_eps = load_branch('uni_kappa=2_eps')
+
+pl(split_eps + uni_eps, bifurcation_y=['chi_hat'],stability=True, use_labels=False)
+
+split_eps_slow = load_branch('split_eps_slow_kappa=0.8')
+uni_eps_slow = load_branch('uni_eps_slow_kappa=0.8')
+pl(split_eps_slow+uni_eps_slow , bifurcation_y=['chi_hat'], stability=True, use_labels=False)
+
+## PLOT 2 - PHASE ASYMM VS EPSILON
+pl(anti, stability=True, use_labels=False, bifurcation_y=['chi_hat'])
+
+
+
+## PLOT 3 - PHASE ASYMM VS KAPPA # limiting kappa range for now...
+
+split_gamma = cache_branch('split_gamma', 'phase_comp', dat='split_flipped_kappa=1_f=0.2_gamma=0_omega=0.1', PAR={'kappa2':1,'f':0.2, 'omega':0.1}, ICP =['kappa2', 11, 14, 13, 15, 16, 17, 18], UZR={'kappa2':[1.25*1.25, 1.5*1.5, 1.75*1.75, 2*2, 2.5*2.5, 3*3, 3.5*3.5]}, UZSTOP={'kappa2':[0.5*0.5, 16]})
+
+pl(anti, stability=True, use_labels=False, bifurcation_y=['chi_hat'], bifurcation_x='kappa')
+
+######## VARIABLE OMEGA ###############
+## PLOT 4
+## 1 par wrt omega
+from math import pi
+
+split_omega = cache_branch('split_omega','phase_comp', dat='ftb_kappa=1.5_f=0.2_gamma=0_omega=0.1', PAR={'kappa2':1.5*1.5,'f':0.2, 'omega':0.1}, SP=['LP8'], ICP =['omega', 11, 14, 13, 15, 16, 17, 18, 19, 20, 21], UZSTOP={11:3e2,'omega':[0, 6*pi]})
+
+
+split_omega_lo = cache_branch('split_omega_lo','phase_comp', dat='btf_kappa=1_f=0.2_gamma=0_omega=1', PAR={'kappa2':1,'f':0.2, 'omega':1}, SP=['LP8'] ,ICP =['omega', 11, 14, 13, 15, 16, 17, 18], UZSTOP={11:3e2,'omega':[0, 6*pi]})
+
+
+
+split2_omega_lo = cache_branch('split2_omega_lo','phase_comp', dat='split_shifted_proper_kappa=0.8_f=0.2_gamma=0_omega=1.15', PAR={'kappa2':0.8*0.8,'f':0.2, 'omega':1.15}, SP=['LP8','TR4'] ,ICP =['omega', 11, 14, 13, 15, 16, 17, 18, 21], UZSTOP={11:3e2,'omega':[0, 6*pi]})
+
+
+sv('rp_anti_omega_for') #rp_anti_omega_for=loadbd('rp_anti_omega_for')
+
+rp_anti_omega_back = run(rp_anti_omega_for('EP1'), DS='-') 
+sv('rp_anti_omega_back') #rp_anti_omega_back=loadbd('rp_anti_omega_back')
+
+
+SNP1_kappa_omega0  = run(split_omega('LP1'), ICP =['omega','kappa2', 11, 14, 13, 15, 16, 17, 18, 21], ISW=2, UZSTOP={11:3e2,'omega':[0, 3*pi]}, NPR=1)
+SNP1 = cache_branch('SNP1_kappa_omega_f=0.2', SNP1_kappa_omega0, NPR=40, UZSTOP={11:3e2,'omega':[0, 2*pi], 'kappa2':25} )
+
+
+SNP2_kappa_omega0  = run(split_omega('LP2'), ICP =['omega','kappa2', 11, 14, 13, 15, 16, 17, 18, 21], ISW=2, UZSTOP={11:3e2,'omega':[0, 3*pi]}, NPR=1)
+SNP2 = cache_branch('SNP2_kappa_omega_f=0.2', SNP2_kappa_omega0, NPR=40, UZSTOP={11:3e2,'omega':[0, 2*pi], 'kappa2':25})
+
+
+
+TR1_kappa_omega0 = run(split_omega('TR1'), ICP =['omega','kappa2', 11, 12, 14, 13, 15, 16, 17, 18, 21], ISW=2, UZSTOP={11:3e2,'omega':[0, 4*pi]}, NPR=1, NTST=125) #NEED LOW NTST TO CURB RAM USAGE
+TR1 = cache_branch('TR1_kappa_omega_f=0.2', TR1_kappa_omega0, NPR=40,  UZSTOP={11:3e2,'omega':[0, 2*pi]})
+
+rp_sym_omega_for = run('phase_comp', dat='five_kappa=2_f=0.2_gamma=0_omega=6.2832', PAR={'kappa2':4,'f':0.2, 'omega':2*pi}, ICP =['omega', 11, 14, 13, 15, 16, 17, 18], UZSTOP={'omega':[0, 6*pi]})
+sv('rp_sym_omega_for') #rp_sym_omega_for=loadbd('rp_sym_omega_for')
+
+rp_sym_omega_back = run(rp_sym_omega_for('EP1'), DS='-') 
+sv('rp_sym_omega_back') #rp_sym_omega_back=loadbd('rp_sym_omega_back')
+
+rp_anti_omega_for=loadbd('rp_anti_omega_for')
+rp_anti_omega_back=loadbd('rp_anti_omega_back')
+anti = rp_anti_omega_for+rp_anti_omega_back
+
+rp_sym_omega_for=loadbd('rp_sym_omega_for')
+rp_sym_omega_back=loadbd('rp_sym_omega_back')
+sym = rp_sym_omega_for + rp_sym_omega_back
+
+pl(anti+sym,  bifurcation_y=['chi_hat'], bifurcation_x='omega', stability=True, use_labels=False)
+
+
+SNP1 = load_branch('SNP1_kappa_omega_f=0.2')
+SNP2 = load_branch('SNP2_kappa_omega_f=0.2')
+TR1 = load_branch('TR1_kappa_omega_f=0.2')
+
+
+pl(SNP1+SNP2+TR1,  bifurcation_y='omega', bifurcation_x='kappa', stability=True, use_labels=False, miny=0, maxy=6, maxx=6)
+
+############ VARIABLE KAPPA ##############
+kappas = [0.2,0.4,0.6,0.8,1.0, 1.2, 1.4, 1.6, 1.8, 2.0, 2.2, 2.4, 2.6, 2.8]
+split_kappa = cache_branch('split_kappa','phase_comp',  dat='ftb_kappa=1.5_f=0.2_gamma=0_omega=0.1', PAR={'kappa2':1.5*1.5, 'f':0.2, 'omega':0.1}, SP=['LP8'] ,ICP =['kappa2', 11, 14, 13, 15, 16, 17, 18, 21], UZSTOP={11:3e2,'kappa2':[0.1*0.1, 3*3]}, UZR={'kappa2':[k*k for k in kappas]}, forward={'DS':0.0001}, backward={'DS':-0.0001})
+
+split_kappa = load_branch('split_kappa')
+split_omegas={}
+for uz in split_kappa('UZ'):
+    kappa  = math.sqrt(uz.__dict__['b']['data'][0])
+    kappa_close = round(kappa,1)
+    #split_omegas[kappa_close] = cache_branch(f'split_omega_kappa={kappa}_f=0.2', uz , SP=['LP8'] ,ICP =['omega', 11, 14, 13, 15, 16, 17, 18, 21], NTST=125, UZSTOP={11:3e2,'omega':[-2*pi, 2*pi]}, NMX=3600)
+    split_omegas[kappa_close] = load_branch(f'split_omega_kappa={kappa}_f=0.2')
+    
+    
+cl = []
+for kappa in split_omegas.keys():
+    
+    split_omegas[kappa].uniquelyLabel()
+    l=[split_omegas[kappa](i) for i in split_omegas[kappa].getLabels()]
+    dcb = np.array([(s.b['data'][0],s.b['data'][6] ) for s in l ])
+    dcb = dcb[dcb[:,0].argsort(),:]
+    cross = np.argwhere(dcb[:,1]>0)[0,0]
+    x0,y0=dcb[cross-1,:]
+    x1,y1=dcb[cross,:]
+    m=(y1-y0)/(x1-x0)
+    b = y1 - m*x1
+    xcross = -b/m
+    if kappa<1.8:
+        cl.append((xcross, kappa))
+        
+cl = np.array(cl)
+cl = cl[cl[:,1].argsort(),:]
+
+lp_lower_kappa_omega0  = run(split_omegas[1.6]('LP4'), ICP =['omega','kappa2', 11, 14, 13, 15, 16, 17, 18, 21], ISW=2, UZSTOP={11:3e2,'omega':[0, 4*pi]}, NPR=1)
+lp_lower_kappa_omega = cache_branch('lp_lower_kappa_omega_f=0.2', lp_lower_kappa_omega0, NPR=40 )
+
+lp_lower2_kappa_omega0  = run(split_omegas[2.2]('LP2'), ICP =['omega','kappa2', 11, 14, 13, 15, 16, 17, 18, 21], ISW=2, UZSTOP={11:3e2,'omega':[0, 4*pi],'kappa':[0]}, NPR=1)
+lp_lower2_kappa_omega = cache_branch('lp_lower2_kappa_omega_f=0.2', lp_lower2_kappa_omega0, NPR=40 )
+
+lp_upper_kappa_omega0  = run(split_omegas[1.6]('LP3'), ICP =['omega','kappa2', 11, 14, 13, 15, 16, 17, 18, 21], ISW=2, UZSTOP={11:3e2,'omega':[0, 4*pi]}, NPR=1)
+lp_upper_kappa_omega = cache_branch('lp_upper_kappa_omega_f=0.2', lp_upper_kappa_omega0, NPR=40 )
+
+lower_omega = cache_branch('lower_kappa=1.8_omega_f=0.2', lp_lower_kappa_omega('UZ1'), ISW=1,ICP =['omega', 11, 14, 13, 15, 16, 17, 18, 21], SP=['TR1'], UZSTOP={11:3e2,'omega':[0, 4*pi]},  NPR=40 )
+
+tr1_upper_kappa_omega0 = run(split_omegas[1.8]('TR1'), ICP =['omega','kappa2', 11, 12, 14, 13, 15, 16, 17, 18, 21], ISW=2, UZSTOP={11:3e2,'omega':[0, 4*pi]}, NTST=125, NPR=1)
+tr1_upper_kappa_omega = cache_branch('tr1_upper_kappa_omega_f=0.2', tr1_upper_kappa_omega0, NPR=40, forward=False )
+
+
+pl(tr1_upper_kappa_omega+lp_upper_kappa_omega+lp_lower_kappa_omega, bifurcation_y='omega',bifurcation_x='kappa')
+## PLOT 5
+## 2 parameter in the (epsilon,omega)-plane
+twopar={'UZSTOP':{'f':0,'omega':[0,9*pi]}, 'ISW':2, 'ICP':['omega', 'f', 11]}
+
+pfp_omega_eps0 = run(rp_anti_omega_for('LP2'), **twopar, NPR=1 )
+sv('pfp_omega_eps0')
+pfp_omega_eps_for = run(pfp_omega_eps0, NPR=40)
+sv('pfp_omega_eps_for')
+pfp_omega_eps_back = run(pfp_omega_eps0, NPR=40, DS='-')
+sv('pfp_omega_eps_back')
+
+r0 = run('phase_comp', dat='ftb_shifted1_kappa=1_f=0.405_gamma=0_omega=0.1', PAR={'kappa2':1,'f':0.405, 'omega':0.1}, UZSTOP={11:1e3,'f':0}, SP=['BP1'], NTST=500, DS=0.0001, DSMAX=0.001, NMX=440)
+r02 = run(r0('EP2'),ICP =['omega', 11, 14, 13, 15, 16, 17, 18, 21, 22, 23, 24], UZSTOP={11:1e3,'f':0}, SP=['LP1'], NTST=250, DS=-0.0001)
+PFP1_omega0  = run(r02('LP1'), ICP =['omega','kappa2', 11, 14, 13, 15, 16, 17, 18, 21], ISW=2, UZSTOP={11:3e2,'omega':[0, 4*pi]}, NPR=1, SP=[])
+PFP1=cache_branch('PFP1_kappa_omega_f', PFP1_omega0,  NPR=40 )
+
+############ VARIABLE gamma ##############
+kappas = [0.2,0.4,0.6,0.8,1.0, 1.2, 1.4, 1.6, 1.8, 2.0, 2.2, 2.4, 2.6, 2.8, 3.0]
+split_gamma = cache_branch('split_gamma','phase_comp', dat='split_proper_kappa=0.8_f=0.2_gamma=0_omega=1', PAR={'kappa2':0.8*0.8,'f':0.2, 'omega':1}, SP=['LP8'] ,ICP =['grad', 11, 14, 13, 15, 16, 17, 18, 21], UZSTOP={11:3e2,'kappa2':[0.1*0.1, 3*3]}, UZR={'kappa2':[k*k for k in kappas]})
+split_gamma = load_branch('split_gamma')

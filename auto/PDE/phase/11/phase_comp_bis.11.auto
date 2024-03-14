@@ -1,0 +1,124 @@
+
+################################
+################################
+##########             N=11
+################################
+################################
+
+############ small OMEGA=0.01 - adiabatic limit ######################
+
+#### KAPPA=1.75 #######
+split_eps = cache_branch('split_eps', 'phase_comp', dat='ftb_kappa=1.75_f=0.2_gamma=0_omega=0.01', PAR={'kappa2':1.75**2,'f':0.2, 'omega':0.01}, UZSTOP = {'f': [-1.5], 11:2e2, 'kappa2':[0,16]}, SP=['LP9'])
+#bndry_eps = cache_branch('bndry_eps', 'phase_comp', dat='nonmono_kappa=1.75_f=0.1_gamma=0_omega=0.01', PAR={'kappa2':1.75**2,'f':0.1, 'omega':0.01}, UZSTOP = {'f': [-1.5], 11:2e2, 'kappa2':[0,16]}, SP=['LP9'])
+shift_eps = cache_branch('shift_eps', 'phase_comp', dat='shifted_kappa=1.75_f=0.55_gamma=0_omega=0.01', PAR={'kappa2':1.75**2,'f':0.55, 'omega':0.01}, SP=['LP9'])
+
+split_eps2 = cache_branch('split_ep2s', 'phase_comp', dat='ftb_kappa=1.47_f=0.1_gamma=0_omega=0.01', PAR={'kappa2':1.47**2,'f':0.1, 'omega':0.01}, UZSTOP = {'f': [-1.5], 11:2e2, 'kappa2':[0,16]}, SP=['LP9'])
+
+split_eps = cache_branch('split_eps')
+
+
+split_omega = cache_branch('split_omega', 'phase_comp', dat='ftb_kappa=1.75_f=0.2_gamma=0_omega=0.01', PAR={'kappa2':1.75**2,'f':0.2, 'omega':0.01}, ICP = ['omega', 11, 14, 13, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24] , SP=['LP9'])
+bndry_omega = cache_branch('bndry_omega', 'phase_comp', dat='nonmono_kappa=1.75_f=0.1_gamma=0_omega=0.01', PAR={'kappa2':1.75**2,'f':0.1, 'omega':0.01}, ICP = ['omega', 11, 14, 13, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24] , SP=['LP9'])
+
+
+split_kappa = cache_branch('split_kappa', 'phase_comp', dat='ftb_kappa=1.75_f=0.2_gamma=0_omega=0.01', PAR={'kappa2':1.75**2,'f':0.2, 'omega':0.01}, ICP = ['kappa2', 11, 14, 13, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24] , SP=['LP9'])
+bndry_kappa = cache_branch('bndry_kappa', 'phase_comp', dat='nonmomo_kappa=1.75_f=0.1_gamma=0_omega=0.01', PAR={'kappa2':1.75**2,'f':0.1, 'omega':0.01}, ICP = ['kappa2', 11, 14, 13, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24] , SP=['LP9'])
+
+
+#### KAPPA=3 #######
+
+bndryhi_eps = cache_branch('bndry_kappa=3_eps', 'phase_comp', dat='nonmono_kappa=3_f=0.1_gamma=0_omega=0.01', PAR={'kappa2':3**2,'f':0.1, 'omega':0.01}, SP=['LP9'])
+
+shifthi_eps = cache_branch('shift_kappa=3_eps', 'phase_comp', dat='shifted_kappa=3_f=0.6_gamma=0_omega=0.01', PAR={'kappa2':3**2,'f':0.6, 'omega':0.01}, SP=['LP9'])
+
+
+
+########## TWO PAR - EPS,KAPPA ###########
+
+SNP10 =  run(split_eps('LP2'), ISW=2, ICP=['f','kappa2',11], DS=1e-4)
+SNP1 = cache_branch('SNP1_eps_kappa', SNP10, UZSTOP = {'f': -0.5, 11:2e2, 'kappa2':[0,16]}, ICP=['f','kappa2',11,'kappa'])
+r0=loadbd('SNP1_eps_kappa_back')
+SNP1_bis = cache_branch('SNP1_eps_kappa_bis', r0('LP')[-1], SP=[], backward=False)
+
+
+SNP20 =  run(split_eps('LP1'), ISW=2, ICP=['f','kappa2',11,'kappa'], DS=1e-4)
+SNP2 = cache_branch('SNP2_eps_kappa', SNP20, UZSTOP = {'f': -0.5, 11:2e2, 'kappa2':[0,16]})
+
+
+SNP20_bis =  run(split_eps2('LP1'), ISW=2, ICP=['f','kappa2',11,'kappa'], DS=1e-4)
+SNP2_bis = cache_branch('SNP2_eps_kappa_bis', SNP20_bis, UZSTOP = {'f': 0, 11:2e2, 'kappa2':[0,16]}, SP=[])
+
+
+HM100 = cache_branch('HM100_eps', 'phase_comp', dat='ftb_kappa=1.75_f=0.2_gamma=0_omega=0.01', PAR={'kappa2':1.75**2,'f':0.2, 'omega':0.01}, UZSTOP = { 11:1e2}, backward=False)
+
+HM10 = cache_branch('HM10_eps', 'phase_comp', dat='ftb_kappa=1.75_f=0.2_gamma=0_omega=0.01', PAR={'kappa2':1.75**2,'f':0.2, 'omega':0.01}, UZSTOP = { 11:1e3}, backward=False)
+HM1 = cache_branch('HM1_kappa_eps',HM10('UZ1'),  ICP=['f','kappa2','kappa'], UZSTOP = {'f': -0.1, 11:2e2, 'kappa2':[0,9]}, SP='LP1')
+#HM1 = cache_branch('HM1_kappa_eps',HM100('UZ1'),  ICP=['f','kappa2','kappa'], UZSTOP = {'f': -0.1, 11:2e2, 'kappa2':[0,9]}, forward=False, NTST=500, SP='LP1')
+
+SNP1 = cache_branch('SNP1_eps_kappa')
+SNP1_bis = cache_branch('SNP1_eps_kappa_bis')
+SNP2 = cache_branch('SNP2_eps_kappa')
+SNP2_bis = cache_branch('SNP2_eps_kappa_bis')
+HM1 = cache_branch('HM1_kappa_eps')
+
+pl(SNP1+SNP1_bis+SNP2+SNP2_bis+HM1, bifurcation_y='f', bifurcation_x='kappa', stability=False, use_labels=False, use_symbols=False, minx=0, maxx=3, miny=-0.1, maxy=1)
+
+
+PFP10 =  run(shifthi_eps('LP1'), ISW=2, ICP=['f','kappa2',11,'kappa'], DS=1e-2)
+PFP1 = cache_branch('PFP1_eps_kappa', PFP10, UZSTOP = {'f': -0.5, 11:2e2, 'kappa2':[0,16]}, NTST=150, forward=False)
+
+
+
+
+
+############ VARIABLE OMEGA ####################
+ICP_omega = ['omega', 11, 14, 13, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24]
+split_omega = cache_branch('split_omega', 'phase_comp', dat='ftb_kappa=1.75_f=0.2_gamma=0_omega=0.01', PAR={'kappa2':1.75**2,'f':0.2, 'omega':0.01}, UZSTOP = {'omega': [-0.1, 4.5], 11:2e2, 'kappa2':[0,16]}, ICP=ICP_omega, SP=['LP9'])
+
+
+btf_omega = cache_branch('btf_omega', 'phase_comp', dat='ftb_kappa=1_f=0.2_gamma=0_omega=1', PAR={'kappa2':1.75**2,'f':0.2, 'omega':1}, UZSTOP = {'omega': [-0.1, 4.5], 11:2e2, 'kappa2':[0,16]}, ICP=ICP_omega, SP=['LP9'])
+
+
+
+SNP20 =  run(split_omega('LP2'), ISW=2, ICP=['omega','kappa2',11], DS=1e-4)
+SNP2 = cache_branch('SNP2_omega_kappa', SNP20, UZSTOP = {'omega': [-0.1, 4], 11:2e2, 'kappa2':[0,16]}, ICP=['omega','kappa2',11,'kappa'])
+
+
+SNP10 =  run(split_omega('LP1'), ISW=2, ICP=['omega','kappa2',11], DS=1e-4)
+SNP1 = cache_branch('SNP1_omega_kappa', SNP10, UZSTOP = {'omega': [-0.1, 4], 11:2e2, 'kappa2':[0,16]}, ICP=['omega','kappa2',11,'kappa'])
+
+
+
+
+
+
+# slices
+
+import numpy as np
+cache_slices('splits_omega', 'phase_comp', dat='ftb_kappa=1.75_f=0.2_gamma=0_omega=0.01', PAR={'kappa2':1.75**2,'f':0.2, 'omega':0.01}, SP=['LP9','TR1'], overwrite=True, slices={'kappa2':[k*k for k in np.arange(1.6, 3.2, 0.2)]}, ICP=['omega', 11, 14, 13, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24], forward={'UZSTOP':{'omega':8}}, backward={'UZSTOP':{'omega':-0.1}})
+
+cache_slices('splits_omega', 'phase_comp', dat='ftb_kappa=1.75_f=0.2_gamma=0_omega=0.01', PAR={'kappa2':1.75**2,'f':0.2, 'omega':0.01}, SP=['LP9','TR1'], overwrite=True, slices={'kappa2':[k*k for k in np.arange(0.2, 1.8, 0.2)]}, ICP=['omega', 11, 14, 13, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24], backward={'UZSTOP':{'omega':8}}, forward={'UZSTOP':{'omega':-0.1}})
+
+def bndry_2_btf(bd):
+    b0=np.where(bifDiag_measures(bd,'ncross')>1)[0][0]
+    btf0 = np.where(np.logical_and(bifDiag_measures(bd,'unstbl')[b0:]==0, bifDiag_measures(bd,'ncross')[b0:]==1))[0][0]+b0
+    return bifDiag_measures(bd,'omega')[btf0]
+    
+def ftb_2_bndry(bd):
+    b0=np.where(bifDiag_measures(bd,'ncross')>1)[0][0]
+    return bifDiag_measures(bd,'omega')[b0]
+
+
+p=pl(SNP2, bifurcation_x='kappa',bifurcation_y='omega', use_symbols=False, use_labels=False, stability=False , minx=0, maxx=3.0, miny=0)
+
+
+k1=np.arange(0.2,1.8,0.2)
+k2=np.arange(1.8,3.2,0.2)
+k=np.concatenate((k1,k2))
+
+rs=[*[loadbd(f'splits_omega_kappa2={k*k}_back') for k in k1],*[loadbd(f'splits_omega_kappa2={k*k}_for') for k in k2]]
+c1=[bndry_2_btf(r) for r in rs]
+c2=[ftb_2_bndry(r) for r in rs]
+
+addLine(p,k,c1)
+addLine(p,k,c2)

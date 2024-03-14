@@ -1,0 +1,6 @@
+u'=a-(b0+b+1)*u+u*u*v
+v'=(b0+b)*u-u*u*v
+
+init u=0, v=0
+par e=0.1,  b=0.0, h=1, d=0.1, a=.3, b0=1
+@ XP1=u, YP1=v, TOTAL=2000, XHI=2000, meth=gear

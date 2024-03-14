@@ -1,0 +1,6 @@
+r0=run('SCH', MXBF=2)
+rp1=run(r0('HB1'), MXBF=0, ICP =  [1, 11, 6], IPS=2, ILP=0,  EPSL= 1e-07, EPSU = 1e-07, EPSS =1e-05,  THL={11:0.05} , DSMAX=0.1, DSMIN=0.00000001, LAB=400, NMX=6000)
+rp2=run(r0('HB3'), MXBF=0, ICP =  [1, 11, 6], IPS=2, ILP=0,  EPSL= 1e-07, EPSU = 1e-07, EPSS =1e-05,  THL={11:0.05} , DSMAX=0.1, DSMIN=0.00000001, LAB=600, NMX=6000)
+rp3=run(r0('HB4'), MXBF=0, ICP =  [1, 11, 6], IPS=2, ILP=0,  EPSL= 1e-06, EPSU = 1e-06, EPSS =1e-05,  THL={11:0.05} , DSMAX=0.1, DSMIN=0.00000001, LAB=700, NMX=6000)
+
+pl(r0+rp1+rp2+rp3, stability=True, use_labels=False)

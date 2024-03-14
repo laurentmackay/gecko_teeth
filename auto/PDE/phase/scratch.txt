@@ -1,0 +1,135 @@
+
+tr1_2par0 = loadbd('anti_tr1_bndry_2par0')
+tr1_2par = run(tr1_2par0, NPR=20, DS=0.01, DSMAX=1, NMX=400, UZSTOP = {2: [0], 11:[30,700], 5:[0,9]}, SP=['R21'], NPAR=19, UZR={'kappa2':1.54*1.54})
+sv('anti_tr1_bndry_2par') 
+
+
+
+
+
+
+
+
+anti_pd1=run('phase_comp',dat='five_anti',  PAR={'mu':1, 'kappa2':4, 'f':0.8}, LAB=31,SP=['PD1'], IBR=1, NPR=100, NMX=1200)
+
+
+pd1_2par0 = run(anti_pd1('PD1'), ISW=2, IPS=2, ISP=2, ICP=[2, 5, 11, 15], DSMAX=0.1, NTST=75, NPR=1, NMX=500)
+sv('anti_pd1_bndry_2par0') #pd1_2par0 =loadbd('anti_pd1_bndry_2par0')
+pd1_2par = run(pd1_2par0, NPR=20, DS='-', NMX=800, UZR={'kappa2':1.54*1.54})
+sv('anti_pd1_bndry_2par') #pd1_2par = loadbd('anti_pd1_bndry_2par')
+
+
+
+
+
+rp_sync_lo_grad=run('phase_comp',dat='5/sym_40_kappa=0.9_f=0.2_gamma=0_omega=6.2832',ICP=[4, 11, 14, 13, 15, 16, 17],  PAR={'mu':1, 'kappa2':0.81, 'f':0.2}, SP=['LP5', 'BP2'], IBR=1, DSMAX=.1, NPR=10, NMX=800)
+sv('sync_lo_gamma')
+#rp_sync_lo_grad = loadbd('sync_lo_gamma')
+
+lp4_2par0_k2=run(rp_sync_lo_grad('LP4'), ISW=2, IPS=2, ISP=2, ICP=['grad', 'kappa2', 11, 12, 15], NPR=1)
+sv('sync_lp4_gamma_k20')
+
+lp4_2par_k22 = run(lp4_2par0_k2, NPR=40, UZSTOP={'kappa2':4}, SP=['LP0'], NMX=800, DS='-')
+sv('sync_lp4_gamma_k22')  #lp4_2par_k22 = loadbd('sync_lp4_gamma_k22')
+
+rp_wtf = run(lp4_2par_k22, IPS=2, ICP=['grad', 11, 'chi_hat', 13, 17], ISW=1, SP=['LP2'], NTST=150, UZR={'grad':[0]} )
+sv('wtf') #rp_wtf = loadbd('wtf') 
+
+rp_check = run(rp_wtf('UZ1'), ICP=['f', 11, 'chi_hat', 13, 17],  UZSTOP={'f':[1e-4]},UZR={'f':[0.2]}, DS='-')
+sv('check_for') #rp_check = loadbd('check_for')
+
+
+pfp_2par0_k2=run(rp_check('LP1'), ISW=2, IPS=2, ISP=2, ICP=['f', 'kappa2', 11, 'kappa'],  NPR=1,  DSMAX=0.1, DS=0.01)
+sv('pfp_eps_k20')#pfp_2par0_k2=loadbd('pfp_eps_k20')
+pfp_2par_k2 = run(pfp_2par0_k2, NPR=40, UZSTOP={'kappa2':4}, SP=['LP0'], NMX=800, DS=0.01, UZR={'kappa2':[0.5*0.5, 1.54*1.54]}, NTST=750)
+sv('pfp_eps_k2') # pfp_2par_k2 =  loadbd('pfp_eps_k2')
+
+
+rp_anti_154_eps=run('phase_comp',dat='five_kappa=1.54_f=0.8_gamma=0', PAR={'mu':1, 'kappa2':1.54*1.54, 'f':0.8}, LAB=31,SP=['LP8', 'BP2'], IBR=1, DSMAX=1, NPR=100, NMX=1200, NTST=350)
+sv('anti_154_eps_for')
+rp_anti_154_eps2=run('phase_comp',dat='five_kappa=1.54_f=0.8_gamma=0', PAR={'mu':1, 'kappa2':1.54*1.54, 'f':0.8}, LAB=61, SP=['LP8', 'BP2'], IBR=1, DSMAX=1, NPR=10, NMX=500, DS=-0.01, NTST=350)
+sv('anti_154_eps_back')
+
+
+pd4_omega_eps0=run(rp_anti_154_eps('PD4'), ISW=2, ICP=[2, 6, 11, 12, 15, 20], UZSTOP={'omega':[0,3*pi], 'f':0}, NPAR=20, NMX=1200, ITMX= 18, NPR=1)
+
+pd4_omega_eps_for = run(pd4_omega_eps0, NPR=20)
+sv('pd4_omega_eps_for') #pd4_omega_eps_for=loadbd('pd4_omega_eps_for')
+pd4_omega_eps_back = run(pd4_omega_eps0, NPR=20)
+sv('pd4_omega_eps_back') #pd4_omega_eps_for=loadbd('pd4_omega_eps_back')
+
+
+
+anti_01_eps=run('phase_comp',dat='five_kappa=1.54_f=0.5_gamma=0', PAR={'mu':1, 'kappa2':1.54*1.54, 'f':0.5, 'omega':0.1}, LAB=31,SP=['LP8', 'BP2'], IBR=1, DSMAX=1, NPR=100, NMX=1200, NTST=350)
+sv('anti_01_eps_for')
+anti_01_eps2=run('phase_comp',dat='five_kappa=1.54_f=0.5_gamma=0', PAR={'mu':1, 'kappa2':1.54*1.54, 'f':0.5, 'omega':0.1}, LAB=61, SP=['LP8', 'BP2'], IBR=1, DSMAX=1, NPR=10, NMX=500, DS=-0.01, NTST=350)
+sv('anti_01_eps_back')
+
+hm2_omega_eps_for=run(anti_01_eps('UZ1'), ICP=[2, 6, 11, 12, 15, 20], UZSTOP={'omega':[0,3*pi], 'f':0}, NPAR=20, NMX=1200, ITMX= 18, NPR=20)
+sv('hm2_omega_eps_for') #hm2_omega_eps_for=loadbd('hm2_omega_eps_for')
+hm2_omega_eps_back=run(anti_01_eps('UZ1'), ICP=[2, 6, 11, 12, 15, 20], UZSTOP={'omega':[0,3*pi], 'f':0}, NPAR=20, DS=-0.0001, DSMAX=0.001, NMX=1200, ITMX= 18, NPR=20)
+sv('hm2_omega_eps_back') #hm2_omega_eps_back=loadbd('hm2_omega_eps_back')
+
+bp1_omega_eps_for= run(r_154_eps('BP1'), ISW=2, IPS=1, ISP=2, ICP=['f', 'omega', 15],  DSMAX=1, DS=.1, NPR=50, NMX=700, UZSTOP={'kappa2':9}, UZR={'kappa2':1.54*1.54}, NPAR=20)
+sv('bp1_omega_eps_for') #bp1_omega_eps_for = loadbd('bp1_omega_eps_for')
+
+
+
+
+
+rp_sync_05_eps=run('phase_comp',dat='five_kappa=0.5_sync',ICP=[2, 11, 14, 13, 15, 16, 17],  PAR={'mu':1, 'kappa2':0.5*0.5, 'f':0.2}, SP=['LP3', 'BP2'],  NPR=20	, NMX=160, UZSTOP={11:7e3}, UZR={'f':[0.36, 0.4, 0.45, 0.5, 0.55, 0.6]})
+sv('sync5_05_eps_for') #rp_sync_05_eps=loadbd('sync5_05_eps_for')
+
+
+hm1_2par_k2 =run(rp_sync_05_eps('UZ7'), NPR=20, ICP=['f', 'kappa2',  'kappa'],  UZSTOP={'kappa2':4}, DS=0.01, UZR={'kappa2':1.54*1.54})
+sv('hm1_eps_k2') #hm1_2par_k2 = loadbd('hm1_eps_k2')
+
+
+
+Uss_lo = {1 : -6.437227915E-02, 2 : -6.437227915E-02, 3 : -6.437227915E-02, 4 : -6.437227915E-02, 5 : -6.437227915E-02, 6 : -9.979259540E-01, 7 : -9.979259540E-01, 8 : -9.979259540E-01, 9 : -9.979259540E-01, 10 : -9.979259540E-01, 11 : 8.981327539E-01, 12 : 9.003780858E-01, 13 : 9.048743629E-01, 14 : 9.116328259E-01, 15 : 9.206703709E-01, 16 : 9.320095919E-01, 17 : 9.456788369E-01, 18 : 9.617122790E-01, 19 : 9.801500018E-01, 20 : 1.001038100E+00, 21 : 1.001038100E+00, 22 : 9.801500018E-01, 23 : 9.617122790E-01, 24 : 9.456788369E-01, 25 : 9.320095919E-01, 26 : 9.206703709E-01, 27 : 9.116328259E-01, 28 : 9.048743629E-01, 29 : 9.003780858E-01, 30 : 8.981327539E-01, 31 : 8.981327539E-01, 32 : 9.003780858E-01, 33 : 9.048743629E-01, 34 : 9.116328259E-01, 35 : 9.206703709E-01, 36 : 9.320095919E-01, 37 : 9.456788369E-01, 38 : 9.617122790E-01, 39 : 9.801500018E-01, 40 : 1.001038100E+00, 41 : 1.001038100E+00, 42 : 9.801500018E-01, 43 : 9.617122790E-01, 44 : 9.456788369E-01, 45 : 9.320095919E-01, 46 : 9.206703709E-01, 47 : 9.116328259E-01, 48 : 9.048743629E-01, 49 : 9.003780858E-01, 50 : 8.981327539E-01, 51 : 8.981327539E-01, 52 : 9.003780858E-01, 53 : 9.048743629E-01, 54 : 9.116328259E-01, 55 : 9.206703709E-01, 56 : 9.320095919E-01, 57 : 9.456788369E-01, 58 : 9.617122790E-01, 59 : 9.801500018E-01, 60 : 1.001038100E+00, 61 : 1.001038100E+00, 62 : 9.801500018E-01, 63 : 9.617122790E-01, 64 : 9.456788369E-01, 65 : 9.320095919E-01, 66 : 9.206703709E-01, 67 : 9.116328259E-01, 68 : 9.048743629E-01, 69 : 9.003780858E-01, 70 : 8.981327539E-01, 71 : 8.981327539E-01, 72 : 9.003780858E-01, 73 : 9.048743629E-01, 74 : 9.116328259E-01, 75 : 9.206703709E-01, 76 : 9.320095919E-01, 77 : 9.456788369E-01, 78 : 9.617122790E-01, 79 : 9.801500018E-01, 80 : 1.001038100E+00, 81 : 1.001038100E+00, 82 : 9.801500018E-01, 83 : 9.617122790E-01, 84 : 9.456788369E-01, 85 : 9.320095919E-01, 86 : 9.206703709E-01, 87 : 9.116328259E-01, 88 : 9.048743629E-01, 89 : 9.003780858E-01, 90 : 8.981327539E-01, 91 : 8.981327539E-01, 92 : 9.003780858E-01, 93 : 9.048743629E-01, 94 : 9.116328259E-01, 95 : 9.206703709E-01, 96 : 9.320095919E-01, 97 : 9.456788369E-01, 98 : 9.617122790E-01, 99 : 9.801500018E-01, 100 : 1.001038100E+00, 101 : 1.001038100E+00, 102 : 9.801500018E-01, 103 : 9.617122790E-01, 104 : 9.456788369E-01, 105 : 9.320095919E-01, 106 : 9.206703709E-01, 107 : 9.116328259E-01, 108 : 9.048743629E-01, 109 : 9.003780858E-01, 110 : 8.981327539E-01, }
+
+
+
+r_sym_lo_eps = run('phase_comp', PAR={'mu':1, 'kappa2':1, 'f':1}, LAB=200, SP=['LP6'], IBR=1, NPR=1000, NMX=5000, DS=-0.001, U=Uss_lo, IPS=1, UZSTOP={2:[1.5]}, MXBF=25)
+sv('r_sym_lo_eps') #r_sym_lo_eps = loadbd('r_sym_lo_eps')
+
+
+bp1_2par2= run(r_sym_lo_eps('BP1'), ISW=2, IPS=1, ISP=2, ICP=[2, 5, 15],  DSMAX=1, DS=.1, NPR=50, NMX=700, UZSTOP={'kappa2':9}, UZR={'kappa2':1.54*1.54}, NPAR=20)
+sv('anti_bp_bndry_2par2') #bp1_2par2 = loadbd('anti_bp_bndry_2par2')
+
+
+run(bp1_2par2('UZ1'), ICP=[2, 6], UZSTOP={'omega':[0,3*pi], 'f':0}, NPAR=20, NMX=1200)
+sv('bp1_omega_eps_for') #bp1_omega_eps_for =loadbd('bp1_omega_eps_for')
+run(bp1_2par2('UZ1'), ICP=[2, 6], DS='-', UZSTOP={'omega':[0,3*pi], 'f':0}, NPAR=20, NMX=1200)
+sv('bp1_omega_eps_fback') #bp1_omega_eps_back =loadbd('bp1_omega_eps_fback')
+
+
+
+
+d={'tr1_omega_eps':tr1_2par ,  'pd1_omega_eps': pd1_2par,' pfp_omega_eps': pfp_2par_k2, 'hm1_omega_eps': hm1_2par_k2}
+d={ 'hm1_omega_eps': hm1_2par_k2}
+d={ 'bp1_omega_eps': bp1_2par2}
+pi=math.pi
+for k,v in d.items():
+    run(v('UZ1'), ICP=[2, 6, 11, 12, 15, 20], UZSTOP={'omega':[0,3*pi], 'f':0}, NPAR=20, NMX=1200)
+    sv(k+'_for')
+    run(v('UZ1'), ICP=[2, 6, 11, 12, 15, 20], DS='-', UZSTOP={'omega':[0,3*pi], 'f':0}, NPAR=20, NMX=1200)
+    sv(k+'_fback')
+
+
+
+for k,v in d.items():
+	exec(f"{k.strip()+'_for'} = loadbd('{k+'_for'}')")
+	exec(f"{k.strip()+'_fback'} = loadbd('{k+'_fback'}')")
+
+
+pl(tr1_omega_eps_for+tr1_omega_eps_fback+pd1_omega_eps_for+pd1_omega_eps_fback+pfp_omega_eps_for+pfp_omega_eps_fback+hm1_omega_eps_for+hm1_omega_eps_fback+hm2_omega_eps_for+hm2_omega_eps_back, bifurcation_y='omega', use_labels=False)
+
+
+
+
+
+U_excite = {1 : 2.595370797E-01, 2 : 2.595370797E-01, 3 : 2.595370796E-01, 4 : 2.595370797E-01, 5 : 2.595370797E-01, 6 : -9.657331434E-01, 7 : -9.657331434E-01, 8 : -9.657331434E-01, 9 : -9.657331434E-01, 10 : -9.657331434E-01, 11 : 1.209061555E+00, 12 : 1.212084209E+00, 13 : 1.218137073E+00, 14 : 1.227235280E+00, 15 : 1.239401575E+00, 16 : 1.254666375E+00, 17 : 1.273067840E+00, 18 : 1.294651974E+00, 19 : 1.319472739E+00, 20 : 1.347592186E+00, 21 : 1.347592186E+00, 22 : 1.319472739E+00, 23 : 1.294651974E+00, 24 : 1.273067840E+00, 25 : 1.254666375E+00, 26 : 1.239401575E+00, 27 : 1.227235280E+00, 28 : 1.218137073E+00, 29 : 1.212084209E+00, 30 : 1.209061555E+00, 31 : 1.209061555E+00, 32 : 1.212084209E+00, 33 : 1.218137073E+00, 34 : 1.227235280E+00, 35 : 1.239401575E+00, 36 : 1.254666375E+00, 37 : 1.273067840E+00, 38 : 1.294651974E+00, 39 : 1.319472739E+00, 40 : 1.347592186E+00, 41 : 1.347592186E+00, 42 : 1.319472739E+00, 43 : 1.294651974E+00, 44 : 1.273067840E+00, 45 : 1.254666375E+00, 46 : 1.239401575E+00, 47 : 1.227235280E+00, 48 : 1.218137073E+00, 49 : 1.212084209E+00, 50 : 1.209061555E+00, 51 : 1.209061555E+00, 52 : 1.212084209E+00, 53 : 1.218137073E+00, 54 : 1.227235280E+00, 55 : 1.239401575E+00, 56 : 1.254666375E+00, 57 : 1.273067840E+00, 58 : 1.294651974E+00, 59 : 1.319472739E+00, 60 : 1.347592186E+00, 61 : 1.347592186E+00, 62 : 1.319472739E+00, 63 : 1.294651974E+00, 64 : 1.273067840E+00, 65 : 1.254666375E+00, 66 : 1.239401575E+00, 67 : 1.227235280E+00, 68 : 1.218137073E+00, 69 : 1.212084209E+00, 70 : 1.209061555E+00, 71 : 1.209061555E+00, 72 : 1.212084209E+00, 73 : 1.218137073E+00, 74 : 1.227235280E+00, 75 : 1.239401575E+00, 76 : 1.254666375E+00, 77 : 1.273067840E+00, 78 : 1.294651974E+00, 79 : 1.319472739E+00, 80 : 1.347592186E+00, 81 : 1.347592186E+00, 82 : 1.319472739E+00, 83 : 1.294651974E+00, 84 : 1.273067840E+00, 85 : 1.254666375E+00, 86 : 1.239401575E+00, 87 : 1.227235280E+00, 88 : 1.218137073E+00, 89 : 1.212084209E+00, 90 : 1.209061555E+00, 91 : 1.209061555E+00, 92 : 1.212084209E+00, 93 : 1.218137073E+00, 94 : 1.227235280E+00, 95 : 1.239401575E+00, 96 : 1.254666375E+00, 97 : 1.273067840E+00, 98 : 1.294651974E+00, 99 : 1.319472739E+00, 100 : 1.347592186E+00, 101 : 1.347592186E+00, 102 : 1.319472739E+00, 103 : 1.294651974E+00, 104 : 1.273067840E+00, 105 : 1.254666375E+00, 106 : 1.239401575E+00, 107 : 1.227235280E+00, 108 : 1.218137073E+00, 109 : 1.212084209E+00, 110 : 1.209061555E+00, }
+
+r_excite = run('phase_comp', PAR={'mu':1, 'kappa2':1, 'f':0.775}, LAB=200, SP=['LP6'], IBR=1, NPR=1000, NMX=5000, DS=-0.001, U=U_excite, IPS=1, UZSTOP={2:[1.5]}, MXBF=25)
+sv('r_excite') #r_excite = loadbd('r_excite')

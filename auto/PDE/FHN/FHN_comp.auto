@@ -1,0 +1,77 @@
+pgm = 'FHN_comp'
+
+
+
+r0=run(pgm, JAC=-1, MXBF=2, NDIM=156, NPR=100, NMX=30000, PAR={'D':0.003}, SP=['BP5'])
+pl(r0, stability=True, use_labels=False)
+sv(pgm)
+cp(pgm, pgm+"_ss_hi")
+
+r2=run( 'FHN_comp', ICP=[1,2,13], ISW=2, IRS=r0('BP1')._AUTOSolution__index+1, NDIM=156, NPR=10, DSMAX=0.001, NMX=700)
+r22=run( 'FHN_comp', ICP=[1,2,13], ISW=2, IRS=r0('BP4')._AUTOSolution__index+1, NDIM=156, NPR=10, DSMAX=0.001, NMX=700, DS='-')
+
+ r3=run( 'FHN_comp', ICP=[1,2,13], ISW=2, IRS=r0('BP2')._AUTOSolution__index+1, NDIM=156, NPR=10, DSMAX=0.001, NMX=230)
+
+pl(r2+r22, stability=True, use_labels=False)
+
+
+# cp( pgm+"_ss_lo", pgm)
+# r0 = loadbd(pgm)
+
+r0=run(pgm, JAC=-1, MXBF=0, NDIM=156, NPR=100, NMX=30000, PAR={'D':0.0008}, SP=['BP5'])
+
+sv(pgm)
+cp(pgm, pgm+"_ss_lo")
+
+rp1=run(r0('HB1'), IPS=2, ICP=[1,11,13], DSMAX=0.5, DSMIN=0.00001, DS=0.0001, NPR=100, NMX=800, NTST=150, ISP=2, LAB=30, IBR=2,SP=['LP8'])
+sv(pgm)
+cp(pgm, pgm+"pbr1_lo")
+
+rp2=run(r0('HB2'), IPS=2, ICP=[1,11,13], DSMAX=0.5, DSMIN=0.00001, DS=0.0001, NPR=100, NMX=800, NTST=150, ISP=2, LAB=60, IBR=3,SP=['LP12'])
+sv(pgm)
+cp(pgm, pgm+"pbr2_lo")
+
+rp3=run(r0('HB3'), IPS=2, ICP=[1,11,13], DSMAX=0.5, DSMIN=0.00001, DS=0.0001, NPR=100, NMX=800, NTST=150, ISP=2, LAB=80, IBR=3,SP=['LP12'])
+sv(pgm)
+cp(pgm, pgm+"pbr3_lo")
+
+pl(r0+rp1, stability=True, use_labels=False)
+sv(pgm)
+
+rp12=run(rp1(44), IPS=2, ICP=[9,11,13,14], DSMAX=1, DSMIN=0.00001, DS=0.1, NPR=20, NMX=1000, NTST=50, ISP=2, LAB=30, IBR=2,SP=['LP4'], UZSTOP={9:[-0.2,0.2]})
+sv(pgm)
+cp(pgm, pgm+"_pbr1_grad")
+
+rp11=run(pgm, IPS=2, ICP=[1,11,13], DSMAX=0.01, DSMIN=0.00001, DS=0.0001,   NPR=300, NMX=600, NTST=150, ISP=2, ISW=-1, IRS=200, LAB=250)
+rp12=run(pgm, IPS=2, ICP=[1,11,13], DSMAX=0.01, DSMIN=0.00001, DS=0.0001,  NPR=300, NMX=600, NTST=300, ISP=2, ISW=-1, IRS=202, LAB=300)
+rp13=run(pgm, IPS=2, ICP=[1,11,13], DSMAX=0.01, DSMIN=0.00001, DS=0.0001,  NPR=300, NMX=600, NTST=300, ISP=2, ISW=-1, IRS=207, LAB=400)
+rp14=run(pgm, IPS=2, ICP=[1,11,13], DSMAX=0.01, DSMIN=0.00001, DS=0.0001,  NPR=300, NMX=600, NTST=300, ISP=2, ISW=-1, IRS=208, LAB=500)
+
+pl(r0+rp1+rp11+rp12+rp13+rp14, stability=True, use_labels=False)
+
+
+rp2=run(r0('HB2'), IPS=2, ICP=[1,11,13], DSMAX=0.05, DSMIN=0.00001, DS=0.0001, NPR=300, NMX=600, NTST=150, ISP=2, LAB=520,SP=['LP12'])
+
+
+sv(pgm)
+rp21=run(pgm, IPS=2, ICP=[1,11,13], DSMAX=0.01, DSMIN=0.00001, DS=0.0001,   NPR=300, NMX=600, NTST=150, ISP=2, ISW=-1, IRS=526, LAB=550)
+
+pl(r0+rp2, stability=True, use_labels=False)
+
+
+rp3=run(r0('HB3'), IPS=2, ICP=[1,11,13], DSMAX=0.01, DSMIN=0.00001, DS=0.0001,  NPR=300, NMX=600, NTST=150, ISP=2, LAB=700)
+sv(pgm)
+
+
+
+pl(r0+rp1+rp11, stability=True, use_labels=False)
+pl(r0+rp1+rp2+rp3, stability=True, use_labels=False)
+
+##NOW WITH THE ASYMMETRIC STEADY STATE....
+
+r0=run(pgm, JAC=-1, MXBF=1)
+pl(r0, stability=True, use_labels=False)
+
+
+### STARTING FROM A PERIODIC SOLUTION
+rp4for=run('FHN_comp',dat='three_FHN_anti', PAR={1:0.1, 2:0.011}, IPS=2, ICP=[1,11], DSMAX=0.5, DSMIN=0.000001, DS=0.0001, NPR=30, NMX=600, NTST=150, ISP=2, LAB=152,SP=['LP6'], IBR=5)

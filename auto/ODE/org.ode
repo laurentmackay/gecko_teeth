@@ -1,0 +1,6 @@
+u'= u*(1-u) - (f0+f)*v*(u-q)/(u+q)
+v'=e*(u-v+b)
+
+init u=0, v=0.001
+par e=0.01,  q=0.013, f=-0.3, f0=1, g=0, b=0
+@ XP1=u, YP1=v, TOTAL=2000, XHI=2000, meth=gear

@@ -1,0 +1,32 @@
+
+r1=run('FHN', MXBF=1)
+pl(r1, stability=True, use_labels=False)
+
+
+r2=run(r1('HB2'), IPS=2, ICP =  [1, 11], NPR=200, ILP=0, NMX=3000, DSMAX=0.1, DS=0.01, DSMIN=0.001)
+pl(r1+r2, stability=True, use_labels=False)
+
+
+############ TWO OSCILLATORS ###################
+
+r1=run('FHN', MXBF=1,  ICP =  [1, 11, 6])
+r2=run(r1('HB1'), IPS=2, ICP =  [1, 11, 6], NPR=800, ILP=0, NMX=160000, DSMAX=0.01, DS=0.001, DSMIN=0.00000001, THL={11:1E-6}, THU={}, EPSL= 1e-06, EPSU = 1e-06, EPSS =1e-04 )
+
+
+rpa=run('FHN',dat='two_boy_anti', PAR={1:0.5E-1}, IPS=2, ICP =  [1, 11, 6], NPR=2000, ILP=0, NMX=100000, DSMAX=0.01, DSMIN=0.00000001, THL={11:0.05}, THU={}, LAB=440, EPSL= 1e-07, EPSU = 1e-07, EPSS =1e-05 )
+rpa2=run('FHN',dat='two_boy_anti', IPS=2,  PAR={1:0.5E-1}, ICP =  [1, 11, 6], NPR=2000, ILP=0, NMX=100000, DSMAX=0.01, DS='-', DSMIN=0.00000001, THL={11:0.05}, THU={}, LAB=1440, EPSL= 1e-07, EPSU = 1e-07, EPSS =1e-05 )
+
+
+rps=run('FHN',dat='two_boy_synchro', PAR={1:0.5E-1}, IPS=2, ICP =  [1, 11, 6], NPR=2000, ILP=0, NMX=100000, DSMAX=0.01, DSMIN=0.00000001, THL={11:0.05}, THU={}, LAB=2440, EPSL= 1e-07, EPSU = 1e-07, EPSS =1e-05 )
+rps2=run('FHN',dat='two_boy_synchro', IPS=2,  PAR={1:0.5E-1}, ICP =  [1, 11, 6], NPR=2000, ILP=0, NMX=100000, DSMAX=0.01, DS='-', DSMIN=0.00000001, THL={11:0.05}, THU={}, LAB=3440, EPSL= 1e-06, EPSU = 1e-06, EPSS =1e-04 )
+
+
+r3=run(r1('HB2'), IPS=2, ICP =  [1, 11, 6], NPR=200, ILP=0, NMX=6000, DSMAX=0.1, DS=0.00001, DSMIN=0.000000001, THL={11:0.005}, THU={}, EPSL= 1e-08, EPSU = 1e-08, EPSS =1e-06, LAB=55)
+
+pl(r1+r2+r3+rpa+rpa2, stability=True, use_labels=False)
+
+##### BRANCH SEPARATION #########
+
+r0=run('FHN', MXBF=0, PAR={2:3.5e0})
+
+r1=run(r0('BP1'), MXBF=0, PAR={2:3.5e0}, ISW=-1, IRS=9)

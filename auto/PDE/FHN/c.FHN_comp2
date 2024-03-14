@@ -1,0 +1,9 @@
+NDIM=   60, IPS =   1, IRS =   0, ILP =   1
+ICP =  [1]
+NTST=  350, NCOL=   4, IAD =   3, ISP =   1, ISW = 1, IPLT= 0, NBC= 0, NINT= 0
+NMX=  400000, NPR=  2000, MXBF=  10, IID =   2, ITMX= 8, ITNW= 5, NWTN= 3, JAC=-1
+EPSL= 1e-09, EPSU = 1e-09, EPSS =1e-07
+DS  =  0.000002, DSMIN= 0.00000001, DSMAX=   0.001, IADS=   1
+NPAR = 8, THL =  {11:0.0}, THU={}
+parnames={1:'b',2:'D', 3:'a', 4:'k', 5:'e', 6:'beta', 7:'p', 8:'L'}
+UZSTOP = {1: [-0.5, 0.5]}

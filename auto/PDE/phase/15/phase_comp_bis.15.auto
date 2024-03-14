@@ -1,0 +1,23 @@
+
+################################
+################################
+##########             N=11
+################################
+################################
+
+############ Variable OMEGA ######################
+
+#### KAPPA=2 #######
+bndry_omega = cache_branch('bndry_omega', 'phase_comp', dat='nonmono_kappa=2_f=0.15_gamma=0_omega=0.01', PAR={'kappa2':2**2,'f':0.15, 'omega':0.01}, UZSTOP = {'f': [-1.5], 11:2e2, 'kappa2':[0,16],'omega':[0,0.45]}, SP=['LP1'])
+ftb_omega = cache_branch('ftb_omega', 'phase_comp', dat='ftb_kappa=2_f=0.15_gamma=0_omega=0.01', PAR={'kappa2':2**2,'f':0.15, 'omega':0.01}, UZSTOP = {'f': [-1.5], 11:2e2, 'kappa2':[0,16],'omega':[0,0.45]}, SP=['LP9'])
+
+
+
+pl(bndry_omega, use_labels=False, bifurcation_y=[ 'chi_int'], minx=0, maxx=0.45, miny=-0.11, maxy=0.05)
+pl(bndry_omega, use_labels=False, bifurcation_y=[ 'abs_cross_pos'], minx=0, maxx=0.45)
+
+
+
+#### KAPPA=2 #######
+ftblo_omega = cache_branch('ftblo_omega', 'phase_comp', dat='ftb_kappa=1_f=0.15_gamma=0_omega=0.01', PAR={'kappa2':1**2,'f':0.15, 'omega':0.01}, UZSTOP = {'f': [-1.5], 11:2e2, 'kappa2':[0,16],'omega':[0,0.45]}, SP=['LP9'])
+

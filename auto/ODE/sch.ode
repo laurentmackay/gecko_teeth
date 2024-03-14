@@ -1,0 +1,6 @@
+u'=e*(a-u+u*u*v) - f
+v'=e*(b-u*u*v) - g
+
+init u=0, v=0
+par e=0.1,  b=0.0, h=1, d=0.1, a=0.1, f=0.0, g=0.0
+@ XP1=u, YP1=v, TOTAL=2000, XHI=2000, meth=gear
