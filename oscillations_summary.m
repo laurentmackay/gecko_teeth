@@ -6,6 +6,9 @@ arguments
     opts.MinPeakProminence (1,1) {mustBeNumeric} = 0.1;
     opts.MinPeakHeight (1,1) {mustBeNumeric} = 1e-5;
     opts.border (1,1) {mustBeNumericOrLogical} = false;
+    opts.border_color (:,:)  = [1,1,1]*0.6;
+    opts.border_width (1,1) {mustBeNumeric} = 0.75;
+    opts.nancolor (1,3) {mustBeNumeric} = [221,221,221]/255;
     opts.xlines (:,1) {mustBeNumeric} = []
     opts.tmin (1,1) {mustBeNumeric} = -Inf;
     opts.tmax (1,1) {mustBeNumeric} = Inf;
@@ -202,7 +205,7 @@ if isempty(tmid)
 end
 if isempty(opts.cycle_min)
     cycle_min = floor((max(tmin, min(tvec))+opts.tburn)/T_mid);
-    cycle_min=0;
+    cycle_min=floor(opts.tburn/T_mid);
 else
     cycle_min=opts.cycle_min;
 end
@@ -225,12 +228,16 @@ yrange = [cycle_min-pad*range cycle_max+(pad)*range];
 
 if opts.border && ~opts.raster
     % hold on;
-    scatter(ovec-mid, cycle, opts.dotSize, [1, 1, 1]*0.6);
+    % scatter(ovec-mid, cycle, opts.dotSize, opts.border_color, 'LineWidth', opts.border_width);
     hold on;
 end
 
 if ~opts.raster
-    scatter(ovec-mid, cycle, opts.dotSize, heatmap_vals, "filled");
+    good=~isnan(heatmap_vals);
+    scatter(ovec(good)-mid, cycle(good), opts.dotSize, heatmap_vals(good), "filled", 'MarkerEdgeColor', opts.border_color, 'LineWidth', opts.border_width);
+    hold on
+    scatter(ovec(~good)-mid, cycle(~good), opts.dotSize, 'MarkerFaceColor',opts.nancolor, 'MarkerEdgeColor', opts.border_color, 'LineWidth', opts.border_width);
+    hold off
 else
     inds = ~isnan(heatmap_vals);
     [xg,yg] = meshgrid(min(ovec-mid):max(ovec-mid), cycle_min:cycle_max);

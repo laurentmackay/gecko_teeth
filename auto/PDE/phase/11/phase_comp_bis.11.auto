@@ -112,7 +112,7 @@ def ftb_2_bndry(bd):
 p=pl(SNP2, bifurcation_x='kappa',bifurcation_y='omega', use_symbols=False, use_labels=False, stability=False , minx=0, maxx=3.0, miny=0)
 
 
-k1=np.arange(0.2,1.8,0.2)
+k1=np.sort(np.concatenate((np.arange(0.2,1.8,0.2),[1.5])))
 k2=np.arange(1.8,3.2,0.2)
 k=np.concatenate((k1,k2))
 
@@ -122,3 +122,11 @@ c2=[ftb_2_bndry(r) for r in rs]
 
 addLine(p,k,c1)
 addLine(p,k,c2)
+
+
+shift_btf_omega = cache_branch('shift_btf_omega', 'phase_comp', dat='btf_shifted_kappa=0.6_f=0.2_gamma=0_omega=0.88', PAR={'kappa2':0.6**2,'f':0.2, 'omega':0.88}, SP=['TR1','LP1'], ICP=['omega', 11, 14, 13, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24])
+
+
+TR10 = run(r0('TR1'), ISW=2, ICP=['omega','kappa2',11, 12,'kappa'], NTST=125)
+TR1 = cache_branch('TR1_omega_kappa', TR10, UZSTOP = {'omega': [-0.1, 4], 11:2e2, 'kappa2':[0,16]}, ICP=['omega','kappa2',11,'kappa'])
+

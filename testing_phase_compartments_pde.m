@@ -1,5 +1,5 @@
 
-N0=22;
+N0=5;
 N=2*N0+1;
 L=N;
 N_inter =  20;
@@ -17,12 +17,12 @@ xosc=xmesh(osc_inds);
 
 T0 = 30;
 
-omega=1;
-kappa=1;
-f=0.1;
+omega=0.88;
+kappa=0.6;
+f=0.2;
 gamma=0;
 
-tburn = 2e4*T0;
+tburn = 6e4*T0;
 
 
 p = 2*pi/(omega*T0);
@@ -149,7 +149,7 @@ inds = i0:i0+6;
 % 
 
 
-dt=0.01;
+dt=0.001;
 tmesh=0:dt:30*T0;
 tic;
 [t,sol] = ode15s(rhs , tmesh, ICP, options );
@@ -173,7 +173,7 @@ f0=0.00;
 w=.2;
 figure(1);
 oscillations_summary(sol_theta(1:ilast,1:N), t(1:ilast), tmin=f0*t(end), tmax=(f0+w)*t(end), tburn=-80,...
-    xlines=[ 0], border=true, dotSize=25, phi_scatter=[], checker=false, edmund_lines=true, period=false, ...
+    xlines=[ 0], dotSize=25, phi_scatter=[], checker=false, edmund_lines=true, period=false, ...
     cycle_min=0, cycle_max=3);
 % figure(2);
 % oscillations_summary(sol_theta(1:ilast,1:N), t(1:ilast), tmin=f0*t(end), tmax=(f0+w)*t(end), xlines=[-20:20], border=false, phi_scatter=[], checker=true);
@@ -250,7 +250,7 @@ disp(u_str(sol(end,:)))
 %%
 get_per_sol(sol(iskip:end,1:2*N), tmesh, sol(end,:), rhs, NTST=1000, options=options, periodicity=1, MinPeakProminence=0.95);
 %%
-fn = ['auto/PDE/phase/' num2str(N) '/ftb_kappa=' num2str(kappa) '_f=' num2str(f) '_gamma=' num2str(gamma) '_omega=' num2str(omega) '.dat']
+fn = ['auto/PDE/phase/' num2str(N) '/btf_shifted_kappa=' num2str(kappa) '_f=' num2str(f) '_gamma=' num2str(gamma) '_omega=' num2str(omega) '.dat']
 write_per_sol(sol(iskip:end,1:2*N), tmesh, sol(end,:), rhs, fn, NTST=1000, options=options, MinPeakProminence=0.95);
  
 %%

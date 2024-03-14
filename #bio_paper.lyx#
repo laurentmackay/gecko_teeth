@@ -1,0 +1,7170 @@
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass article
+\begin_preamble
+\usepackage{subcaption}
+
+\usepackage{titlesec}
+\usepackage{gensymb}
+
+\newcommand{\centerpage}[2][1]{\begin{minipage}[t][1\totalheight]{#1\columnwidth}\centering#2\end{minipage}}
+\renewcommand{\thesubfigure}{\bfseries{\alph{subfigure}}}
+\newcommand{\subpane}[3][]{\begin{subfigure}[t]{#2\columnwidth}\caption{#1}\centerpage{#3}\end{subfigure}}
+
+
+\newcommand{\mini}[2]{\begin{minipage}{#1\columnwidth} #2 \end{minipage}}
+
+
+\numberwithin{equation}{section}
+\end_preamble
+\use_default_options true
+\begin_modules
+subequations
+\end_modules
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures true
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\spacing single
+\use_hyperref true
+\pdf_bookmarks true
+\pdf_bookmarksnumbered false
+\pdf_bookmarksopen false
+\pdf_bookmarksopenlevel 1
+\pdf_breaklinks false
+\pdf_pdfborder true
+\pdf_colorlinks false
+\pdf_backref false
+\pdf_pdfusetitle true
+\papersize default
+\use_geometry true
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 2
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\use_minted 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Oscillatory dynamics are ubiquitous in biology and serve many purposes ranging
+ from homeostatic physiologcal functions such as continuous cardiac beating,
+ regulation of sleep-wake cycles, and sensory input processsing 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Thaut1999"
+literal "false"
+
+\end_inset
+
+ to early developmental processes such as embryonic segmentation 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Aulehla2008"
+literal "false"
+
+\end_inset
+
+.
+ Generically, these oscillations arise from chemical, electrical, and mechanical
+ variables that interact through specific feedback patterns to produce cyclic
+ variations 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Tyson2003,Tsai2008"
+literal "false"
+
+\end_inset
+
+.
+ Here we define an oscillator as a single unit containing all the necessary
+ interactions to produce cyclic dynamics, and note that many interesting
+ and non-trivial dynamics arise when considering systems of interacting
+ oscillators.
+ Entrainment of oscillators, defined as a state of fixed phase differences,
+ is a common mechanism for producing the robust synchronization and spatiotempor
+al order in networks of biological oscillators 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Winfree2001,Bao2015,Jimenez2022"
+literal "false"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Plain Layout
+The problem of entrainment has been studied extensively using both experimental
+ and theoretical approaches.
+ Of primary interest are (i) the existence of entrained states for a given
+ system, (ii) precise descriptions of entrained states (e.g., whether all
+ oscillators are synchronized in-phase versus anti-phase synchronization
+ where a subset is 
+\begin_inset Formula $\pi$
+\end_inset
+
+ out-of-phase with the rest), and (iii) the conditions required for attaining
+ an entrained state.
+ On the theoretical side, the simplest oscillator model uses a single variable
+ to for phase (phase oscillators), with phase progressing at a fixed phase
+ velocity.
+ Entrainment is studied by considering a collection of oscillators with
+ appropriate coupling terms that depend on instantaneous phase-differences
+ and modulate the phase velocity of each oscillator (Kuramoto model).
+ Generically, in-phase synchronization occurs when coupling is attractive
+ and sufficiently strong to overcome any intrinsic phase velocity differences,
+ whereas anti-phase synchronization via repulsive coupling terms requires
+ more stringent restrictions on the the oscillator network (i.e., low number
+ of oscillators and low connectivity) 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Joseph2020,Chen2022"
+literal "false"
+
+\end_inset
+
+.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Title
+On the phase dynamics of cyclic reptilian tooth replacement
+\end_layout
+
+\begin_layout Section
+Introduction
+\end_layout
+
+\begin_layout Standard
+For over a century, scientists have studied the striking spatiotemporal
+ patterns observed during the continual and cyclic replacement of teeth
+ in many repitilian taxa 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Woerdeman1918,Edmund1960"
+literal "false"
+
+\end_inset
+
+.
+ From a physiological perspective, it is thought that continual tooth replacemen
+t in reptiles serves to deliver progressively larger teeth as the jaw grows.
+ Numerous features of tooth development are evolutionarily conserved from
+ squamate reptiles and crocodilians to mammals 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Whitlock2013"
+literal "false"
+
+\end_inset
+
+.
+ Thus, it has been proposed that the 
+\begin_inset Quotes eld
+\end_inset
+
+waves
+\begin_inset Quotes erd
+\end_inset
+
+ of tooth replacement observed in these lower vertebrates may have relevance
+ to the dynamics of mammalian tooth replacement 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Osborn1974,Osborn1970"
+literal "false"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+At the simplest descriptive level, replacement at given tooth position occurs
+ with a roughly fixed period.
+ However, data collected from fossil records and live animals reveals a
+ more nuanced picture of replacment timing with subtly related features:
+\end_layout
+
+\begin_layout Enumerate
+There is typically a phase difference of roughly one half replacement cycle
+ between neighbouring teeth.
+ This has the effect that the odd and even-numbered teeth appear to be replaced
+ independently of one another, maintaining a relatively constant functional
+ tooth density throughout time.
+ Early theories even proposed that they are produced from physically distinct
+ locations.
+ Thus it is common in the literature to refer to the even and odd dentitions,
+ which are said to be nearly in anti-phase at most times 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Edmund1962"
+literal "false"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Enumerate
+A closer examination of replacement timings shows that nearest neighbours
+ are not in perfect anti-phase.
+ Rather, next nearest neighbours are slightly out-of-phase, producing apparent
+ replacement 
+\begin_inset Quotes eld
+\end_inset
+
+waves
+\begin_inset Quotes erd
+\end_inset
+
+ progating through the even (or odd) dentition usually either front-to-back
+ or, more commonly, back-to-front 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Edmund1960,Edmund1962"
+literal "false"
+
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Enumerate
+Data also suggests that there are systematic variations in the amount of
+ time between tooth replacements.
+ In both crocodiles and leopard geckos, the replacement period at a given
+ tooth position increases from front-to-back, with crocodiles exhibiting
+ a much larger gradient (
+\begin_inset Formula $\sim100\%$
+\end_inset
+
+, 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Edmund1962"
+literal "false"
+
+\end_inset
+
+) in period compared to leopard geckos (
+\begin_inset Formula $\sim10\%$
+\end_inset
+
+, 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Brink2022"
+literal "false"
+
+\end_inset
+
+).
+ Furthermore, the rate of tooth replacement also decreases with the age
+ of an animal 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Edmund1962,Osborn1974,Brink2022"
+literal "false"
+
+\end_inset
+
+, and replacement eventually ceases in fully matured crocodiles 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "McIlhenny1935"
+literal "false"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Multiple lines of evidence and reasoning suggest that the apparent waves
+ are not fundamental to tooth replacement in a causational sense 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Osborn1974,Whitlock2013,Brink2022"
+literal "false"
+
+\end_inset
+
+.
+ Despite this, apparent replacement waves can be inferred (even if arbitrarily)
+ from the replacement timing data of nearly all reptiles during some period
+ of their development 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Edmund1962,DeMar1972"
+literal "false"
+
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Standard
+The first two observations have received considerable attention in the literatur
+e, with even the earliest reports of anti-phase replacement proposing theoretica
+l frameworks for the the spatiotemporal patterns 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Woerdeman1918,Edmund1962"
+literal "false"
+
+\end_inset
+
+.
+ Edmund proposed the influential graphical theory of replacement waves as
+ 
+\begin_inset Quotes eld
+\end_inset
+
+Zahnreihen
+\begin_inset Quotes erd
+\end_inset
+
+, or rows of teeth, that propagate through the odd/even dentitions due to
+ a diffusing stimulus that somehow only activates tooth production in alternatel
+y numbered teeth 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Edmund1960,Edmund1962"
+literal "false"
+
+\end_inset
+
+.
+ In turn, Osborn later mathematically formalized this graphical theory and
+ compared the equations to experimental findings 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Osborn1971,Osborn1974"
+literal "false"
+
+\end_inset
+
+, arriving at an alternative geometric theory based on a mechanistic hypothesis.
+ Namely, Osborn postulated that the half-cycle phase shift between nearest
+ neighbours were the results of 
+\begin_inset Quotes eld
+\end_inset
+
+spheres of inhibition
+\begin_inset Quotes erd
+\end_inset
+
+ surrounding each developing tooth and suggested that the directionality
+ of replacement waves may be explained by differences in the replacement
+ periods of different tooth families 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Osborn1971"
+literal "false"
+
+\end_inset
+
+.
+ The newer geometric hypothesis posits that during the very early stages
+ of its development in the dental lamina a tooth produces an inhibitory
+ signal which diffuses outwards and inhibits the development of neighbouring
+ sites.
+ Then as a nascent tooth ages and migrates towards the oral cavity, its
+ sphere of inhibition both shrinks and shifts spatially until the neighbouring
+ sites are no longer contained in the sphere and can thus produce their
+ own teeth.
+ 
+\end_layout
+
+\begin_layout Standard
+Studies across a plethora of model organisms have elucidated some of the
+ morphological changes and biochemical interactions involved in tooth replacemen
+t, giving insight into how and when spheres of inhibition might arise as
+ well as their relation to tooth replacement 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Sadier2023"
+literal "false"
+
+\end_inset
+
+.
+ These studies show that the cellular material required for a tooth originates
+ from spatially organized pools of epithelial and mesenchymal stem cells
+ near the tip of the dental lamina 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Handrigan2010,Wu2013"
+literal "false"
+
+\end_inset
+
+.
+ Many of the steps of tooth replacement depend on Wnt/β-catenin signalling
+ pathway, an ancient intercellular signalling pathway that potently induces
+ spatially patterned cell fates 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Liu2010,Loh2016"
+literal "false"
+
+\end_inset
+
+.
+ Interestingly, interactions between the BMP (bone morphogenetic protein)
+ and Wnt signalling pathways in stem cells at the dental lamina tip are
+ known to form a self-activating circuit 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "OConnell2012"
+literal "false"
+
+\end_inset
+
+, suggesting that spme downstream effects of Wnt-signalling will proceed
+ autonomously once the appropriate cell populations are in place.
+\end_layout
+
+\begin_layout Standard
+Tooth initiation begins by Wnt-driven activation of mesenchymal and eptitheleal
+ cells to produce the tooth bud and a surrounding dental follicle.
+ 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Wu2013,Tokavanich2021,Handrigan2010a"
+literal "false"
+
+\end_inset
+
+.
+ This same signalling pathways also activates adjacent epitehial 
+\begin_inset Quotes eld
+\end_inset
+
+transit-amplifying 
+\begin_inset Quotes erd
+\end_inset
+
+ stem cells to transport the bud towards the oral cavity in a fashion reminiscen
+t of a conveyor belt 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Handrigan2010"
+literal "false"
+
+\end_inset
+
+.
+ Wnt-signalling at tooth sites is cyclic and when it is active at one tooth
+ site then its neighbouring sites exist in a 
+\begin_inset Quotes eld
+\end_inset
+
+paused
+\begin_inset Quotes erd
+\end_inset
+
+ state with no Wnt/
+\begin_inset Formula $\beta$
+\end_inset
+
+-catenin activity, suggesting that 
+\begin_inset Quotes eld
+\end_inset
+
+active
+\begin_inset Quotes erd
+\end_inset
+
+ tooth site is somehow inhibiting Wnt activity at neigbouring sites 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Fraser2020"
+literal "false"
+
+\end_inset
+
+.
+ Migration of the nascent tooth towards the oral cavity would conceivably
+ decrease the inhibition at neighbouring sites, allowing the previsouly
+ paused neighbours to eventually become active.
+ The precise molecular mechanism behind the cyclic activity and spatially
+ extended inhibiton of Wnt remains unknown.
+ However, many Wnt inhibitors are known to play prominent roles in tooth
+ replacement (e.g., Fgf4, Bmp2, and Shh 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Kettunen2000,Smith2009,Cho2011,Navarro2018,Thiery2022"
+literal "false"
+
+\end_inset
+
+); also, other relevant interaction partners are known to induce intrinsically
+ oscillatory dyanmics in Wnt activity (e.g., axin2 and APC 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Lammi2004,Cavallo2020,MacDonald2009,Thakker1995"
+literal "false"
+
+\end_inset
+
+).
+ In summary, Wnt-signalling may underlie the cyclic nature of tooth replacement
+ (through its effects driving tooth initiation and migration), and spatially-ext
+ended inhibitory interactions may explain the spatiotemporal coordination
+ between neighbouring tooth sites.
+\end_layout
+
+\begin_layout Standard
+Local self-activation combined with spatially-extended inhibition form a
+ classical recipe in a biochemical pattern formation theory known as the
+ Turing mechanism 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Meinhardt1982,Marcon2016"
+literal "false"
+
+\end_inset
+
+.
+ Many aspects of the spatiotemporal patterning of both mamalian hair follicles
+ and bird plummage can be recapitulated using Reaction-Diffusion (RD) models
+ based on the Turing mechanism, and it has been noted that dental development
+ and replacement share many of the same molecular players as these two systems
+ 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Sadier2023"
+literal "false"
+
+\end_inset
+
+.
+ Mathematical models based on this interplay between activation and inhibition
+ recapitulate some aspects of embryonic dental development; namely, the
+ order of appearance for the first few tooth families in a variety of reptiles
+ 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Kulesa1996,Lubkin1997"
+literal "false"
+
+\end_inset
+
+, and how singaling centers of vestigal tooth sites influence early tooth
+ patterning in mice 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Sadier2019"
+literal "false"
+
+\end_inset
+
+.
+ These models give particularly good insight into the spatial appearance
+ of tooth families during embryonic growth, as Turing patterns exhibit a
+ (roughly) constant spacing and new tooth families are added as the jaw
+ grows enough to add in one more spacing 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Kulesa1996,Lubkin1997,Sadier2023"
+literal "false"
+
+\end_inset
+
+.
+ On the other hand, those studies have not considered the long-term behaviour
+ predicted by RD models.
+ 
+\end_layout
+
+\begin_layout Standard
+As a simplification to full spatiotemporal Turing RD modelling, the geometric
+ 
+\begin_inset Quotes eld
+\end_inset
+
+sphere of inhibition
+\begin_inset Quotes erd
+\end_inset
+
+ hypothesis was implemented as a mathematical model in 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Brink2022"
+literal "false"
+
+\end_inset
+
+ and its long-term behaviour was analyzed.
+ As expected, such a model robustly produces the roughly half-cycle phase
+ difference between odd and even numbered teeth.
+ However, it struggles to produce long-lived phase asymmetry (i.e., directional
+ replacement waves) and fails to capture the effects of certain surgical
+ manipulations.
+ In order to improve on these results, a novel model based on ordinary different
+ial equations was proposed.
+ This phase-inhibitor model treats each tooth as a phase oscillator that
+ produces an inhibitory signal, slowing the phase progression of its neighbours.
+ This variant of the hypothesis proposed by Osborn replaces the hard geometric
+ threshold for tooth initiation with a more dynamic picture that takes into
+ account the history of tooth eruptions at each site.
+ Inspired by the dynamics of biochemical reactions, each tooth site in the
+ phase-inhibitor model has a phase-dependent sensitivity for the inhibitory
+ signal coming from its neighbours.
+ The phase-inhibitor model succesfully predicts (i) anti-phase synchronization
+ of nearest neighbours and (ii) stable directional replacement waves when
+ spatial gradients in the period are imposed on the model.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+While cyclic spatiotemporal patterns can be found in RD models near a codimensio
+n-2 Turing-Hopf point 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "SanchezGarduno2019,LedesmaDuran2019"
+literal "false"
+
+\end_inset
+
+, predicting and controlling such patterns remains a technically challening
+ process.
+ Rather, we propose a simpler strategy which is to assume that the geometry
+ of tooth positions is likely set by some type of Turing mechanism, and
+ that the temporal cycling through tooth initiation and migration stages
+ is (mostly) downstream of whatever interactions dictate the spatial positions
+ of tooth families.
+ A simple example of such a model 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Need a paragraph that talks about the developmental modelling, kulessa 1995,
+ sneyd 1993, lubkin 1997, thast osborn paper...maybe read lubkin to get inspired.
+ Say that we aim to use as generic a model as possible.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+We also need to talk about how the implications of period gradients has
+ generally been ignored in previous frameworks
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The emergence of spatiotemporal order in networks of interacting oscillators
+ has been studied extensively.
+ Entrainment of oscillators, defined as a state of where all oscillators
+ have a common frequency, is a ubiquitous mechanism for robustly synchronizing
+ biological events (i.e., ensuring they occur with fixed phase differences)
+ 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Winfree2001,Bao2015,Jimenez2022"
+literal "false"
+
+\end_inset
+
+.
+ The mutual inhibition between tooth sites, intially proposed by Osborn
+ and supported by more recent molecular work, is known to be a potent mechanism
+ for producing entrainment 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Janaki2019"
+literal "false"
+
+\end_inset
+
+.
+ However, the common period of entrained states is logically at odds with
+ the observation of spatial gradients in replacement periods.
+ 
+\end_layout
+
+\begin_layout Standard
+There are two major possibilities for reconciling the period gradients with
+ dynamical systems theory: (i) the system may be tending towards an entrained
+ state from some initial condition specified by an embryonic developmental
+ program (i.e., the period gradient will eventually vanish), or (ii) the system
+ has aperiodic stationary solutions such as qausi-periodic or even chaotic
+ solutions with perpetual period gradients 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Baeuerle2022"
+literal "false"
+
+\end_inset
+
+.
+ Alternatively, it is likely that the life-long developmental program in
+ reptiles causes time-dependent changes in physical and biochemical parameters
+ 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Edmund1960,Edmund1962,Lubkin1997"
+literal "false"
+
+\end_inset
+
+, possibly preventing the system from ever reaching a stationary solution,
+ be it entrained or aperiodic.
+\end_layout
+
+\begin_layout Standard
+In this paper, we study the problem of reptilian tooth replacement dynamics
+ using mathematical models.
+ We begin by studying the evolution of phases in a linear array of uncoupled
+ oscillator, demonstrating how phase asymmetry and apparent replacement
+ waves spontaneously arise from differences in replacement periods.
+ We then study oscillators coupled by mutual inhibition and establish conditions
+ for the emergence of solutions with neighbours in near anti-phase and experimen
+tally-relevant phase asymmetry.
+\end_layout
+
+\begin_layout Section
+Methods
+\end_layout
+
+\begin_layout Standard
+We use two related mathematical models to investigate oscillators coupled
+ through lateral inhibition, focusing on the existence of (i) entrained
+ states and (ii) aperiodic oscillatory solutions that arise in certain contexts
+ (e.g., when intrinsic periods become too dissimilar).
+ The first model is a phase-inhibitor ODE model similar to what was used
+ in 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Brink2022"
+literal "false"
+
+\end_inset
+
+, while the second model uses PDEs to extend the first by explicitly considering
+ the diffusion of inhibitor in the space between tooth sites.
+ We study both models using a combination of time-integration to obtain
+ periodic and aperiodic solutions, and numerical continuation to help define
+ parameter regimes where specific types of solutions are relevant.
+\end_layout
+
+\begin_layout Subsection
+Phase-Inhibitor Model
+\end_layout
+
+\begin_layout Standard
+The upper/lower half of the jaw is modelled as a linear array of 
+\begin_inset Formula $N=2N_{0}+1$
+\end_inset
+
+ coupled phase-oscillators (i.e., with 
+\begin_inset Formula $N_{0}$
+\end_inset
+
+ teeth on the left and right sides of the jaw), where the 
+\begin_inset Formula $i^{\text{th}}$
+\end_inset
+
+ phase 
+\begin_inset Formula $\theta_{i}\in\left[0,2\pi\right]$
+\end_inset
+
+ has an intrinsic period 
+\begin_inset Formula $T_{i}$
+\end_inset
+
+.
+ The progression of each oscillator is slowed by an inhibitory signal coming
+ from its neighbours, which is maximal at 
+\begin_inset Formula $\theta=0$
+\end_inset
+
+ while the sensitivity of each oscillator is greatest at a phase of 
+\begin_inset Formula $\theta=-\pi/2$
+\end_inset
+
+.
+ The dynamics of the each oscillator is given by 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Flex Subequations
+status open
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "eq:phase_inh"
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{align}
+\dot{\theta}_{i} & =\frac{2\pi}{T_{i}}-\epsilon\frac{\sigma\left(\theta_{i-1}\right)+\sigma\left(\theta_{i+1}\right)}{2}\rho\left(\theta_{i}\right)\qquad\text{for }i=-N_{0},-N_{0}+1,\dots,N_{0}-1,N_{0}\\
+\text{with} & \qquad\theta_{\pm\left(N_{0}+1\right)}=\theta_{\pm\left(N_{0}-1\right)}\nonumber 
+\end{align}
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+where 
+\begin_inset Formula $\epsilon>0$
+\end_inset
+
+ is an inhibition sensitivity parameter, 
+\begin_inset Formula $\omega_{i}=2\pi/T_{i}$
+\end_inset
+
+, and the funcitons 
+\begin_inset Formula $\sigma\left(x\right)=\left(1+\cos\left(x\right)\right)/2$
+\end_inset
+
+ and 
+\begin_inset Formula $\rho\left(x\right)=\left(1-\sin\left(x\right)\right)/2$
+\end_inset
+
+ represent the proposed phase-dependence of inhibitor production and sensing,
+ respectively.
+ For simplicity, we focus on simple linear gradients that are symmetric
+ about the midjaw 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Edmund1962"
+literal "false"
+
+\end_inset
+
+, given by
+\begin_inset Formula 
+\begin{equation}
+T_{i}=T_{{\rm 0}}\left(1+\gamma\left|\frac{i}{N_{0}}\right|\right),\label{eq:period_gradient}
+\end{equation}
+
+\end_inset
+
+where 
+\begin_inset Formula $T_{{\rm 0}}>0$
+\end_inset
+
+ is the intrinsic period of the zeroth oscillator, and 
+\begin_inset Formula $\gamma\in\left(-1,\infty\right)$
+\end_inset
+
+ is the fractional change in period from the midjaw to the edges of the
+ jaw.
+ After non-dimensionalization, we obtain
+\begin_inset Flex Subequations
+status open
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "eq:phase_inh_nondim"
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{align}
+\dot{\theta}_{i} & =\frac{1}{1+\gamma\left|i/N_{0}\right|}-\epsilon\frac{\sigma\left(\theta_{i-1}\right)+\sigma\left(\theta_{i+1}\right)}{2}\rho\left(\theta_{i}\right)\qquad\text{for }i=-N_{0},-N_{0}+1,\dots,N_{0}-1,N_{0}\\
+\text{with} & \qquad\theta_{\pm\left(N_{0}+1\right)}=\theta_{\pm\left(N_{0}-1\right)}\nonumber 
+\end{align}
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+where we have made the dimensionless subsititutions 
+\begin_inset Formula $t=2\pi t/T_{0}$
+\end_inset
+
+ and 
+\begin_inset Formula $\epsilon=\epsilon T_{{\rm 0}}/2\pi$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Subsection
+Phase-Inhibitor Diffusion Model
+\end_layout
+
+\begin_layout Standard
+We now extend the ODE model given by Eq.
+ 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:phase_inh"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ to explicitly account for the secretion, diffusion, and degradation of
+ an inhibitory factor represented by the concentration field 
+\begin_inset Formula $I(x,t)$
+\end_inset
+
+.
+ The inhibitor is confined to a one-dimensional domain of length 
+\begin_inset Formula $L$
+\end_inset
+
+ with zero-flux boundary conditions at the edges and 
+\begin_inset Formula $N=2N_{0}+1$
+\end_inset
+
+ tooth sites (i.e., oscillators with phase 
+\begin_inset Formula $\theta\left(t\right)$
+\end_inset
+
+ ) evenly spaced throughout the domain.
+ Each tooth site acts as site of phase-dependent inhibitor production (maximal
+ secretion at 
+\begin_inset Formula $\theta=0$
+\end_inset
+
+), and the phase progression of each oscillator is slowed by the local concentra
+tion of inhibitor (maximal sensitivity at 
+\begin_inset Formula $\theta=-\pi/2$
+\end_inset
+
+).
+ The resulting PDE model is given by
+\begin_inset Flex Subequations
+status open
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "eq:phase_pde"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Formula 
+\begin{alignat*}{1}
+\partial_{t}I & =D\partial_{xx}I-pI+\alpha\sum_{i=-N_{0}}^{N_{0}}\sigma\left(\theta_{i}\right)\delta\left(x-x_{i}\right)\qquad\text{on }x\in\left(-L/2,L/2\right),\\
+\text{ with }\partial_{x}I\left(\pm L/2,t\right) & =0,\\
+D\left[\partial_{x}I\left(x_{i}\right)\right] & =-\alpha\sigma\left(\theta_{i}\right)\quad\text{for }\quad i=-N_{0},-N_{0}+1,\dots,N_{0}-1,N_{0}\\
+\dot{\theta}_{i} & =\frac{2\pi}{T_{i}}-\epsilon I\left(x_{i}\right)\rho\left(\theta_{i}\right),
+\end{alignat*}
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+where 
+\begin_inset Formula $D$
+\end_inset
+
+ is a diffusion coefficient, 
+\begin_inset Formula $p$
+\end_inset
+
+ is a degradation rate, 
+\begin_inset Formula $\alpha$
+\end_inset
+
+ is an inhibitor secretion rate, 
+\begin_inset Formula $x_{i}=iL/N$
+\end_inset
+
+ is the position of the 
+\begin_inset Formula $i^{{\rm th}}$
+\end_inset
+
+ oscillator, 
+\begin_inset Formula $T_{i}$
+\end_inset
+
+ is given by Eq.
+ 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:period_gradient"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+, 
+\begin_inset Formula $\sigma$
+\end_inset
+
+ and 
+\begin_inset Formula $\rho$
+\end_inset
+
+ are as defined before, and 
+\begin_inset Formula $\epsilon$
+\end_inset
+
+ is an inhibition sensitivity parameter.
+\end_layout
+
+\begin_layout Standard
+After non-dimensionalization, we arrive at
+\begin_inset Flex Subequations
+status open
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "eq:phase_pde_nondim"
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{alignat}{1}
+\tau\partial_{\tilde{t}}\tilde{I} & =\kappa^{2}\partial_{\tilde{x}\tilde{x}}\tilde{I}-\tilde{I}+\sum_{i=-N_{0}}^{N_{0}}\sigma\left(\theta_{i}\right)\delta\left(\tilde{x}-i\right)\qquad\text{on }\tilde{x}\in\left(-N/2,-N/2\right),\\
+\text{ with }\partial_{\tilde{x}}\tilde{I}\left(\pm N/2,\tilde{t}\right) & =0,\\
+\frac{{\rm d}}{{\rm d}\tilde{t}}\theta_{i} & =\frac{1}{\left(1+\gamma\left|i/N_{0}\right|\right)}-2\epsilon\tilde{I}\left(i\right)\rho\left(\theta_{i}\right).
+\end{alignat}
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+where we have used the dimensionless substitutions 
+\begin_inset Formula $\epsilon=\left(T_{0}\alpha/4\pi p\right)\epsilon$
+\end_inset
+
+, 
+\begin_inset Formula $\tilde{I}=\left(p/\alpha\right)I$
+\end_inset
+
+, 
+\begin_inset Formula $\tau=pT_{0}/2\pi$
+\end_inset
+
+, 
+\begin_inset Formula $\kappa=\sqrt{DN^{2}/pL^{2}}$
+\end_inset
+
+, 
+\begin_inset Formula $\tilde{t}=pt$
+\end_inset
+
+, and 
+\begin_inset Formula $\tilde{x}=xN/L$
+\end_inset
+
+ with 
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+
+\begin_inset Formula $T_{0}$
+\end_inset
+
+ as defined previously.
+\end_layout
+
+\begin_layout Subsubsection
+Adiabatic Limit
+\end_layout
+
+\begin_layout Standard
+The PDE model extends the ODE model to by introducing (i) chemical coupling
+ that extends beyond nearest neighbours and (ii) diffusion-dependent delays
+ in the inhibitory coupling.
+ In order to isolate the effects of extended spatial coupling, we can work
+ in the adiabatic limit of 
+\begin_inset Formula $\tau\to0$
+\end_inset
+
+ 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Kuramoto1995"
+literal "false"
+
+\end_inset
+
+.
+ This allows us to explicitly solve for the spatial profile of the inhibitory
+ field, reducing the PDE model to a limiting system of ODEs where nonlocal
+ communication via inhibitor concentrations is instantaneous (see 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "sec:Derivation-of-the"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ for details).
+\end_layout
+
+\begin_layout Subsection
+Numerical Continuation
+\end_layout
+
+\begin_layout Subsection
+Summary Statistics
+\end_layout
+
+\begin_layout Standard
+We are interested in quantitatively analyzing cyclic events such as tooth
+ replacement or the evolution of model oscillators.
+ Of primary interest to the phenomenon of tooth replacement are (i) the
+ extent to which nearest neighbours are in the anti-phase (ii) the left-right
+ phase asymmetry between a tooth site/oscillator and its neightbours.
+ 
+\end_layout
+
+\begin_layout Standard
+To quantify these two aspects, we first denote the right and left relative
+ phase of tooth replacement at the 
+\begin_inset Formula $n^{{\rm th}}$
+\end_inset
+
+ tooth site (normalized to 1) by 
+\begin_inset Formula $\phi_{r}^{n}$
+\end_inset
+
+ and 
+\begin_inset Formula $\phi_{l}^{n}$
+\end_inset
+
+ , respectively.
+ The time of a specific tooth replacement event at this site is denoted
+ by 
+\begin_inset Formula $\tau_{n}$
+\end_inset
+
+.
+ For a given replacment event, the right and left relative phases are given
+ by 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{align*}
+\backslash
+phi_{r}^n = (
+\backslash
+tau_n-
+\backslash
+tau^{
+\backslash
+rm prev}_{n+1})/T_{n+1} 
+\backslash
+intertext{and} 
+\backslash
+phi_{l}^n = (
+\backslash
+tau_n-
+\backslash
+tau^{
+\backslash
+rm prev}_{n-1})/T_{n-1}
+\backslash
+end{align*}
+\end_layout
+
+\end_inset
+
+ where 
+\begin_inset Formula $\tau_{n\pm1}^{{\rm prev}}<\tau_{n}$
+\end_inset
+
+ are the previous replacement times of the right and left neighbours , respectiv
+ely (see 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "subsec:Phase-Asymmetry-Flipping"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+), and 
+\begin_inset Formula $T_{n\pm1}$
+\end_inset
+
+ are the respective replacement periods.
+\end_layout
+
+\begin_layout Subsubsection
+Anti-Phase Metric
+\end_layout
+
+\begin_layout Standard
+Anti-phase oscillations correspond to 
+\begin_inset Formula $\phi_{r}^{n}=\phi_{l}^{n}=1/2$
+\end_inset
+
+ for all 
+\begin_inset Formula $n$
+\end_inset
+
+, so we seek a metric which is near unity for and 
+\begin_inset Formula $\phi_{r},\phi_{l}\approx1/2$
+\end_inset
+
+ and drops off quickly to zero once either relative phase deviates significantly
+ from 
+\begin_inset Formula $1/2$
+\end_inset
+
+.
+ We propose the metric 
+\begin_inset Formula $\psi$
+\end_inset
+
+, defined as
+\begin_inset Formula 
+\[
+\psi=\left(\sin\left(\pi\phi_{r}^{n}\right)\sin\left(\pi\phi_{l}^{n}\right)\right)^{3}
+\]
+
+\end_inset
+
+where the third order dependence was determined subjectively from the criterion
+ that 
+\begin_inset Formula $\psi=0.3$
+\end_inset
+
+ acts as a threshold for configurations we perceived as anti-phase or not.
+ 
+\end_layout
+
+\begin_layout Standard
+In order to summarize the behaviour of a jaw with 
+\begin_inset Formula $N=2N_{0}+1$
+\end_inset
+
+ tooth sites we define the mean anti-phase metric, 
+\begin_inset Formula $\bar{\psi}$
+\end_inset
+
+, given by 
+\begin_inset Formula 
+\begin{equation}
+\bar{\psi}=\frac{1}{N-2}\sum_{n=-\left(N_{0}-1\right)}^{N_{0}-1}\psi_{i}.\label{eq:psi_bar}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Phase Asymmetry
+\end_layout
+
+\begin_layout Standard
+In order to quantify phase asymmetry we first define a measure for the 
+\begin_inset Formula $n^{{\rm th}}$
+\end_inset
+
+ oscillator 
+\begin_inset Formula $\chi_{n}$
+\end_inset
+
+, given by
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\chi_{n}=\frac{\sin\left(\pi\left(\phi_{r}^{n}-\phi_{l}^{n}\right)\right)}{\pi}\label{eq:phase_asym}
+\end{equation}
+
+\end_inset
+
+where we note that 
+\begin_inset Formula $\chi_{i}\approx\phi_{r}^{n}-\phi_{l}^{n}$
+\end_inset
+
+ in the limit 
+\begin_inset Formula $\phi_{r}^{n}-\phi_{l}^{n}\to0$
+\end_inset
+
+.
+ The choice of using a 
+\begin_inset Formula $\sin$
+\end_inset
+
+ function was made to cases with 
+\begin_inset Formula $\phi_{r}^{n}\approx1$
+\end_inset
+
+ and 
+\begin_inset Formula $\phi_{l}^{n}\approx0$
+\end_inset
+
+ (or vice-versa) have a low asymmetry score, as in these scenarios phase
+ asymmetry is less meaningful.
+\end_layout
+
+\begin_layout Standard
+We can then define two measures for a collection of 
+\begin_inset Formula $N=2N_{0}+1$
+\end_inset
+
+ tooth sites.
+ Firstly, we define the mean phase asymmetry for the entire jaw, 
+\begin_inset Formula $\bar{\chi}$
+\end_inset
+
+, given by
+\begin_inset Formula 
+\begin{equation}
+\bar{\chi}=\frac{1}{N-2}\sum_{n=-\left(N_{0}-1\right)}^{N_{0}-1}\chi_{n}.\label{eq:chi_bar}
+\end{equation}
+
+\end_inset
+
+ 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+move that note to the end of the subsection...and the next one too
+\end_layout
+
+\end_inset
+
+.
+ In order to distinguish between apparent front-to-back and back-to-front
+ waves, we furthermore define 
+\begin_inset Formula 
+\begin{equation}
+\Delta\bar{\chi}=\bar{\chi}_{{\rm right}}-\bar{\chi}_{{\rm {\rm left}}}\label{eq:chi_hat}
+\end{equation}
+
+\end_inset
+
+where 
+\begin_inset Formula $\bar{\chi}_{{\rm left}}$
+\end_inset
+
+ and 
+\begin_inset Formula $\bar{\chi}_{{\rm right}}$
+\end_inset
+
+ are the mean values of 
+\begin_inset Formula $\chi$
+\end_inset
+
+ in the left and right sides of the jaw, respectively.
+ We note that, on the basis the data in 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Brink2022"
+literal "false"
+
+\end_inset
+
+, we expect 
+\begin_inset Formula $\Delta\chi>0$
+\end_inset
+
+ for leopard .
+\end_layout
+
+\begin_layout Standard
+Finally, we note that from 1-3 years of age leopard geckos seem to exhibit
+ tooth replacement with 
+\begin_inset Formula $\bar{\psi}\approx0.8$
+\end_inset
+
+ and 
+\begin_inset Formula $\Delta\bar{\chi}>0$
+\end_inset
+
+ (i.e., nearly anti-phase with apparent back-to-front waves).
+\end_layout
+
+\begin_layout Subsubsection
+Computational Zahnreihe Reconstruction
+\end_layout
+
+\begin_layout Standard
+We now seek a means to convert the phase asymmetries of replacement events
+ with the the apparent replacement waves reported by Edmund and others.
+ It has previously been shown that different 
+\begin_inset Quotes eld
+\end_inset
+
+wave
+\begin_inset Quotes erd
+\end_inset
+
+ directions are obtained by assuming different rules for the waves 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "DeMar1972,Osborn1974"
+literal "false"
+
+\end_inset
+
+.
+ Given the doubts and uncertainties about the mechanisms underlying such
+ rules, we seek a simple graphical rule that captures the most basic principle
+ of Zahnreihe theory and systematically converts replacement times into
+ local wave directions.
+ A common approach is to draw line segments joining evenly-spaced tooth
+ replacement events in a plot has time on the vertical axis and tooth index
+ on the horizontal axis 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Edmund1962,DeMar1972,Osborn1974"
+literal "false"
+
+\end_inset
+
+.
+ To avoid ambiguities in wave direction 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "DeMar1972"
+literal "false"
+
+\end_inset
+
+, we draw line segments between alternately numbered teeth (i.e., next nearest
+ neighbours).
+ Our graphical rule should result in the line segments drawn through sequential
+ tooth generations that are roughly parallel and equidistant.
+\end_layout
+
+\begin_layout Standard
+In order to draw these lines, we first compute the phase asymmetry of every
+ replacement event.
+ If a given replacement event and the next replacement event of its leftward
+ (rightward) neighbour both have positive (negative) 
+\begin_inset Formula $\chi$
+\end_inset
+
+ then we draw a line between the two events.
+ With appropriately timed replacement events this produces a sequence of
+ replacement events joined by lines with a clear direction, which can be
+ interpreted as a Zahnreihe (see Fig.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:leopard_gecko_phases"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+a).
+ To reduce the effect of missed/skipped replacement events, we futhermore
+ add a rule that events within the same Zahnreihe must occur within a certain
+ amount of time of one another (e.g., within two cycles of the middle tooth).
+\end_layout
+
+\begin_layout Standard
+This data-driven approach was chosen due to being mechanistically agnostic
+ and based entirely on objective measures such as phase asymmetry.
+ We could conceivably have chosen the opposite rule of drawing rightward
+ (leftward) waves for positive (negative) 
+\begin_inset Formula $\chi$
+\end_inset
+
+; however, counter to the classic descriptions of Zhareinhe and our requirement
+ to have well-separated and nearly parallel lines, such a rule tends to
+ produce lines that appear to join nearest neighbours and/or exhibit many
+ intersections.
+ Moreover, from the limited data with unambiguous phase asymmetry presented
+ in 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Edmund1962"
+literal "false"
+
+\end_inset
+
+, it seems that Edmund's approach to drawing Zahnreihe largely overlaps
+ with our proposed rule.
+\end_layout
+
+\begin_layout Standard
+Based on this rule for drawing Zahnreihe, replacement timing data with a
+ fixed sign of phase asymmetry on each side of the jaw and 
+\begin_inset Formula $\Delta\bar{\chi}<0$
+\end_inset
+
+ (
+\begin_inset Formula $\Delta\bar{\chi}>0$
+\end_inset
+
+) is straightforwardly interpreted as apparent front-to-back (back-to-front)
+ waves.
+ We stress that, although we have produced a systematic rule for drawing
+ apparent replacement waves, this is mearly a way to summarize data and
+ that the presence of such apparent waves yields no insight into the mechanism
+ behind tooth replacement dynamics.
+\end_layout
+
+\begin_layout Section
+Results
+\end_layout
+
+\begin_layout Subsection
+Spatiotemporal pattern of tooth replace in Leopard geckos 
+\begin_inset CommandInset label
+LatexCommand label
+name "subsec:Spatiotemporal-Geckos"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+We begin by using applying our computational zahnreihe reconstruction method
+ to tooth replacement data collected from leopard geckos.
+ In 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Brink2022"
+literal "false"
+
+\end_inset
+
+ it was shown that leopard geckos tooth replacement occurs with a positive
+ (negative) phase asymmetry on the right (left) side of the jaw.
+ According to logic of our proposed zahnreihe reconstruction technique,
+ this corresponds to back-to-front waves.
+ To illustrate this we use a dataset published 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Brink2022"
+literal "false"
+
+\end_inset
+
+, where tooth replacement events were recorded across the whole leopard
+ gecko jaw over a period of 259 days with most teeth exhibiting around seven
+ replacement events.
+ Our compuational zahnreihe reconstruction method was applied to this data
+ (see Fig.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:leopard_gecko_phases"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+a), showing very clear back-to-front waves as expected.
+ We also confirmed that these tooth replacement events are very close to
+ anti-phase by computing the anti-phase metric 
+\begin_inset Formula $\psi$
+\end_inset
+
+ for each event, with most events exhibiting 
+\begin_inset Formula $\psi\approx0.8$
+\end_inset
+
+ (see lower part of Fig.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:leopard_gecko_phases"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+a).
+ 
+\end_layout
+
+\begin_layout Standard
+From the timing of replacement events, we can compute the replacement period
+ at each tooth site.
+ After discarding events from tooth positions 8-22 due to surgery-related
+ artefacts, two distinct trends in replacement period are observed in the
+ data.
+ Firstly, over time the replacement period slows down, which can be seen
+ by comparing the averaged replacement period (in days) at each toothsite
+ during the first 3 cycles of replacement with the replacment periods from
+ the fourth cycle onwards (compared red and black data in left side of Fig.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:leopard_gecko_phases"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+c).
+ Secondly, it seems that the replacement period increases from the front
+ to the rear of the jaw (compare tooth position 0 and 
+\begin_inset Formula $\pm36$
+\end_inset
+
+ in left side Fig.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:leopard_gecko_phases"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+c).
+ To quantify these trends, we use a simple model for the period of the 
+\begin_inset Formula $i^{{\rm th}}$
+\end_inset
+
+ tooth at time 
+\begin_inset Formula $t$
+\end_inset
+
+, given by 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+T\left(i,t\right)=T_{{\rm 0}}\left(t\right)+\Delta T(t)\left|i/N_{0}\right|\label{eq:period_data_model}
+\end{equation}
+
+\end_inset
+
+where 
+\begin_inset Formula $T_{0}$
+\end_inset
+
+ is the period of the middle tooth, 
+\begin_inset Formula $\Delta T$
+\end_inset
+
+ is the magnitude of the period gradient, and 
+\begin_inset Formula $N_{0}=36$
+\end_inset
+
+.
+ Fitting this model to the early data (cycle #
+\begin_inset Formula $\leq$
+\end_inset
+
+3) we estimate 
+\begin_inset Formula $T_{0}=34.36\pm0.47$
+\end_inset
+
+ days and 
+\begin_inset Formula $\Delta T=3.18\pm0.82$
+\end_inset
+
+ days, while for the latter data (cycle #
+\begin_inset Formula $\geq$
+\end_inset
+
+4) we find 
+\begin_inset Formula $T_{0}=39.83\pm0.42$
+\end_inset
+
+ days and 
+\begin_inset Formula $\Delta T=2.43\pm0.71$
+\end_inset
+
+ days.
+ Thus it is clear that the replacement period of all teeth increases over
+ time and that there is a nonzero spatial gradient in the period across
+ the jaw.
+ To acheive a finer time resolution, we defined sliding windows of 150 days
+ (roughly 4 replacment cycles) and fit Eq.
+ 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:period_data_model"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ to the data in these sliding windows (see right side of Fig.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:leopard_gecko_phases"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+b).
+ This analysis corroborates the analyis of the early and late replacment
+ data, showing a continuous and nearly linear increase in 
+\begin_inset Formula $T_{0}$
+\end_inset
+
+ and a 
+\begin_inset Formula $\Delta T$
+\end_inset
+
+ that seems to be fluctuating around a constant value.
+\end_layout
+
+\begin_layout Standard
+Back-to-front waves are nearly ubiquitous in reptiles 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Edmund1960"
+literal "false"
+
+\end_inset
+
+.
+ Moreover, a gradual lengthening of the replacement period as well as spatial
+ gradients in the period that increase from the front of the jaw to the
+ rear have also been reported in crocodiles 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Edmund1962,Westergaard1987"
+literal "false"
+
+\end_inset
+
+.
+ A global slowing of tooth replacement is unlikely to have a signifcant
+ effect on apparent replacement waves aside from slowing their progression
+ through the jaw.
+ On the other hand, the effects of a spatial gradient in replacement period
+ is more difficult to predict.
+ Thus we next investigate the influence of period gradients on different
+ spatiotemporal patterns of tooth replacement.
+ We begin by modelling toothsites as simple non-interacting oscillators
+ in 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "subsec:Dynamics-of-chi"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+, showing that these gradients can spontaneously induce apparent waves from
+ anti-phase and in-phase initial conditions.
+ Then in 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "subsec:ODE-Model"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ we incorporate mutual inhibitory interactions via an ODE model, and find
+ that such interactions can lead to stable entrained states exhbiting apparent
+ replacement waves.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+centering 
+\backslash
+begin{minipage}{.3
+\backslash
+columnwidth}
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+ 
+\backslash
+begin{subfigure}[t]{
+\backslash
+columnwidth}
+\backslash
+caption{}
+\backslash
+centerline{
+\end_layout
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename LG190_asymm.pdf
+	height 3cm
+
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+} 
+\backslash
+vspace{.25cm} 
+\backslash
+centerline{
+\end_layout
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename LG190_anti-phase.pdf
+	height 3cm
+
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}
+\backslash
+end{subfigure}
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{minipage}
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+hfill
+\backslash
+begin{minipage}{.67
+\backslash
+columnwidth}
+\backslash
+begin{subfigure}[t]{
+\backslash
+columnwidth}
+\backslash
+caption{}
+\backslash
+centerline{
+\end_layout
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename period_fitting.pdf
+	height 6.25cm
+
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}
+\backslash
+end{subfigure}
+\backslash
+end{minipage}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Apparent back-to-front waves of tooth replacement and spatial period gradients
+ observed in leopard geckos.
+ Time has been non-dimensionalized in terms of cycles of the middle tooth
+ (tooth index 0), with the first replacement event of the middle tooth defining
+ cycle 0.
+ In panel 
+\series bold
+(a)
+\series default
+ we color each replacement event according to the phase asymmetry metric
+ 
+\begin_inset Formula $\chi$
+\end_inset
+
+ (top) or the anti-phase metric 
+\begin_inset Formula $\psi$
+\end_inset
+
+ (bottom).
+ The dashed boxes indicate data that has been affected by surgical intervention,
+ data from these tooth sites was removed from subsequent analyses.
+ In panel 
+\series bold
+(b)
+\series default
+ we analyze the replacement period observed at each tooth site.
+ On the left, mean replacement periods and their estimated standard deviation
+ are shown.
+ Data was divided into two groups, one at the beginning (black symbols)
+ and another at the end of the experiment (black symbols).
+ The data was fit to a linear model given by Eq.
+ 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:period_data_model"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ (see black and red lines), showing that replacement period at the middle
+ of the jaw slows by roughly 5.5 days during the experiment and that there
+ is a non-negligible spatial gradient in replacement period.
+ On the right, we fit Eq.
+ 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:period_data_model"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ to data obtained from sliding windows, showing that the period at the midjaw,
+ 
+\begin_inset Formula $T_{0}$
+\end_inset
+
+, increases linearly with time while the magnitude of the spatial gradient,
+ 
+\begin_inset Formula $\Delta T$
+\end_inset
+
+, fluctuates around a roughly constant value.
+ Solid lines indicate the parameter estimate, and dashed lines bound the
+ 95% confidence interval of the estimate.
+ 
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:leopard_gecko_phases"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Dynamics of Phase Asymmetry in Non-Interacting Networks 
+\begin_inset CommandInset label
+LatexCommand label
+name "subsec:Dynamics-of-chi"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+To study how phases evolve in a row of uncoupled phase oscillators we use
+ Eq.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:phase_inh_nondim"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ with 
+\begin_inset Formula $\epsilon=0$
+\end_inset
+
+.
+ In the absence of a gradient in periods (i.e., with 
+\begin_inset Formula $\gamma=0$
+\end_inset
+
+), the relative phase between oscillators is fully determined by the intial
+ conditions of the system, such that any phase asymmetry (or lack thereof)
+ is maintained indefinitely.
+\end_layout
+
+\begin_layout Standard
+With non-zero 
+\begin_inset Formula $\gamma$
+\end_inset
+
+, phase asymmetry evolves from an initial condition in a non-trivial manner.
+ To undestand this, we consider the 
+\begin_inset Formula $n^{{\rm th}}$
+\end_inset
+
+ oscillator which has a period 
+\begin_inset Formula $T_{n}$
+\end_inset
+
+, and the normalized phase 
+\begin_inset Formula $\phi^{n}$
+\end_inset
+
+ at time 
+\begin_inset Formula $t$
+\end_inset
+
+ is given by 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{flalign*}
+\phi^{n} & =\frac{t}{T_{n}}+\delta^{n}
+\end{flalign*}
+
+\end_inset
+
+where 
+\begin_inset Formula $\delta_{n}\in\left[0,1\right)$
+\end_inset
+
+ is the initial normalised phase difference (i.e., at 
+\begin_inset Formula $t=0$
+\end_inset
+
+).
+ We are interested in the phase asymmetry of the next replacement at tooth
+ site 
+\begin_inset Formula $n$
+\end_inset
+
+, as detailed in 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "subsec:Phase-Asymmetry-Flipping"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ this is determined by the right and left relative initial phases, i.e, 
+\begin_inset Formula 
+\[
+\delta_{r}^{n}=\delta^{n}-\delta^{n+1}\quad\text{and}\quad\delta_{l}^{n}=\delta^{n}-\delta^{n-1},
+\]
+
+\end_inset
+
+respectively, as well as the ratio 
+\begin_inset Formula $N_{0}/\gamma$
+\end_inset
+
+ (see Eqs.
+ (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:intial_phase_asymm"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+-
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:initial_phase_asymm_inphase"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+) for details).
+ For physiologically reasonable conditions (
+\begin_inset Formula $0<\gamma<N_{0}/2$
+\end_inset
+
+), with anti-phase intial conditions, 
+\begin_inset Formula $\delta_{l}^{n}=\delta_{r}^{n}=\frac{1}{2}$
+\end_inset
+
+, this invariably predicts positive phase asymmetry on the left side of
+ the jaw and negative asymmetry on the left (i.e., apparent front-to-back
+ replacement waves), while with in-phase intial conditions, 
+\begin_inset Formula $\delta_{l}^{n}=\delta_{r}^{n}=0$
+\end_inset
+
+, we find instead apparent back-to-front replacement waves.
+ 
+\end_layout
+
+\begin_layout Standard
+Phase asymmetry eventually switches sign repeatedly.
+ For the class of initial conditions with 
+\begin_inset Formula $\delta_{n+1}-\delta_{n-1}$
+\end_inset
+
+ independent of 
+\begin_inset Formula $n$
+\end_inset
+
+ (or possibly fixed on each side of the jaw), it can be shown that phase
+ asymmtery switching begins at the midjaw and spread outwards.
+ This switching phenomenon initiates at the tooth site 
+\begin_inset Formula $n=\pm1$
+\end_inset
+
+ at a time 
+\begin_inset Formula $t=\tilde{t}_{1}$
+\end_inset
+
+, where, in general, the 
+\begin_inset Formula $k^{\text{th}}$
+\end_inset
+
+ phase asymmetry sign flip occurs at a time given by 
+\begin_inset Formula 
+\begin{equation}
+\tilde{t}_{k}=T_{0}\left(k+\text{sgn}(n)\left(\delta^{n+1}-\delta^{n-1}\right)\right)\left(1+N_{0}/(2\gamma)\right).\label{eq:first_flipping_time}
+\end{equation}
+
+\end_inset
+
+It then takes a some time, 
+\begin_inset Formula $\Delta_{k}$
+\end_inset
+
+, for this sign flipping to propagate to all the way to the the back of
+ the jaw, given by 
+\begin_inset Formula 
+\begin{equation}
+\Delta_{k}=T_{0}\left(k+\text{sgn}(n)\left(\delta^{n+1}-\delta^{n-1}\right)\right)\left(1+\frac{\gamma}{2}\right)\left(N_{0}-1\right).\label{eq:propagation_time}
+\end{equation}
+
+\end_inset
+
+For cases with 
+\begin_inset Formula $\delta^{n+1}=\delta^{n-1}$
+\end_inset
+
+ (e.g., anti-phase or in-phase intial conditions) this predicts an instantaneous
+ switch (i.e., 
+\begin_inset Formula $\Delta_{1}=0$
+\end_inset
+
+) at 
+\begin_inset Formula $\tilde{t}_{1}=0$
+\end_inset
+
+.
+ For anti-phase initial conditions, we observe exactly the directional switching
+ described by Edmund, that is back-to-front waves for 
+\begin_inset Formula $t<0$
+\end_inset
+
+ and front-to-back waves for 
+\begin_inset Formula $t>0$
+\end_inset
+
+ (see Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig: phase_row_uncoupled"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+).
+\end_layout
+
+\begin_layout Standard
+On longer timescales, the inital phase asymmtery gets erased and is replaced
+ by complicated spatial patterns.
+ To investigate this in physiologically-relevant manner, we choose parameters
+ that roughly correspond to the lower jaws of crocodiles (
+\begin_inset Formula $N_{0}=21,\gamma=1.0$
+\end_inset
+
+, 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Edmund1962"
+literal "false"
+
+\end_inset
+
+) and leopard geckos (
+\begin_inset Formula $N_{0}=45,\gamma=0.1$
+\end_inset
+
+, 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Brink2022"
+literal "false"
+
+\end_inset
+
+).
+ For the model crocodile jaw, we observe a switch in apparent replacement
+ wave direction starting at 11.5 replacement cycles (approximately 8.86 years)
+ taking some 31.5 replacement cycles (approximately 22.5 years) to reach the
+ rear of the jaw.
+ The combination of a long propagation time and comparatively shorter first
+ flipping time leads to the rapid development of a complicated spatiotemporal
+ pattern of replacement wave directionality (see Fig.
+ 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "fig: phase_row_uncoupled"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+b).
+ On the other hand, for the model gecko jaw the first switch happens much
+ later after 226 replacement cycles (approximately 18.8 years) and only takes
+ 47.5 replacement cycles (approximately 4 years) to spread through the jaw
+ (see Fig.
+ 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "fig: phase_row_uncoupled"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+c).
+ 
+\end_layout
+
+\begin_layout Standard
+From these simple simulations we gain a number of insights.
+ Firstly, we find that apparent directional replacement waves develop spontaneou
+sly from any initial condition provided there is a gradient in replacement
+ periods, no interaction between tooth sites is required.
+ Moreover, with an appropriate set of intial conditions we observe the abrupt
+ switching in apparent replacement wave direction reported by Edmund in
+ crocodiles 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Edmund1962"
+literal "false"
+
+\end_inset
+
+, no stimulus source is required.
+ Secondly, after such directional switching occurs, we eventually see a
+ breakdown of clear front-to-back replacement waves as has been described
+ in mature crocodiles 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Edmund1962"
+literal "false"
+
+\end_inset
+
+.
+ Finally, for parameters based on the leopard gecko jaw, we observe apparent
+ replacment waves maintaining their directionality for timescales longer
+ than the typical lifespan of an animal.
+ However, the back-to-front waves in this simple model gecko jaw arise from
+ in-phase initial conditions.
+ With such an approach only brief period of time actually exhibits waves
+ with both the correct directionality and neighbouring teeth close to anti-phase
+ (i.e., 
+\begin_inset Formula $\Delta\bar{\chi}>0$
+\end_inset
+
+ and 
+\begin_inset Formula $\bar{\psi}>0.5$
+\end_inset
+
+, see Fig.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Initial-phase-asymmetry"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+b-d).
+\end_layout
+
+\begin_layout Standard
+Thus, while apparent replacement waves seem to be an emergent property of
+ a row oscillators with a spatial gradient in period, the choice of initial
+ condition determines the initial directionality of the waves.
+ Moreover, without some type of interaction between oscillators the directionali
+ty cannot be maintained indefinitely.
+ We now consider models with inhibitory coupling between oscillators (i.e.,
+ Eqs.
+ 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:phase_inh_nondim"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ & 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:phase_pde_nondim"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ with 
+\begin_inset Formula $\epsilon>0$
+\end_inset
+
+) to see if such interactions can (i) serve as a robust means of obtaining
+ waves with a specific directionality and (ii) maintain that directionality
+ for longer, or potentially indefinite, periods of time.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+centering 
+\backslash
+begin{subfigure}[t]{.3
+\backslash
+columnwidth}
+\backslash
+caption{ {
+\backslash
+small  $N_0=21,
+\backslash
+epsilon=0, 
+\backslash
+gamma=1$}}
+\backslash
+vspace{0.5em} 
+\backslash
+centerline{
+\end_layout
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename uncoupled_antiphase_switch_gamma=1.pdf
+	width 100col%
+
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}
+\backslash
+end{subfigure}
+\backslash
+hfill
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{subfigure}[t]{.3
+\backslash
+columnwidth}
+\backslash
+caption{{
+\backslash
+small $N_0=21, 
+\backslash
+epsilon=0, 
+\backslash
+gamma=1$}}
+\backslash
+vspace{0.5em}
+\backslash
+centerline{
+\end_layout
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename uncoupled_longterm_gamma=1.pdf
+	width 100col%
+
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}
+\backslash
+end{subfigure} 
+\backslash
+hfill 
+\backslash
+begin{subfigure}[t]{.3
+\backslash
+columnwidth}
+\backslash
+caption{{
+\backslash
+small  $N_0=45, 
+\backslash
+epsilon=0, 
+\backslash
+gamma=0.1$}}
+\backslash
+vspace{0.5em}
+\backslash
+centerline{
+\end_layout
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename uncoupled_longterm_gamma=0.1.pdf
+	display false
+	width 100col%
+
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}
+\backslash
+end{subfigure}
+\backslash
+hfill
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+The effect of period gradients in a linear network of uncoupled oscillators.
+ Model parameters are picked to be comparable to the jaws of (a&b) crocodiles
+ (with 
+\begin_inset Formula $N_{0}=21,\gamma=1.0$
+\end_inset
+
+) and (c) leopard geckos (with 
+\begin_inset Formula $N=45,\gamma=0.1$
+\end_inset
+
+).
+ In all panels, dots are used to mark the times at which oscillators cross
+ 
+\begin_inset Formula $\theta=0$
+\end_inset
+
+ (i.e., tooth replacement), with symbols coloured according to the sign of
+ phase asymmetry and black solid lines indicating the direction of apparent
+ replacement waves.
+ Time is normalized to cycles of the zeroth oscillator, and at 
+\begin_inset Formula $t=0$
+\end_inset
+
+ simulations are either in (a&b) anti-phase leading to apparent front–to-back
+ waves for 
+\begin_inset Formula $t>0$
+\end_inset
+
+ or (c) in-phase leading to back-to-front waves.
+ The observed period of each oscillator and the standard measure of error
+ is plotted at the top of panels.
+ 
+\series bold
+(a)
+\series default
+ Back-to-front waves spontaneously switch into front-to-back waves at 
+\begin_inset Formula $t=0$
+\end_inset
+
+ (see dashed black line).
+
+\series bold
+ (b)
+\series default
+ On longer timescales, the sign of the phase asymmetry flips repeatedly
+ in a spatially-dependent manner (see dotted lines drawn using Eq.
+ 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:phase_asymm_flip"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+).
+ 
+\series bold
+(c)
+\series default
+ Increasing the ratio 
+\begin_inset Formula $N_{0}/\gamma$
+\end_inset
+
+ alters two features of the sign flipping: (i) the frequency decreases and
+ (ii) the propagation time decreases such that sign flipping happens more
+ simultaneously throughout the jaw.
+ 
+\begin_inset CommandInset label
+LatexCommand label
+name "fig: phase_row_uncoupled"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Nearest-Neighbour Interaction Model
+\begin_inset CommandInset label
+LatexCommand label
+name "subsec:ODE-Model"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The ODE model given by Eq.
+ 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:phase_inh_nondim"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ has two main parameters that can be varied, the coupling parameter 
+\begin_inset Formula $\epsilon$
+\end_inset
+
+ and the detuning parameter 
+\begin_inset Formula $\gamma$
+\end_inset
+
+.
+ We begin by setting 
+\begin_inset Formula $\gamma=0$
+\end_inset
+
+ (i.e., assuming identical tooth sites) so that we can define coupling regimes,
+ and then we vary the value of 
+\begin_inset Formula $\gamma$
+\end_inset
+
+ within physiologically-relevant ranges.
+ For 
+\begin_inset Formula $\epsilon>0$
+\end_inset
+
+ and 
+\begin_inset Formula $\gamma=0$
+\end_inset
+
+, the existence of entrained states is investigated by choosing random initial
+ conditions and then integrating in time until a stationary solution is
+ attained.
+ The solutions are continued numerically to find the parameter ranges for
+ the existence of entrained states, and then numerical time-integration
+ is used to study solutions beyond the regions of entrainment.
+\end_layout
+
+\begin_layout Subsubsection
+Entrained States
+\end_layout
+
+\begin_layout Standard
+For small values of 
+\begin_inset Formula $\epsilon$
+\end_inset
+
+, the only solutions we obtain by time-integration all correspond to spatially
+ homogenous anti-phase oscillations (see Fig.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig: phase_eps_bif"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+a).
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+As 
+\begin_inset Formula $\epsilon\to1$
+\end_inset
+
+ we begin to see a secondary maximum appear in our solutions.
+ This should correspond to period doubling , but I have not been able to
+ actually detect a period doubling bifurcation.
+\end_layout
+
+\end_inset
+
+ As 
+\begin_inset Formula $\epsilon$
+\end_inset
+
+ increases, we first observe the appearance of spatially patterned oscillations
+ where every other tooth exhibits period doubled small amplitude oscilaltions
+ near some phase close to 
+\begin_inset Formula $\pi$
+\end_inset
+
+ while its neighbours complete full phase cycles (see Fig.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig: phase_eps_bif"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+b, and ).
+ As we increase 
+\begin_inset Formula $\epsilon$
+\end_inset
+
+ more, we also find solutions with apparent unidirectional replacment waves,
+ sweeping across the whole jaw either leftwards or rightwards (see Fig.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig: phase_eps_bif"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+c and 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "subsec:Unidirectional-Waves"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ for more details).
+ Increasing 
+\begin_inset Formula $\epsilon$
+\end_inset
+
+ further, we also find 
+\begin_inset Quotes eld
+\end_inset
+
+wavelets
+\begin_inset Quotes erd
+\end_inset
+
+ that appear as subtle back-to-front waves for small 
+\begin_inset Formula $N$
+\end_inset
+
+ and breakdown into a pattern with spatially alternating signs of phase
+ asymmetry for large 
+\begin_inset Formula $N$
+\end_inset
+
+ (see Fig.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig: phase_eps_bif"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+c and 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "subsec:Unidirectional-Waves"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ for more details).
+ Finally with even larger values of 
+\begin_inset Formula $\epsilon$
+\end_inset
+
+, the effects of inhibition are strong enough for all the oscillators to
+ arrest one another in spatially patterened equilibria, with the number
+ of possible equilibria grows significantly with 
+\begin_inset Formula $N$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Subsubsection
+Coupling Regimes
+\end_layout
+
+\begin_layout Standard
+We continue all of these solutions in the parameter 
+\begin_inset Formula $\epsilon$
+\end_inset
+
+ for 
+\begin_inset Formula $N=9$
+\end_inset
+
+, allowing us to detect the parameter regimes where the solutions exist
+ and are stable.
+ Notably, we find that the family of simple anti-phase undergoes a series
+ of bifurcations that gives rise to the unirectional waves and the wavelet
+ solutions, while the family of spatially-patterned oscillations is isolated
+ from all the branches emerging from the anti-phase oscillations (see Fig.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig: phase_eps_bif"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+e).
+ For large enough values of 
+\begin_inset Formula $\epsilon$
+\end_inset
+
+ these different periodic solutions collide with equilibria and cease to
+ exist.
+ This allows us to define three coupling regimes: weakly couple, strongly
+ coupled, and oscillator death (see Fig.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig: phase_eps_bif"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+c).
+ 
+\end_layout
+
+\begin_layout Standard
+We find that the family of simple anti-phase oscillations is stable for
+ arbitrily small 
+\begin_inset Formula $\epsilon$
+\end_inset
+
+ and exhibits two pitchfork of periodics bifurcations as 
+\begin_inset Formula $\epsilon$
+\end_inset
+
+ increases (see cyan line in Fig.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig: phase_eps_bif"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+e).
+ The first at 
+\begin_inset Formula $\epsilon\approx5.82$
+\end_inset
+
+, results in a loss of stability and produces two branches corresponding
+ to leftward or rightward replacement waves (see purple and green lines
+ in Fig.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig: phase_eps_bif"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+e, respectively); these branches are then both annihilated through a pair
+ of saddle node of periodics bifurcations.
+ The second pitchfork, at 
+\begin_inset Formula $\epsilon\approx6.3$
+\end_inset
+
+, is subcritical with one of the two unstable emerging branches subsequently
+ gaining stability through a pitchfork of periodics bifurcation with the
+ two families of periodic solution that annihilate with the unidirectional
+ waves, resulting in a stable branch corresponding to the wavelet solutions
+ (see teal line in Fig.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig: phase_eps_bif"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+e).
+ The branch of stable wavelets loses stability trough a period doubling
+ cascade at 
+\begin_inset Formula $\epsilon\approx6.8$
+\end_inset
+
+ (for simplicity only the first period doubling is shown in Fig.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig: phase_eps_bif"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+e); both branches, along with the branch of simple anti-phase solutions,
+ then terminate through heteroclynic bifurcations at 
+\begin_inset Formula $\epsilon=8$
+\end_inset
+
+ (see HT4 and HT5 in Fig.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig: phase_eps_bif"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+c).
+ Meanwhile, the family of spatially-patterned oscillations becomes stable
+ at 
+\begin_inset Formula $\epsilon=4$
+\end_inset
+
+ through a pitchfork of periodics bifurcation and also terminates at heteroclyni
+c bifrucations at 
+\begin_inset Formula $\epsilon\approx2.02$
+\end_inset
+
+ and 
+\begin_inset Formula $\epsilon\approx10.84$
+\end_inset
+
+ (see dark blue lines in Fig.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig: phase_eps_bif"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+c).
+ Finally, the families of equilibria are born out of two saddle-node bifurcation
+s at 
+\begin_inset Formula $\epsilon\approx8$
+\end_inset
+
+, with one of the families gaining stability through a pithfork bifurcation
+ at 
+\begin_inset Formula $\epsilon\approx8.74$
+\end_inset
+
+ 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+this is probably not correct, nor any of the other numbers lol
+\end_layout
+
+\end_inset
+
+ and generically these equilibria remain stable for arbitrarily large 
+\begin_inset Formula $\epsilon$
+\end_inset
+
+ (see black lines in Fig.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig: phase_eps_bif"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+w).
+ 
+\end_layout
+
+\begin_layout Standard
+Thus the weakly coupled regime (anti-phase solutions only) is 
+\begin_inset Formula $0<\epsilon<4$
+\end_inset
+
+, the strongly coupled regime (coexistence of anti-phase solutions, spatially-pa
+tterned oscillations, unidirectional replacement waves, and wavelets) is
+ roughly 
+\begin_inset Formula $4<\epsilon<10.84$
+\end_inset
+
+, and the oscillator death regime is roughly 
+\begin_inset Formula $\epsilon>10.84$
+\end_inset
+
+.
+ We note that there are more families of periodic solutions and equilibria
+ that are possible for larger 
+\begin_inset Formula $N$
+\end_inset
+
+, but that these are primarily minor variations of the solutions types already
+ discussed.
+ Thus, in all three of these regimes with 
+\begin_inset Formula $\gamma=0$
+\end_inset
+
+, we have not detected any entrained states with bilaterally symmetric waves
+ that could conceivably correspond to either front-to-back or back-to-front
+ waves.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+centering 
+\backslash
+begin{minipage}{.47
+\backslash
+columnwidth}
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+ 
+\backslash
+begin{subfigure}[t]{.45
+\backslash
+columnwidth}
+\backslash
+caption{}
+\backslash
+centerline{
+\end_layout
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename eps=0.5_gamma=0_antiphase_N=41.pdf
+	width 100col%
+
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}
+\backslash
+end{subfigure}
+\backslash
+hfill
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+ 
+\backslash
+begin{subfigure}[t]{.45
+\backslash
+columnwidth}
+\backslash
+caption{}
+\backslash
+centerline{
+\end_layout
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename eps=8_gamma=0_spatially_patterned_N=37.pdf
+	width 100col%
+
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}
+\backslash
+end{subfigure}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{subfigure}{.45
+\backslash
+columnwidth}
+\backslash
+caption{}
+\backslash
+centerline{
+\end_layout
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename eps=5.75_gamma=0.07_rightward_N=45.pdf
+	width 100col%
+
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}
+\backslash
+end{subfigure}
+\backslash
+hfill
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+ 
+\backslash
+begin{subfigure}{.45
+\backslash
+columnwidth}
+\backslash
+caption{}
+\backslash
+centerline{
+\end_layout
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename eps=6.5_gamma=0_wavelets_N=91.pdf
+	width 100col%
+
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}
+\backslash
+end{subfigure}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{minipage}
+\backslash
+hfill
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{minipage}{.47
+\backslash
+columnwidth} 
+\backslash
+begin{subfigure}[t]{
+\backslash
+columnwidth}
+\backslash
+caption{}
+\backslash
+centerline{
+\end_layout
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename auto/ODE/phase/phase_coupling_bif_N=9.pdf
+	width 100col%
+
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}
+\backslash
+end{subfigure}
+\backslash
+end{minipage}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Entrained states of the phase-inhibitor model in the absence of a period
+ gradient.
+ 
+\series bold
+(a)
+\series default
+ Spatially homogeneous anti-phase solutions observed for all values of 
+\begin_inset Formula $N$
+\end_inset
+
+ with small 
+\begin_inset Formula $\epsilon$
+\end_inset
+
+ (here 
+\begin_inset Formula $\epsilon=0.5$
+\end_inset
+
+).
+ 
+\series bold
+(b)
+\series default
+ Spatially patterned oscillations observed for 
+\begin_inset Formula $\epsilon>4$
+\end_inset
+
+ (here 
+\begin_inset Formula $\epsilon=8$
+\end_inset
+
+), note that only every other oscillator completes a full 
+\begin_inset Formula $2\pi$
+\end_inset
+
+ cycle.
+ 
+\series bold
+(c)
+\series default
+ Rightward unidirectional waves observed 
+\series bold
+(e)
+\series default
+ Bifurcation diagram for Eq.
+ 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:phase_inh_nondim"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ with 
+\begin_inset Formula $N=9$
+\end_inset
+
+ and 
+\begin_inset Formula $\gamma=0$
+\end_inset
+
+ as a function of the parameter 
+\begin_inset Formula $\epsilon$
+\end_inset
+
+.
+ The bifurcations discussed in the text are labelled by a short black line
+ and a text label (HT=heteroclinic, PFP=pitchfork of periodics, SN=saddle-node
+ of equilibria, PF=pitchfork of equilibria).
+ The projection used was chosen to separate the various oscillations (coloured
+ lines) and equilibria (black lines), with stable solutions appearing as
+ solid line while unstable solutions appear as dotted (unstable oscillations)
+ or dashed (unstable equilibria) lines.
+ Dark blue lines represents spatially patterned oscillation which are born
+ as unstable oscillations out of HT1, and gain stability through PFP1 which
+ produces two more unstable spatially patterned oscillations.
+ Cyan lines represents simple anti-phase solutions, which loses stability
+ at PFP2; producing solutions corresponding to leftward and rightward replacemen
+t waves, represented by purple and green lines, repsectively.
+ All of the solution branches connected to the simple anti-phase solutions
+ terminate at 
+\begin_inset Formula $\epsilon\approx8$
+\end_inset
+
+ through HT2 or HT5.
+ 
+\begin_inset CommandInset label
+LatexCommand label
+name "fig: phase_eps_bif"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Effect of Period Gradients
+\end_layout
+
+\begin_layout Standard
+Out of the three coupling regimes identified for 
+\begin_inset Formula $\gamma=0$
+\end_inset
+
+, only the weakly and strongly coupled regimes contain oscillatory solutions.
+ 
+\end_layout
+
+\begin_layout Standard
+For the anti-phase solutions found in the the weekly coupled regime, we
+ find that increasing 
+\begin_inset Formula $\gamma$
+\end_inset
+
+ breaks the phase symmetry of oscillations.
+ For small values of 
+\begin_inset Formula $\gamma$
+\end_inset
+
+ this occurs with perfect bilaterally symmetry, producing leftward (rightward)
+ waves on the right (left) side of the jaw that converge on the middle tooth,
+ resulting in apparent front-to-back replacement waves (i.e., periodic solutions
+ with 
+\begin_inset Formula $\Delta\bar{\chi}$
+\end_inset
+
+, see 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig: phase_ODE_gamma_nonzero"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+a).
+ Increasing 
+\begin_inset Formula $\gamma$
+\end_inset
+
+ further, we generically observe a breakdown of the bilateral symmetry,
+ resulting in front-to-back waves that are shifted away from the jaw midline
+ (see orange lines in top panel of Fig.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig: phase_ODE_gamma_nonzero"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+c, and Fig.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:supp_fig_coupled_ODE"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+c for an example).
+ 
+\end_layout
+
+\begin_layout Standard
+Meanwhile, in the strongly coupled regime, for small values of 
+\begin_inset Formula $\gamma$
+\end_inset
+
+ we observe that mean 
+\begin_inset Quotes eld
+\end_inset
+
+slope
+\begin_inset Quotes erd
+\end_inset
+
+ of the undirectional waves increases with 
+\begin_inset Formula $\gamma$
+\end_inset
+
+ (i.e., 
+\begin_inset Formula $\left|\bar{\chi}\right|$
+\end_inset
+
+ increases, see green and pruple lines in Fig.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig: phase_ODE_gamma_nonzero"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+c).
+ Increasing 
+\begin_inset Formula $\gamma$
+\end_inset
+
+ further, we observe that the fixed sign of phase asymmetry breaks down
+ at the rear of the jaw on one side, resulting once again in solutions that
+ appear as front-to-back waves shifted away from the middle oscillator (see
+ see pink lines in bottom panel of Fig.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig: phase_ODE_gamma_nonzero"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+c).
+\end_layout
+
+\begin_layout Standard
+Generically, if we increase 
+\begin_inset Formula $\gamma$
+\end_inset
+
+ sufficiently there is eventually a breakdown of entrainment; in this case
+ the oscillators exhibit a gradient of incommesurable periods even after
+ arbitrary long waiting periods.
+ While there are large variety of such aperiodic stationary solutions, they
+ tend to have the appearance of front-to-back waves (i.e., 
+\begin_inset Formula $\Delta\bar{\chi}<0$
+\end_inset
+
+) at most points in time, with occasional localized flips in the sign of
+ phase asymmetry (see Fig.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig: phase_ODE_gamma_nonzero"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+b).
+ We note that the timing of the these sign flips are generally not well
+ predicted by Eq.
+ 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:phase_asymm_flip"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ which neglects interactions between the oscillators.
+ Finally, such solutions spend roughly equal amounts of time with neighbours
+ close in-phase as it does with them near anti-phase (see 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "subsec:Non-entrained-Dynamics"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+), thus they are hard to reconcile with experimental data that primarily
+ exhibits neighbours in near anti-phase.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Either you have a slowdown of the middle oscillator or you have a long-lasting
+ period gradient, you cannot have both.
+\end_layout
+
+\begin_layout Plain Layout
+Can only get front-to-back waves, the biologically ubiquituous front-to-back
+ oscillations just dont happen with ODE model.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Paragraph
+Dynamics of Entrainment
+\end_layout
+
+\begin_layout Standard
+If 
+\begin_inset Formula $\epsilon$
+\end_inset
+
+ and 
+\begin_inset Formula $\gamma$
+\end_inset
+
+ are chosen appropriately, the system approaches an entrained state with
+ fixed period across the jaw (see red line in the upper part of Fig.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig: phase_ODE_period_gradients"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+a).
+ In this case, if initial conditions are chosen appropriately, it is possible
+ to maintain front-to-back waves indefinitely, but not an observed gradient
+ in period.
+ On the other hand, choosing initial conditions corresponding to back-to-front
+ waves, we observed a rapid breakdown in wave directionality starting at
+ the midjaw and spreading outwards.
+ For example, we can obtain such initial conditions by integrating backwards
+ in time with 
+\begin_inset Formula $\epsilon=0$
+\end_inset
+
+ starting from a perfect anti-phase state (i.e., similar to the solution presented
+ in Fig.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig: phase_row_uncoupled"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+a), and then integrating fowards in time with 
+\begin_inset Formula $\epsilon>0$
+\end_inset
+
+.
+ With 
+\begin_inset Formula $\gamma=1$
+\end_inset
+
+, we see an immediate switch in phase asymmetry adjacent to the middle oscillato
+r while the phase asymmetry of the oscillators at the rear of the jaw only
+ swicthes sign after about four replacement cycles (see Fig.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:supp_fig_coupled_ODE"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+e).
+ Thus, this model of nearest-neighbour interactions with 
+\begin_inset Formula $\epsilon>0$
+\end_inset
+
+ and 
+\begin_inset Formula $\gamma>0$
+\end_inset
+
+ is generally incapable of producing sustained back-to-front replacement
+ waves as observed in leopard geckos (and many other species) as well as
+ the rapid switching in replacement waves directionality observed in crocodiles.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+centering 
+\backslash
+begin{minipage}{.45
+\backslash
+columnwidth}
+\backslash
+begin{subfigure}[t]{
+\backslash
+columnwidth}
+\backslash
+caption{$
+\backslash
+epsilon=3.5, 
+\backslash
+gamma=0.1$}
+\backslash
+vspace{0.5em} 
+\backslash
+centerline{
+\end_layout
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename eps=3.5_gamma=0.1_summary.pdf
+	width 100col%
+
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+} 
+\backslash
+caption{$
+\backslash
+epsilon=0.5, 
+\backslash
+gamma=0.1$}
+\backslash
+vspace{0.5em}
+\backslash
+centerline{
+\end_layout
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename eps=0.5_stationary_gamma=0.1.pdf
+	width 100col%
+
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}
+\backslash
+end{subfigure}
+\backslash
+end{minipage}
+\backslash
+hfill
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+centering 
+\backslash
+begin{minipage}{.45
+\backslash
+columnwidth}
+\backslash
+begin{subfigure}[t]{
+\backslash
+columnwidth}
+\backslash
+caption{}
+\backslash
+vspace{0.5em} 
+\backslash
+centerline{
+\end_layout
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename auto/ODE/phase/anti_phase_and_uni_gamma_N=9_updated.pdf
+	width 100col%
+
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}
+\backslash
+vspace{1.25cm}  
+\backslash
+caption{}
+\backslash
+vspace{0.5em}
+\backslash
+centerline{
+\end_layout
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename auto/ODE/phase/gamma_eps_continuation_zones_N=9.pdf
+	display false
+	width 100col%
+
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}
+\backslash
+end{subfigure}
+\backslash
+end{minipage}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+The effect of period gradients in a linear network of oscillators with coupling
+ (a&b), with coupling strong enough to overcome the period gradient (c&d),
+ and with weak coupling (e&f).
+ All simulations are run from anti-phase initial conditions with no phase
+ asymmetry.
+ Spontaneous phase asymmetry develops but repeatedly flips sign in an uncoupled
+ linear array of 
+\begin_inset Formula $N$
+\end_inset
+
+ oscillators with non-zero period gradients (
+\begin_inset Formula $\gamma>0$
+\end_inset
+
+) where we pick parameters comparable to the jaws of 
+\series bold
+(a)
+\series default
+ crocodiles (with 
+\begin_inset Formula $N=43,\gamma=1.0$
+\end_inset
+
+) and 
+\series bold
+(b)
+\series default
+ leopard geckos (with 
+\begin_inset Formula $N=91,\gamma=0.1$
+\end_inset
+
+).
+ When mutual inhibitory couply is sufficiently strong, the sign of the phase
+ asymmetry remains fixed in each half of the jaw 
+\series bold
+(c)
+\series default
+ but the observed gradient in period eventually vanishes as the system approache
+s an entrained state 
+\series bold
+(d)
+\series default
+.
+ When coupling is at an intermediate level, phase asymmetry can be maintained
+ for many cycles before sign flipping occurs 
+\series bold
+(e)
+\series default
+ while at longer timescales the system approaches a quasi-periodic stationary
+ solution 
+\series bold
+(f)
+\series default
+.
+ 
+\begin_inset CommandInset label
+LatexCommand label
+name "fig: phase_ODE_gamma_nonzero"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+centering 
+\backslash
+begin{minipage}{.3
+\backslash
+columnwidth}
+\backslash
+begin{subfigure}[t]{
+\backslash
+columnwidth}
+\backslash
+caption{Anti-Phase: $
+\backslash
+epsilon=3.5, 
+\backslash
+gamma=0.1$}
+\backslash
+vspace{0.5em} 
+\backslash
+centerline{
+\end_layout
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename eps=3.5_transient_gamma=0.1.pdf
+	width 100col%
+
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}
+\backslash
+vspace{0.5cm}
+\backslash
+centerline{
+\end_layout
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename eps=3.5_entrained_gamma=0.1.pdf
+	width 100col%
+
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}
+\backslash
+end{subfigure}
+\backslash
+end{minipage}
+\backslash
+hfill
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+centering 
+\backslash
+begin{minipage}{.3
+\backslash
+columnwidth}
+\backslash
+begin{subfigure}[t]{
+\backslash
+columnwidth}
+\backslash
+caption{Anti-Phase: $
+\backslash
+epsilon=0.5, 
+\backslash
+gamma=0.1$}
+\backslash
+vspace{0.5em} 
+\backslash
+centerline{
+\end_layout
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename eps=0.5_transient_gamma=0.1.pdf
+	width 100col%
+
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}
+\backslash
+vspace{0.5cm}
+\backslash
+centerline{
+\end_layout
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename eps=0.5_stationary_gamma=0.1.png
+	display false
+	width 100col%
+
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}
+\backslash
+end{subfigure}
+\backslash
+end{minipage}
+\backslash
+hfill
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{minipage}{.3
+\backslash
+columnwidth}
+\backslash
+begin{subfigure}[t]{
+\backslash
+columnwidth}
+\backslash
+caption{}
+\backslash
+vspace{0.5em}
+\backslash
+centerline{
+\end_layout
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename auto/ODE/phase/anti_phase_gamma_continuation.pdf
+	width 100col%
+
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}
+\backslash
+end{subfigure} 
+\backslash
+
+\backslash
+ 
+\backslash
+vspace{0.5cm} 
+\backslash
+begin{subfigure}[t]{
+\backslash
+columnwidth}
+\backslash
+caption{}
+\backslash
+vspace{0.25em}
+\backslash
+centerline{
+\end_layout
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename auto/ODE/phase/anti_phase_zones_gamma_eps_continuation_N=7.pdf
+	display false
+	width 100col%
+
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}
+\backslash
+end{subfigure}
+\backslash
+end{minipage}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+The effect of period gradients in a linear network of oscillators with coupling
+ (a&b), with coupling strong enough to overcome the period gradient (c&d),
+ and with weak coupling (e&f).
+ All simulations are run from anti-phase initial conditions with no phase
+ asymmetry.
+ Spontaneous phase asymmetry develops but repeatedly flips sign in an uncoupled
+ linear array of 
+\begin_inset Formula $N$
+\end_inset
+
+ oscillators with non-zero period gradients (
+\begin_inset Formula $\gamma>0$
+\end_inset
+
+) where we pick parameters comparable to the jaws of 
+\series bold
+(a)
+\series default
+ crocodiles (with 
+\begin_inset Formula $N=43,\gamma=1.0$
+\end_inset
+
+) and 
+\series bold
+(b)
+\series default
+ leopard geckos (with 
+\begin_inset Formula $N=91,\gamma=0.1$
+\end_inset
+
+).
+ When mutual inhibitory couply is sufficiently strong, the sign of the phase
+ asymmetry remains fixed in each half of the jaw 
+\series bold
+(c)
+\series default
+ but the observed gradient in period eventually vanishes as the system approache
+s an entrained state 
+\series bold
+(d)
+\series default
+.
+ When coupling is at an intermediate level, phase asymmetry can be maintained
+ for many cycles before sign flipping occurs 
+\series bold
+(e)
+\series default
+ while at longer timescales the system approaches a quasi-periodic stationary
+ solution 
+\series bold
+(f)
+\series default
+.
+ 
+\begin_inset CommandInset label
+LatexCommand label
+name "fig: phase_ODE_period_gradients"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Spatially-Extended Interaction Model 
+\begin_inset CommandInset label
+LatexCommand label
+name "subsec:PDE-Model"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+In contrast to the two parameters that govern the nearest-neighbour model,
+ the spatially-extended model Eq.
+ 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:phase_pde_nondim"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ has 4 parameters: 
+\begin_inset Formula $\epsilon$
+\end_inset
+
+, 
+\begin_inset Formula $\tau$
+\end_inset
+
+, 
+\begin_inset Formula $\kappa$
+\end_inset
+
+, and 
+\begin_inset Formula $\gamma$
+\end_inset
+
+.
+ In the latter PDE model, the parameters 
+\begin_inset Formula $\epsilon$
+\end_inset
+
+ and 
+\begin_inset Formula $\gamma$
+\end_inset
+
+ play precisely the same roles as before; what is more, the parameters 
+\begin_inset Formula $\tau$
+\end_inset
+
+ and 
+\begin_inset Formula $\kappa$
+\end_inset
+
+ additionally allow us to control (i) the timescale of reaction-diffusion
+ dynamics relative to the phase dynamics and (ii) the space scale of inhibitory
+ coupling, respectively.
+ In the limit of 
+\begin_inset Formula $\tau\to0$
+\end_inset
+
+, we recover the instantaneous inter-oscillator communication as was assumed
+ in the nearest-neighbour model, while for 
+\begin_inset Formula $\tau\gg0$
+\end_inset
+
+ there is some delay between when an inhibitory molecule is secreted at
+ one tooth site and it arriving at its neighbour(s).
+ Meanwhile, as we increase 
+\begin_inset Formula $\kappa$
+\end_inset
+
+ the spatial decay of inhibitory signal emanating the toothsites is reduced,
+ and in the limit of 
+\begin_inset Formula $\kappa\to\infty$
+\end_inset
+
+ all teeth inhibit one another with equal magnitude.
+\end_layout
+
+\begin_layout Subsubsection
+Effects of non-local coupling
+\end_layout
+
+\begin_layout Standard
+We begin once again with 
+\begin_inset Formula $\gamma=0$
+\end_inset
+
+ and work in the adiabatic limit (
+\begin_inset Formula $\tau\to0$
+\end_inset
+
+), allowing for variations in the model parameters 
+\begin_inset Formula $\epsilon$
+\end_inset
+
+ and 
+\begin_inset Formula $\kappa$
+\end_inset
+
+.
+ Intriguingly, with the inclusion of non-local coupling, even with 
+\begin_inset Formula $\gamma=0$
+\end_inset
+
+, we can find entrained states exhibiting front-to-back replacement waves
+ for all values 
+\begin_inset Formula $\epsilon$
+\end_inset
+
+ and 
+\begin_inset Formula $\kappa$
+\end_inset
+
+ tested.
+ We note that these waves become increasingly subtle as we decrease either
+ 
+\begin_inset Formula $\epsilon$
+\end_inset
+
+ or 
+\begin_inset Formula $\kappa$
+\end_inset
+
+ (see upper inset in Fig.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig: adiabatic_limit"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+a).
+ Similar to the ODE model, these waves have bilateral symmetry for small
+ 
+\begin_inset Formula $\epsilon$
+\end_inset
+
+ , and bifurcate through a supercritical pitchfork of periodics into a pair
+ of left and right shifted front-to-back waves for sufficiently large 
+\begin_inset Formula $\epsilon$
+\end_inset
+
+ (see PFP1 in Fig.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig: adiabatic_limit"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+a&b).
+ Increasing 
+\begin_inset Formula $\epsilon$
+\end_inset
+
+ moves shifts the 
+\begin_inset Quotes eld
+\end_inset
+
+center
+\begin_inset Quotes erd
+\end_inset
+
+ of the shifted waves further from the midjaw, such that they may eventually
+ become unidirectional waves for large 
+\begin_inset Formula $\epsilon$
+\end_inset
+
+ (see upper inset in Fig.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig: adiabatic_limit"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+a).
+ All these families of periodic solutions terminate in heteroclinic bifurcations
+, with larger values of 
+\begin_inset Formula $\epsilon$
+\end_inset
+
+ resulting in solutions that converge to simple equilibria (see HT labels
+ in Fig.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig: adiabatic_limit"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+a&b).
+ 
+\end_layout
+
+\begin_layout Standard
+For sufficiently large 
+\begin_inset Formula $\kappa$
+\end_inset
+
+ (e.g.
+ 
+\begin_inset Formula $\kappa\apprge1.45$
+\end_inset
+
+ for 
+\begin_inset Formula $N=11$
+\end_inset
+
+) and small 
+\begin_inset Formula $\epsilon$
+\end_inset
+
+, we also observe the emergence of a novel solution type with bilateral
+ symmetry, termed boundary waves, where two teeth at the rear of the jaw
+ (i.e., near the domain boundaries) have phase asymmeries that would typically
+ be associated with back-to-front waves while the rest of the jaw exhibits
+ front-to-back waves.
+ Using continuation methods we find that this family of solutions is connected
+ to the family of front-to-back waves through two saddle-node of periodics
+ bifurcations, one of which causes its annihilation at a non-zero value
+ of 
+\begin_inset Formula $\epsilon$
+\end_inset
+
+.
+ By increasing 
+\begin_inset Formula $\kappa$
+\end_inset
+
+, we see that the position of the saddle-nodes shifts to larger 
+\begin_inset Formula $\epsilon$
+\end_inset
+
+ growing the parameter region where the boundary waves exist.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+centering 
+\backslash
+begin{subfigure}[t]{.3
+\backslash
+columnwidth}
+\backslash
+caption{ }
+\backslash
+vspace{0.5em} 
+\backslash
+centerline{
+\end_layout
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename auto/ODE/phase_nonlocal/ftb_eps_kappa=1.pdf
+	width 100col%
+	special decodearray={.1 .5 .5 .5 .5 .5}
+
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}
+\backslash
+end{subfigure}
+\backslash
+hfill
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{subfigure}[t]{.3
+\backslash
+columnwidth}
+\backslash
+caption{}
+\backslash
+vspace{0.5em}
+\backslash
+centerline{
+\end_layout
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename auto/ODE/phase_nonlocal/ftb_eps_kappa=1.75.pdf
+	width 100col%
+
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}
+\backslash
+end{subfigure} 
+\backslash
+hfill 
+\backslash
+begin{subfigure}[t]{.3
+\backslash
+columnwidth}
+\backslash
+caption{{
+\backslash
+small  $N_0=45, 
+\backslash
+epsilon=0, 
+\backslash
+gamma=0.1$}}
+\backslash
+vspace{0.5em}
+\backslash
+centerline{
+\end_layout
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename auto/PDE/phase/11/SNP12_kappa__eps.pdf
+	display false
+	width 100col%
+
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}
+\backslash
+end{subfigure}
+\backslash
+hfill
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Adiabatic Limit
+\begin_inset CommandInset label
+LatexCommand label
+name "fig: adiabatic_limit"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Effects of Diffusion Delays
+\end_layout
+
+\begin_layout Standard
+We next continue the two bilaterally symmetric solutions obtained in the
+ adiabatic limit for 
+\begin_inset Formula $\tau>0$
+\end_inset
+
+.
+ Interestingly, both the front-to-back waves and the boundary waves are
+ gradually tranformed into back-to-front wave as 
+\begin_inset Formula $\tau$
+\end_inset
+
+ increases.
+ For both types of waves this occurs through a decrease in the slope of
+ the apparent front-to-back waves (i.e., the waves at the center of the domain
+ for the boundary waves) until they are transformed into anti-phase replacement,
+ and then any subsequent increase in 
+\begin_inset Formula $\tau$
+\end_inset
+
+ results in apparent back-to-front waves.
+\end_layout
+
+\begin_layout Standard
+At low values of 
+\begin_inset Formula $\kappa$
+\end_inset
+
+, the slope of the back-to-front waves is roughly constant throughout the
+ domain.
+ On the other hand, for large values of 
+\begin_inset Formula $\kappa$
+\end_inset
+
+ the slope of these waves is very shallow at midjaw and becomes much steeper
+ near the rear of the jaw.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+centering 
+\backslash
+begin{subfigure}[t]{.3
+\backslash
+columnwidth}
+\backslash
+caption{ }
+\backslash
+vspace{0.5em} 
+\backslash
+centerline{
+\end_layout
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename eps=0.2_gamma=0_kappa=1_btf_N=91.pdf
+	display false
+	width 100col%
+	special decodearray={.1 .5 .5 .5 .5 .5}
+
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}
+\backslash
+end{subfigure}
+\backslash
+hfill
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{subfigure}[t]{.3
+\backslash
+columnwidth}
+\backslash
+caption{}
+\backslash
+vspace{0.5em}
+\backslash
+centerline{
+\end_layout
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename eps=0.45_gamma=0_kappa=3_btf_N=45.pdf
+	width 100col%
+
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}
+\backslash
+end{subfigure} 
+\backslash
+hfill 
+\backslash
+begin{subfigure}[t]{.3
+\backslash
+columnwidth}
+\backslash
+caption{{
+\backslash
+small  $N_0=45, 
+\backslash
+epsilon=0, 
+\backslash
+gamma=0.1$}}
+\backslash
+vspace{0.5em}
+\backslash
+centerline{
+\end_layout
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename uncoupled_longterm_gamma=0.1.pdf
+	display false
+	width 100col%
+
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}
+\backslash
+end{subfigure}
+\backslash
+hfill
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+PDE model with delays
+\begin_inset CommandInset label
+LatexCommand label
+name "fig: PDE_with_delays"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Combined Effect of Delays and Period Gradients
+\end_layout
+
+\begin_layout Standard
+TBD
+\end_layout
+
+\begin_layout Section
+Discussion
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+%These commands reset the figure counter and add "S" to the figure caption
+ (e.g.
+ "Figure S1").
+ This is in case you want to add actual figures and not just captions.
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+setcounter{figure}{0}
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset FormulaMacro
+\newcommand{\thefigure}{S\arabic{figure}}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+setcounter{equation}{0}
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset FormulaMacro
+\newcommand{\theequation}{S\arabic{equation}}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+setcounter{section}{0} 
+\end_layout
+
+\begin_layout Plain Layout
+
+ 
+\backslash
+renewcommand{
+\backslash
+thesection}{S
+\backslash
+arabic{section}}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Part*
+Supplemental Material
+\end_layout
+
+\begin_layout Section
+Dynamics of Phase Asymmetry 
+\begin_inset CommandInset label
+LatexCommand label
+name "subsec:Phase-Asymmetry-Flipping"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+In the absence of any coupling between oscillators, it is possible to compute
+ the precise times when phase asymmetry will change sign as well as the
+ phase asymmetry the develops from a specific initial condition.
+ In order to do so, we consider the 
+\begin_inset Formula $n^{{\rm th}}$
+\end_inset
+
+ oscillator which has a period 
+\begin_inset Formula $T_{n}$
+\end_inset
+
+, and the normalized phase 
+\begin_inset Formula $\phi_{n}$
+\end_inset
+
+ at time 
+\begin_inset Formula $t$
+\end_inset
+
+ is given by 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{flalign*}
+\phi_{n} & =\frac{t}{T_{n}}+\delta_{n}
+\end{flalign*}
+
+\end_inset
+
+where 
+\begin_inset Formula $\delta_{n}\in\left[0,1\right)$
+\end_inset
+
+ is the initial normalised phase difference.
+\end_layout
+
+\begin_layout Subsection
+Spontaneous Development of Phase Asymmetry
+\end_layout
+
+\begin_layout Standard
+In order to predict the phase asymmetry that intially emerges from a given
+ initial condtion, we define the next and previous eruption times, given
+ by 
+\begin_inset Formula 
+\begin{align*}
+\tau_{n}^{{\rm next}} & =\text{mod}\left(1-\phi_{n},1\right)T_{n}+t\\
+\shortintertext{and}\tau_{n}^{{\rm prev}} & =\tau_{n}^{{\rm next}}-T_{n},
+\end{align*}
+
+\end_inset
+
+respectively.
+ The left and right relative phases are then given by 
+\begin_inset Formula 
+\begin{align*}
+\phi_{r}^{n} & =\frac{\tau_{n}^{{\rm next}}-\left.\tau_{n+1}^{{\rm prev}}\right|_{t=\tau_{n}^{next}}}{T_{n+1}}\\
+\shortintertext{and}\phi_{l}^{n} & =\frac{\tau_{n}^{{\rm next}}-\left.\tau_{n-1}^{{\rm prev}}\right|_{t=\tau_{n}^{next}}}{T_{n-1}},
+\end{align*}
+
+\end_inset
+
+respectively.
+ Finally, in the limit 
+\begin_inset Formula $t\to0^{+}$
+\end_inset
+
+ we find that 
+\begin_inset Formula 
+\begin{equation}
+\phi_{r}^{n}-\phi_{l}^{n}=\text{mod}\left(\delta_{l}^{n}-\frac{\text{sgn}\left(n-\frac{1}{2}\right)}{|n-1|+N_{0}/\gamma},1\right)-\text{mod}\left(\frac{\text{sgn}\left(n+\frac{1}{2}\right)}{|n+1|+N_{0}/\gamma}-\delta_{r}^{n},1\right),\label{eq:intial_phase_asymm}
+\end{equation}
+
+\end_inset
+
+where 
+\begin_inset Formula $\text{mod}$
+\end_inset
+
+ is the modulo function, 
+\begin_inset Formula $\delta_{r}^{n}=\delta_{n}-\delta_{n+1}$
+\end_inset
+
+, and 
+\begin_inset Formula $\delta_{l}^{n}=\delta_{n}-\delta_{n-1}$
+\end_inset
+
+.
+ We can further simplify this result using the physiologically-reasonable
+ assumption that 
+\begin_inset Formula $0<\gamma<N_{0}/2$
+\end_inset
+
+, such that for anti-phase initial conditions (i.e., 
+\begin_inset Formula $\delta_{l}^{n}=\delta_{r}^{n}=\frac{1}{2}$
+\end_inset
+
+) we obtain 
+\begin_inset Formula 
+\begin{equation}
+\phi_{r}^{n}-\phi_{l}^{n}=-\text{sgn}\left(n\right)\left(\frac{1}{|n-1|+N_{0}/\gamma}+\frac{1}{|n+1|+N_{0}/\gamma}\right),\label{eq:initial_phase_asymm_anti}
+\end{equation}
+
+\end_inset
+
+while for in-phase initial conditions (i.e., 
+\begin_inset Formula $\delta_{l}^{n}=\delta_{r}^{n}=0$
+\end_inset
+
+) we obtain
+\begin_inset Formula 
+\begin{equation}
+\phi_{r}^{n}-\phi_{l}^{n}=\text{sgn}\left(n\right)\left(1-\frac{1}{|n-1|+N_{0}/\gamma}-\frac{1}{|n+1|+N_{0}/\gamma}\right).\label{eq:initial_phase_asymm_inphase}
+\end{equation}
+
+\end_inset
+
+ As illustated in Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Initial-phase-asymmetry"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+, this predicts positive phase asymmetry on the left side of the jaw and
+ negative asymmetry on the left (i.e., apparent front-to-back replacement
+ waves) for anti-phase initial conditions, while for in-phase intial conditions
+ we find the opposite (i.e., apparent back-to-front replacement waves).
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+centering 
+\backslash
+begin{subfigure}[t]{.3
+\backslash
+columnwidth}
+\backslash
+caption{{
+\backslash
+small $
+\backslash
+gamma=1$}}
+\backslash
+centerline{
+\end_layout
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename initial_chi.pdf
+	width 100col%
+
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}
+\backslash
+end{subfigure}
+\backslash
+hfill
+\backslash
+begin{subfigure}[t]{.3
+\backslash
+columnwidth}
+\backslash
+caption{{
+\backslash
+small $
+\backslash
+epsilon=0, 
+\backslash
+gamma=0.1$}}
+\backslash
+centerline{
+\end_layout
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename uncoupled_gecko_asymm.pdf
+	width 100col%
+
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}
+\backslash
+end{subfigure}
+\backslash
+hfill
+\backslash
+begin{subfigure}[t]{.3
+\backslash
+columnwidth}
+\backslash
+caption{{
+\backslash
+small $
+\backslash
+epsilon=0, 
+\backslash
+gamma=0.1$}}
+\backslash
+centerline{
+\end_layout
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename uncoupled_gecko_checker.pdf
+	width 100col%
+
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}
+\backslash
+end{subfigure}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{subfigure}[t]{.3
+\backslash
+columnwidth}
+\backslash
+caption{{
+\backslash
+small $
+\backslash
+gamma=1$}}
+\backslash
+centerline{
+\end_layout
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename uncoupled_gecko_metrics.pdf
+	width 100col%
+
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}
+\backslash
+end{subfigure}
+\end_layout
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+
+\series bold
+(a)
+\series default
+ Initial phase asymmetry 
+\begin_inset Formula $\chi$
+\end_inset
+
+ evaluated after one full cycle of each oscillator starting from anti-phase
+ (solid lines) and in-phase (dashed lines) initial conditions with 
+\begin_inset Formula $N_{0}=21,\gamma=1.0$
+\end_inset
+
+.
+ (b&c) Starting from in-phase initial conditions, uncoupled oscillators
+ eventually reach a state similar to the experimental data from leopard
+ geckos (compare with Fig.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:leopard_gecko_phases"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+).
+ This is quantified by heatmaps of the 
+\series bold
+(b)
+\series default
+ phase asymmetry and 
+\series bold
+(c)
+\series default
+ anti-phase metrics 
+\begin_inset Formula $\chi$
+\end_inset
+
+ and 
+\begin_inset Formula $\psi$
+\end_inset
+
+, respectively.
+ 
+\series bold
+(d) 
+\series default
+Uncoupled oscillators only produce replacement event with suitable values
+ of 
+\begin_inset Formula $\chi$
+\end_inset
+
+ and 
+\begin_inset Formula $\psi$
+\end_inset
+
+ during a brief window of time.
+ 
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Initial-phase-asymmetry"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Phase Asymmetry Flipping
+\end_layout
+
+\begin_layout Standard
+We wish to find the times at which the phase asymmetry switches sign, this
+ occurs when neighbours or next nearest neighbours have integer phase difference
+s, that is
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{align*} 
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+phi_{n+1}-
+\backslash
+phi_{n-1} & =k,
+\backslash
+
+\backslash
+ 
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+phi_{n}-
+\backslash
+phi_{n+1} & =k, 
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+intertext{and}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+phi_{n}-
+\backslash
+phi_{n-1} & =k 
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{align*}
+\end_layout
+
+\end_inset
+
+where 
+\begin_inset Formula $k$
+\end_inset
+
+ is any integer; isolating for 
+\begin_inset Formula $t$
+\end_inset
+
+ yields 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{align*} 
+\end_layout
+
+\begin_layout Plain Layout
+
+t & =(
+\backslash
+delta_{l}^{n}-
+\backslash
+delta_{r}^{n}+k)
+\backslash
+frac{T_{n-1}T_{n+1}}{T_{n+1}-T_{n-1}},
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+t & =
+\backslash
+left(k-
+\backslash
+delta_{r}^{n}
+\backslash
+right)
+\backslash
+frac{T_{n}T_{n+1}}{T_{n+1}-T_{n}},
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+intertext{and}
+\end_layout
+
+\begin_layout Plain Layout
+
+t & =
+\backslash
+left(
+\backslash
+delta_{l}^{n}+k
+\backslash
+right)
+\backslash
+frac{T_{n-1}T_{n}}{T_{n}-T_{n-1}}, 
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{align*}
+\end_layout
+
+\end_inset
+
+respectively, where 
+\begin_inset Formula $\delta_{r}^{n}$
+\end_inset
+
+ and 
+\begin_inset Formula $\delta_{l}^{n}$
+\end_inset
+
+ are as defined perviously.
+\end_layout
+
+\begin_layout Standard
+With the choice of 
+\begin_inset Formula $T_{n}$
+\end_inset
+
+ given by Eq.
+ 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:period_gradient"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+, we obtain 
+\begin_inset Flex Subequations
+status open
+
+\begin_layout Plain Layout
+\begin_inset Formula 
+\begin{flalign}
+t & =\frac{T_{0}}{\gamma N_{0}2\text{sgn}(n)}\left(\delta_{n+1}-\delta_{n-1}+\text{sgn}(n)k\right)\left(N_{0}+\gamma\left|n+1\right|\right)\left(N_{0}+\gamma\left|n-1\right|\right)\quad\text{for }n\neq0,\label{eq:phase_asymm_flip}\\
+t & =\frac{T_{0}}{\gamma N_{0}}\left(k-\text{sgn}(n+1/2)\delta_{r}^{n}\right)\left(N_{0}+\gamma\left|n+1\right|\right)\left(N_{0}+\gamma\left|n\right|\right),\\
+\shortintertext{and}t & =\frac{T_{0}}{\gamma N_{0}}\left(k+\text{sgn}(n-1/2)\delta_{l}^{n}\right)\left(N_{0}+\gamma\left|n\right|\right)\left(N_{0}+\gamma\left|n-1\right|\right)
+\end{flalign}
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+where 
+\begin_inset Formula $\text{sgn}(x)$
+\end_inset
+
+ denotes the signum function.
+ Notably, all three conditions predict that the sign flipping time increases
+ with the second power of 
+\begin_inset Formula $|n|$
+\end_inset
+
+, and the first condition produces sign flipping approximately twice as
+ frequently as the other two.
+ With the simplifying assumption that 
+\begin_inset Formula $\delta_{l}^{n}-\delta_{r}^{n}$
+\end_inset
+
+ is independent of 
+\begin_inset Formula $n$
+\end_inset
+
+ we generically observed sign flipping that spreads from the middle of the
+ jaw outwards; this behaviour can be described by (i) the time of the first
+ flipping at 
+\begin_inset Formula $n=\pm1$
+\end_inset
+
+, given by 
+\begin_inset Formula 
+\[
+t_{1}=T_{0}\left(k+\text{sgn}(n)\left(\delta_{n+1}-\delta_{n-1}\right)\right)\left(1+N_{0}/(2\gamma)\right)
+\]
+
+\end_inset
+
+and (ii) the propagation time estimate (i.e., the difference between the flipping
+ time at 
+\begin_inset Formula $n=\pm N_{0}$
+\end_inset
+
+ and 
+\begin_inset Formula $n=\pm1$
+\end_inset
+
+, respectively), given by 
+\begin_inset Formula 
+\[
+\Delta=T_{0}\left(k+\text{sgn}(n)\left(\delta_{n+1}-\delta_{n-1}\right)\right)\left(1+\frac{\gamma}{2}\right)\left(N_{0}-1\right)
+\]
+
+\end_inset
+
+where we have made the mild assumption 
+\begin_inset Formula $N_{0}\gg\gamma$
+\end_inset
+
+ .
+\end_layout
+
+\begin_layout Standard
+Both in-phase and anti-phase initial conditions have 
+\begin_inset Formula $\delta_{n+1}=\delta_{n-1}$
+\end_inset
+
+and thus both the flipping time and propagation time are determined entirely
+ by 
+\begin_inset Formula $k$
+\end_inset
+
+.
+ For these intial conditions, with 
+\begin_inset Formula $k=0$
+\end_inset
+
+ we observe sign flipping simultaneously throughout the jaw at 
+\begin_inset Formula $t=0$
+\end_inset
+
+, similar to what is described in 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Edmund1962"
+literal "false"
+
+\end_inset
+
+.
+ In contrast, for 
+\begin_inset Formula $k=1$
+\end_inset
+
+ and gecko (crocodile) jaw parameters we find a first flipping time 
+\begin_inset Formula $t_{1}=226T_{0}$
+\end_inset
+
+( 
+\begin_inset Formula $t_{1}=11.5T_{0}$
+\end_inset
+
+) and a propagation time 
+\begin_inset Formula $\Delta=47.25T_{0}$
+\end_inset
+
+ (
+\begin_inset Formula $\Delta=31.5T_{0}$
+\end_inset
+
+).
+ If we assume fixed 
+\begin_inset Formula $T_{0}=1$
+\end_inset
+
+ month (
+\begin_inset Formula $T_{0}=9$
+\end_inset
+
+ months) for geckos (crocodiles) then we predict a first flipping time of
+ 
+\begin_inset Formula $t_{1}\approx18.8$
+\end_inset
+
+ years (
+\begin_inset Formula $t_{1}\approx8.625$
+\end_inset
+
+ years) and a propagation time of 
+\begin_inset Formula $\Delta\approx3.85$
+\end_inset
+
+ years (
+\begin_inset Formula $\Delta\approx22.5$
+\end_inset
+
+ years).
+ We note that it is possible to relax the fixed value of 
+\begin_inset Formula $T_{0}$
+\end_inset
+
+ to account for aging effects, and that for reasonable assumptions this
+ changes all sign flipping timing predictions by less that 10% [data not
+ shown].
+\end_layout
+
+\begin_layout Section
+Derivation of the Limiting System of ODEs
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:Derivation-of-the"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The PDE model Eq.
+ 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:phase_pde_nondim"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ can be reduced to a system of ODEs in the adiabatic limit 
+\begin_inset Formula $\tau\to0$
+\end_inset
+
+, where the dynamics of the spatial reaction-diffusion process are arbitraily
+ faster than those of the oscillators.
+ In such a setting, the spatial profile of inhibitor concentration can be
+ found by treating the phase of each oscillator as constant and setting
+ the reaction-diffusion process to qausi steady-state.
+ Due to the linearity of Eq.
+ 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:phase_pde_nondim"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ in 
+\begin_inset Formula $\tilde{I}$
+\end_inset
+
+, this reduces to solving for a Green's function that satisfies
+\begin_inset Flex Subequations
+status open
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "eq:Greens"
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{alignat}{1}
+G_{i} & =\kappa^{2}\partial_{xx}G_{i}\qquad\text{on }x\in\left(-N/2,-N/2\right),\\
+\text{ with }\partial_{x}G\left(\pm N/2,t\right) & =0\qquad\text{and\ensuremath{\qquad}\ensuremath{\kappa^{2}}\left[\partial_{x}G\left(i^{+}\right)-\partial_{x}G\left(i^{-}\right)\right]=-\sigma\left(\theta_{i}\right)},
+\end{alignat}
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+for 
+\begin_inset Formula $i=-N_{0},-N_{0}+1,\dots,N_{0}-1,N_{0}$
+\end_inset
+
+.
+ This equation has a unique continuous solution given by 
+\begin_inset Formula 
+\[
+G_{i}\left(x\right)=\frac{1}{2}\sigma\left(\theta_{i}\right)\frac{\cosh\left(\frac{N-|i-x|}{\kappa}\right)+\cosh\left(\frac{i+x}{\kappa}\right)}{\sinh\left(N/\kappa\right)}.
+\]
+
+\end_inset
+
+Thus in the adiabatic limit, given the values of all oscillator phases,
+ we can directly compute the inhibitor concentration as 
+\begin_inset Formula $\tilde{I}\left(x\right)=\sum_{i=-N_{0}}^{N_{0}}G_{i}\left(x\right).$
+\end_inset
+
+ Then the dynamics of the phase oscillators in Eq.
+ 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:phase_pde_nondim"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ reduce to
+\begin_inset Formula 
+\[
+\dot{\theta}_{i}=\frac{1}{\left(1+\gamma\left|i/N_{0}\right|\right)}-\epsilon\rho\left(\theta_{i}\right)\sum_{j=-N_{0}}^{N_{0}}c_{ij}\sigma\left(\theta_{j}\right),
+\]
+
+\end_inset
+
+where 
+\begin_inset Formula $c_{ij}$
+\end_inset
+
+ are coupling coefficients given by 
+\begin_inset Formula 
+\[
+c_{ij}=\frac{\cosh\left(\frac{N-|i-j|}{\kappa}\right)+\cosh\left(\frac{i+j}{\kappa}\right)}{\sinh\left(N/\kappa\right)}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+PDE Numerical Scheme
+\end_layout
+
+\begin_layout Standard
+Ghost cell scheme from Merlin paper, basically.
+\end_layout
+
+\begin_layout Section
+Supplemental ODE Simulations
+\end_layout
+
+\begin_layout Subsection
+Entrained States
+\end_layout
+
+\begin_layout Subsubsection
+Spatially Patterned Oscillations
+\end_layout
+
+\begin_layout Standard
+For the simple case of 
+\begin_inset Formula $N=3$
+\end_inset
+
+, these oscillations correspond to 
+\begin_inset Formula $\theta_{0}$
+\end_inset
+
+ undergoing small amplitude period doubled oscillations near 
+\begin_inset Formula $\pi$
+\end_inset
+
+ with 
+\begin_inset Formula $\theta_{-1}$
+\end_inset
+
+ and 
+\begin_inset Formula $\theta_{1}$
+\end_inset
+
+ in anti-phase (see Fig.
+ 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "fig:supp_solns_ODE"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+a).
+ This pattern of alternating small and large amplitude oscillations is maintaine
+d for increasing 
+\begin_inset Formula $N$
+\end_inset
+
+, where we note that if 
+\begin_inset Formula $N_{0}$
+\end_inset
+
+ is odd then 
+\begin_inset Formula $\theta_{0}$
+\end_inset
+
+ undergoes small amplitude oscillations while when
+\begin_inset Formula $N_{0}$
+\end_inset
+
+ is even 
+\begin_inset Formula $\theta_{-1}$
+\end_inset
+
+ and 
+\begin_inset Formula $\theta_{1}$
+\end_inset
+
+ do.
+\end_layout
+
+\begin_layout Subsubsection
+Unidirectional Waves 
+\begin_inset CommandInset label
+LatexCommand label
+name "subsec:Unidirectional-Waves"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Unidirectional waves coexist with spatially patterned oscillations when
+ 
+\begin_inset Formula $\gamma=0$
+\end_inset
+
+ and 
+\begin_inset Formula $\epsilon$
+\end_inset
+
+ is chosen appropriately, this is demonstrated for 
+\begin_inset Formula $N=9$
+\end_inset
+
+ by the green and purple lines in Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig: phase_eps_bif"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+e.
+ However, for large 
+\begin_inset Formula $N$
+\end_inset
+
+ nearly all intial conditions converge to spatially patterned oscillations
+ rather than unideirectional waves.
+ By increasing 
+\begin_inset Formula $\gamma$
+\end_inset
+
+, it seems that the basin of attraction of the former increases such that
+ most intial conditions converge to unidirectional waves even with large
+ 
+\begin_inset Formula $N$
+\end_inset
+
+ (e.g., see Fig.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig: phase_eps_bif"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+c).
+ We can continue these solutions numerically and confirm that they persist,
+ even with large 
+\begin_inset Formula $N$
+\end_inset
+
+, in the limit of 
+\begin_inset Formula $\gamma\to0$
+\end_inset
+
+ [data not shown].
+\end_layout
+
+\begin_layout Subsubsection
+Wavelets 
+\begin_inset CommandInset label
+LatexCommand label
+name "subsec:Wavelets"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+For 
+\begin_inset Formula $N\leq15$
+\end_inset
+
+, wavelet solutions appear as subtle back-to-front waves (see Fig.
+ 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "fig:supp_solns_ODE"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+c).
+ Increasing 
+\begin_inset Formula $N$
+\end_inset
+
+ causes the simple back-to-front waves to break down into a many small wavelets
+ that propagate leftwards and rightwards until they collide and appear to
+ annihilate (see Fig.
+ 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "fig:supp_solns_ODE"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+d).
+ Despite the apparent promising result for small 
+\begin_inset Formula $N$
+\end_inset
+
+, we have not be able to find any way to maintain the back-to-front solutions
+ for 
+\begin_inset Formula $N>15$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Subsubsection
+Shifted Front-to-Back Waves 
+\begin_inset CommandInset label
+LatexCommand label
+name "subsec:Shifted-Front-to-Back-Waves"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+As 
+\begin_inset Formula $\gamma$
+\end_inset
+
+ increases, the left-right symmetry of front-to-back waves breaks down.
+ This results in an entrained state where the waves seem to emanate from
+ a point that is shifted away from the middle oscillator.
+ The 
+\begin_inset Quotes eld
+\end_inset
+
+center
+\begin_inset Quotes erd
+\end_inset
+
+ of these waves can be shifted both left or right, and preliminary evidence
+ suggests that increasing 
+\begin_inset Formula $\gamma$
+\end_inset
+
+ increases the size of the shift.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{subfigure}[t]{.28
+\backslash
+columnwidth}
+\backslash
+caption{$
+\backslash
+epsilon=8, 
+\backslash
+gamma=0$}
+\backslash
+vspace{0.5em}
+\backslash
+centerline{
+\end_layout
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename spatially_patterned_ode.pdf
+	width 100col%
+
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}
+\backslash
+end{subfigure} 
+\backslash
+hfill 
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{subfigure}[t]{.33
+\backslash
+columnwidth}
+\backslash
+caption{$
+\backslash
+epsilon=6.5, 
+\backslash
+gamma=0$}
+\backslash
+vspace{0.5em}
+\backslash
+centerline{
+\end_layout
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename eps=6.5_gamma=0.0_back_to_front_N=15.pdf
+	display false
+	width 100col%
+
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}
+\backslash
+end{subfigure}
+\backslash
+hfill
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{subfigure}[t]{.33
+\backslash
+columnwidth}
+\backslash
+caption{ $
+\backslash
+epsilon=4, 
+\backslash
+gamma=0.165$}
+\backslash
+vspace{0.5em} 
+\backslash
+centerline{
+\end_layout
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename eps=4_gamma=0.165_shifted2_N=43.pdf
+	width 100text%
+
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}
+\backslash
+end{subfigure}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Supplemental ODE model solutions.
+
+\series bold
+ (a)
+\series default
+ Spatially patterned oscillations exhibiting alternating small and large
+ amplitude oscillations, where the small amplitude oscillations remain near
+ 
+\begin_inset Formula $\pi$
+\end_inset
+
+ while the large amplitude oscillations run through the full 
+\begin_inset Formula $2\pi$
+\end_inset
+
+ range.
+ 
+\series bold
+(b)
+\series default
+ For small 
+\begin_inset Formula $N$
+\end_inset
+
+ (i.e., 
+\begin_inset Formula $N<15$
+\end_inset
+
+), wavelet solutions appear as subtle back-to-front waves.
+ 
+\series bold
+(c)
+\series default
+ Front-to-back waves lose their bilateral symmetry as 
+\begin_inset Formula $\gamma$
+\end_inset
+
+ increases, resulting in waves that appear to emanate from a point that
+ is displaced from the middle oscillator 
+\begin_inset Formula $\theta_{0}$
+\end_inset
+
+.
+ 
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:supp_solns_ODE"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Non-entrained Dynamics
+\begin_inset CommandInset label
+LatexCommand label
+name "subsec:Non-entrained-Dynamics"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Paragraph
+Phase Asymmtery and the Anti-Phase Metric Dynamics 
+\end_layout
+
+\begin_layout Standard
+Phase differences between any pair of oscillators are fixed in any entrained
+ state.
+ Accordingly, entrained states exhibit a constant value of the anti-phase
+ metric 
+\begin_inset Formula $\psi_{n}$
+\end_inset
+
+ for each oscillator 
+\begin_inset Formula $n$
+\end_inset
+
+.
+ The ODE model Eq.
+ 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:phase_inh_nondim"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ posseses periodic solutions (entrained states) exhibting apparent front-to-back
+ waves for 
+\begin_inset Formula $\gamma>0$
+\end_inset
+
+ and a range of 
+\begin_inset Formula $\epsilon$
+\end_inset
+
+ values (see Fig.
+ 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "fig: phase_eps_bif"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+), where 
+\begin_inset Formula $\psi_{n}$
+\end_inset
+
+ is typically close to unity (e.g., 
+\begin_inset Formula $\bar{\psi}\approx0.9$
+\end_inset
+
+ in Fig.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:supp_fig_coupled_ODE"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+c).
+ On the other hand, the same model exhibits quasi-periodic stationary solutions
+ when 
+\begin_inset Formula $\gamma$
+\end_inset
+
+ becomes too large, and in such cases 
+\begin_inset Formula $\psi_{n}$
+\end_inset
+
+ cycles between 0 and 1 such that teeth spend as much time being close to
+ in-phase as they do being close to anti-phase (see Fig.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:supp_fig_coupled_ODE"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+c).
+\end_layout
+
+\begin_layout Standard
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{minipage}{.3
+\backslash
+columnwidth}
+\backslash
+begin{subfigure}[t]{
+\backslash
+columnwidth}
+\backslash
+caption{$
+\backslash
+epsilon=5.45, 
+\backslash
+gamma=0.07$}
+\backslash
+vspace{0.5em}
+\backslash
+centerline{
+\end_layout
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename eps=5.45_unidirectional_left_gamma=0.07.pdf
+	display false
+	width 100col%
+
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}
+\backslash
+end{subfigure}
+\backslash
+
+\backslash
+
+\backslash
+begin{subfigure}[t]{
+\backslash
+columnwidth}
+\backslash
+caption{$
+\backslash
+epsilon=5.45, 
+\backslash
+gamma=0.07$}
+\backslash
+vspace{0.25em}
+\backslash
+centerline{
+\end_layout
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename eps=5.45_unidirectional_right_gamma=0.07.pdf
+	display false
+	width 100col%
+
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}
+\backslash
+end{subfigure}
+\backslash
+end{minipage}
+\backslash
+hfill
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{minipage}{.3
+\backslash
+columnwidth}
+\backslash
+begin{subfigure}[t]{
+\backslash
+columnwidth}
+\backslash
+caption{Anti-Phase: $
+\backslash
+epsilon=3.5, 
+\backslash
+gamma=1$}
+\backslash
+vspace{0.5em}
+\backslash
+centerline{
+\end_layout
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename eps=3.5_initial_checker_gamma=0.1.png
+	display false
+	width 100col%
+
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}
+\backslash
+end{subfigure}
+\backslash
+
+\backslash
+
+\backslash
+begin{subfigure}[t]{
+\backslash
+columnwidth}
+\backslash
+caption{Anti-Phase: $
+\backslash
+epsilon=0.5, 
+\backslash
+gamma=0.1$}
+\backslash
+vspace{0.25em}
+\backslash
+centerline{
+\end_layout
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename eps=0.5_stationary_checker_gamma=0.1.png
+	display false
+	width 100col%
+
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}
+\backslash
+end{subfigure}
+\backslash
+end{minipage}
+\backslash
+hfill
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+ 
+\backslash
+begin{minipage}{.3
+\backslash
+columnwidth}
+\backslash
+begin{subfigure}[t]{
+\backslash
+columnwidth}
+\backslash
+caption{$
+\backslash
+epsilon=1, 
+\backslash
+gamma=1$}
+\backslash
+vspace{0.5em} 
+\backslash
+centerline{
+\end_layout
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename eps=1_gamma=1_back_to_front_transient_N=43.pdf
+	width 100text%
+
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}
+\backslash
+end{subfigure}
+\backslash
+end{minipage}
+\backslash
+hfill
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+(a&b) Unidirectional waves can be found for large N by choosing 
+\begin_inset Formula $\gamma\neq0$
+\end_inset
+
+ and 
+\begin_inset Formula $\epsilon$
+\end_inset
+
+ appropriately, for 
+\begin_inset Formula $\epsilon=5.45$
+\end_inset
+
+ and 
+\begin_inset Formula $\gamma=0.07$
+\end_inset
+
+ from random initial conditions we can readily find both 
+\series bold
+(a)
+\series default
+ leftward and 
+\series bold
+(b)
+\series default
+ rightward unidriectional waves.
+ (c&d) The anti-phase metric remains fixed and close to unity for entrained
+ states 
+\series bold
+(c)
+\series default
+, while for quasiperiodic solutions it varies over the full range [0,1]
+ such that solutions spend an equal amount of time being close and far from
+ anti-phase 
+\series bold
+(d)
+\series default
+.
+ (e) With 
+\begin_inset Formula $\gamma>0$
+\end_inset
+
+ and 
+\begin_inset Formula $\epsilon>0$
+\end_inset
+
+, initial conditions can be chosen to initially produce back-to-front waves
+ yet the directionality of waves quickly breaks down at the midjaw and an
+ stationary solution with predominently front-to-back waves eventually develops
+ (see Fig.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig: phase_ODE_gamma_nonzero"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+b).
+ 
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:supp_fig_coupled_ODE"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Supplemental PDE Simulations
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{subfigure}[t]{0.3
+\backslash
+columnwidth}
+\backslash
+caption{$
+\backslash
+tau=0, 
+\backslash
+kappa=3, 
+\backslash
+epsilon=0.45$}
+\backslash
+vspace{0.5em}
+\backslash
+centerline{
+\end_layout
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename bndry_waves_adiabatic_N=45_gamma=0_eps=0.45_kappa=3.pdf
+	display false
+	width 100col%
+
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}
+\backslash
+end{subfigure}
+\backslash
+hfill
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{subfigure}[t]{0.3
+\backslash
+columnwidth}
+\backslash
+caption{$
+\backslash
+tau=4.55, 
+\backslash
+kappa=3, 
+\backslash
+epsilon=0.45$}
+\backslash
+vspace{0.5em}
+\backslash
+centerline{
+\end_layout
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename bndry_waves_N=45_gamma=0_eps=0.45_kappa=3_omega=4.55.pdf
+	display false
+	width 100col%
+
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}
+\backslash
+end{subfigure}
+\backslash
+hfill
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{subfigure}[t]{0.3
+\backslash
+columnwidth}
+\backslash
+caption{$
+\backslash
+kappa=2, 
+\backslash
+epsilon=0.15$}
+\backslash
+vspace{0.5em}
+\backslash
+centerline{
+\end_layout
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename auto/PDE/phase/15/bndry_cross_pos.pdf
+	display false
+	width 100col%
+
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}
+\backslash
+end{subfigure}
+\backslash
+hfill
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+The boundary wave mode, all results are for 
+\begin_inset Formula $\gamma=0$
+\end_inset
+
+.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+In order to obtain results the considerably faster propagation time observed
+ in 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Edmund1962"
+literal "false"
+
+\end_inset
+
+, we consider initial conditions where 
+\begin_inset Formula $\delta_{l}^{n}-\delta_{r}^{n}\neq0$
+\end_inset
+
+ ) will always predict an excessively long propagtion time.
+ More specificically, with the choice 
+\begin_inset Formula $0<\text{sgn}(n)\left(\delta_{l}^{n}-\delta_{r}^{n}\right)\ll1$
+\end_inset
+
+ we obtain very fast propagation of the wave direction flipping.
+ For example, with the choice
+\begin_inset Formula 
+\[
+\theta_{n}(0)=\begin{cases}
+0 & n=0\\
+\theta_{n-\text{sgn}(n)2}+\text{sgn}(n)\delta2\pi & n\text{ is odd}\\
+\theta_{n-\text{sgn}(n)2}+\left(\frac{1}{2}+\text{sgn}(n)\delta\right)2\pi & n\text{ is even}
+\end{cases}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset bibtex
+LatexCommand bibtex
+btprint "btPrintCited"
+bibfiles "gecko"
+options "unsrt"
+
+\end_inset
+
+
+\end_layout
+
+\end_body
+\end_document

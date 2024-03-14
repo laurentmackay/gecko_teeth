@@ -37,7 +37,7 @@ clf();
 sol_theta = mod(atan2(sol(:,N+1:end),sol(:,1:N)),2*pi);
 T_mid = oscillations_summary(sol_theta, tmesh, tmax=1*tmesh(end), dotSize=25, ...
     MinPeakDistance=0, chi_thresh=1e-3,  MinPeakProminence=0.95, MinPeakHeight=6, border=true,  cycle_thresh=1.75, ...
-    xlines=0, tburn=-t_back(end), edmund_lines=true, checker=false, period=true, pad=0.02, title=false, ...
+    xlines=0, tburn=-t_back(end)+4*pi, edmund_lines=true, checker=false, period=true, pad=0.02, title=false, ...
     cycle_min=-5, cycle_max=5);
 
 
@@ -49,11 +49,11 @@ annotation('textbox',[xx y2 .0 .0],'String','front-to-back','LineStyle','none','
 apos=get(gca, 'Position');
 d=0.046;
 c=[1,1,1]*0.7;
-annotation('line',[pos(1) xx+d],[apos(2) y1+0.015],'LineWidth',0.5, 'Color',c);
-annotation('line',[pos(1) xx+d],[apos(2)+apos(4)/2-0.001 y1+0.24],'LineWidth',0.5, 'Color',c);
+annotation('line',[apos(1) xx+d],[apos(2) y1+0.015],'LineWidth',0.5, 'Color',c);
+annotation('line',[apos(1) xx+d],[apos(2)+apos(4)/2-0.001 y1+0.24],'LineWidth',0.5, 'Color',c);
 
-annotation('line',[pos(1) xx+d],[apos(2)+apos(4) y2+0.24],'LineWidth',0.5, 'Color',c);
-annotation('line',[pos(1) xx+d],[apos(2)+apos(4)/2+0.001 y2+0.015],'LineWidth',0.5, 'Color',c);
+annotation('line',[apos(1) xx+d],[apos(2)+apos(4) y2+0.24],'LineWidth',0.5, 'Color',c);
+annotation('line',[apos(1) xx+d],[apos(2)+apos(4)/2+0.001 y2+0.015],'LineWidth',0.5, 'Color',c);
 
 
 plot_switching_times(N0, 2*pi, sol_theta(tmesh==0,:), gamma, bottom=true, k=0, tburn=-t_back(end))
@@ -93,7 +93,7 @@ tmesh=0:0.001:600;
 figure(2);
 sol_theta = mod(atan2(sol(:,N+1:end),sol(:,1:N)),2*pi);
 T_mid = oscillations_summary(sol_theta, tmesh, tmax=1*tmesh(end), dotSize=25, ...
-    MinPeakDistance=0, MinPeakProminence=0.95, MinPeakHeight=6, border=false,  cycle_thresh=1.75, ...
+    MinPeakDistance=0, MinPeakProminence=0.95, MinPeakHeight=6, border_color='none',  cycle_thresh=1.75, ...
     xlines=0, edmund_lines=false, period=true, pad=0.02, title=false);
 
 

@@ -127,7 +127,8 @@ def bifDiag_measures(bd, m):
 
 def addLine(p,x,y):
     from auto.graphics import grapher_mpl as grapher 
-    
+    cnf = {'minx':p.cget('minx'),'maxx':p.cget('maxx'),'miny':p.cget('miny'),'maxy':p.cget('maxy')}
     p.grapher.addArray((x,y))
     grapher.GUIGrapher.plot(p.grapher)
+    p.grapher._configureNoDraw(cnf)
     p.grapher.draw()

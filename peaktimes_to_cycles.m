@@ -16,7 +16,7 @@ T = mean(diff(peaks_ref(peaks_ref >= opts.tmin & peaks_ref<opts.tmax)));
 
 
 cycle_min = floor((max(tmin, min([peak_times{:}]))+opts.tburn)/T);
-cycle_min = 0;
+cycle_min = floor(opts.tburn/T);
 
 cycle0 = ceil((peaks_ref(1)-tmin)/T);
 cycle_inds = 0:(length(peaks_ref)-1);
